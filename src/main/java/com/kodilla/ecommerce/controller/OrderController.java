@@ -18,12 +18,12 @@ public class OrderController {
     private final OrderServiceImpl orderServiceImpl;
     private final OrderMapper orderMapper;
 
-    @GetMapping
+    @GetMapping("get")
     public OrderDto getOrder(@RequestParam Long id) {
         return new OrderDto(id);
     }
 
-    @GetMapping
+    @GetMapping("getAll")
     public List<OrderDto> getAllOrders() {
         List<OrderDto> orders = new ArrayList<>();
         orders.add(new OrderDto(1L));
@@ -31,17 +31,17 @@ public class OrderController {
         return orders;
     }
 
-    @PostMapping
+    @PostMapping("add")
     public Long addOrder(@RequestBody OrderDto orderDto) {
         return orderDto.getId();
     }
 
-    @DeleteMapping
+    @DeleteMapping("delete")
     public void deleteOrder(@RequestParam Long id) {
 
     }
 
-    @PutMapping
+    @PutMapping("update")
     public OrderDto updateOrder(@RequestParam Long id, @RequestBody OrderDto orderDto) {
         return orderDto;
     }
