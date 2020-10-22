@@ -21,7 +21,7 @@ public class ProductControler {
 
     @RequestMapping(method = RequestMethod.GET, value = "getProduct")
     public ProductDto getProduct(Long productId) {
-        return new ProductDto(1L, "Product title", 123L, "Product description", 23L);
+        return new ProductDto(1L, "Product title", 125L, "Product description", 23L);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct")
