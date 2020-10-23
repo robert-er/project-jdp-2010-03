@@ -17,8 +17,8 @@ public class Group {
     private String name;
     private List<Product> products;
 
-    public Group(long id, String name) {
-        this.id = id;
+    public Group(String name, List<Product> products) {
         this.name = name;
+        this.products = products;
     }
 }
