@@ -12,7 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "surname", "email"})})
-@Entity(name = "users")
+@Entity(name = "USERS")
 public class User {
 
     @Id
@@ -22,6 +22,10 @@ public class User {
     private String surname;
     private String email;
     private LocalDateTime signUpDate;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
     @Override
     public boolean equals(Object o) {
