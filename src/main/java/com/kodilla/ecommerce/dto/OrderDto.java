@@ -7,8 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class OrderDto {
 
-    private Long id;
     private String name;
     private String description;
-
 }
