@@ -12,22 +12,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "createUser")
-    public UserDto createUser(@RequestParam String nickname,@RequestParam String name, @RequestParam String surname,@RequestParam String email){
-        return new UserDto("Johnny","John", "Smith","smith@smith.com");
+    public void createUser(@RequestParam String nickname,@RequestParam String name, @RequestParam String surname,@RequestParam String email){
+
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
-    public UserDto blockUser (@RequestParam Long id){
-        return new UserDto("Johnny","John", "Smith","smith@smith.com");
+    public void blockUser (@RequestParam Long id){
+
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "generateRandomKey")
-    public UserDto generateRandomKey(@RequestParam Long id){
-        return new UserDto("Johnny","John", "Smith","smith@smith.com");
+    public String generateRandomKey(@RequestParam Long id){
+        return "";
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "unblockUser")
-    public UserDto unblockUser(@RequestParam Long id){
-        return new UserDto("Johnny","John", "Smith","smith@smith.com");
+    public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey){
+
     }
 }
