@@ -1,18 +1,17 @@
 package com.kodilla.ecommerce.controller;
 
 import com.kodilla.ecommerce.dto.UserDto;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
 
-    @RequestMapping(method = RequestMethod.POST, value = "createUser")
-    public void createUser(@RequestParam String nickname,@RequestParam String name, @RequestParam String surname,@RequestParam String email){
+    @RequestMapping(method = RequestMethod.POST, value = "createUser",consumes = APPLICATION_JSON_VALUE)
+    public void createUser(@RequestBody UserDto userDto){
 
     }
 
