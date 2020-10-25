@@ -1,6 +1,6 @@
 package com.kodilla.ecommerce.domain;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,13 +14,13 @@ import java.time.LocalDate;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long userId;
     private String nickname;
     private String name;
     private String surname;
     private String email;
-    private boolean isBlocked = true;
+    private boolean isBlocked;
     private String randomKey;
     private LocalDate timeOfCreationRandomKey;
 
