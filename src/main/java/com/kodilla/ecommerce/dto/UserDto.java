@@ -1,19 +1,26 @@
 package com.kodilla.ecommerce.dto;
 
-import com.kodilla.ecommerce.domain.UserRandomKey;
+
 import lombok.Data;
+
+import java.time.LocalDate;
 
 
 @Data
 public class UserDto {
 
-    private Long userId;
-    private String userName;
+    private String nickname;
+    private String name;
+    private String surname;
+    private String email;
     private boolean isBlocked = true;
-    private UserRandomKey userRandomKey;
+    private String randomKey;
+    private LocalDate timeOfCreationRandomKey;
 
-    public UserDto (String userName){
-        this.userName = userName;
+    public UserDto(String nickname, String name, String surname, String email) {
+        this.nickname = nickname;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
     }
-
 }
