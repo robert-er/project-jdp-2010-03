@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -18,11 +19,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonBackReference
-    @NotNull
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="cart_id")
-    private Cart cart;
+    @ManyToMany(mappedBy = "products")
+    private List<Cart> carts;
 
     @JsonBackReference
     @NotNull
