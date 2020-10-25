@@ -24,7 +24,7 @@ public class User {
     private String randomKey;
     private LocalDate timeOfCreationRandomKey;
 
-    public User(String nickname, String name, String surname, String email) {
+    public User(String nickname, String name, String surname, String email, boolean isBlocked) {
         this.nickname = nickname;
         this.name = name;
         this.surname = surname;

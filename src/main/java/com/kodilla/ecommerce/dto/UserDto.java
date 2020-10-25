@@ -14,11 +14,11 @@ public class UserDto {
     private String name;
     private String surname;
     private String email;
-    private boolean isBlocked = true;
+    private boolean isBlocked;
     private String randomKey;
     private LocalDate timeOfCreationRandomKey;
 
-    public UserDto(String nickname, String name, String surname, String email) {
+    public UserDto(String nickname, String name, String surname, String email, boolean isBlocked) {
         this.nickname = nickname;
         this.name = name;
         this.surname = surname;
