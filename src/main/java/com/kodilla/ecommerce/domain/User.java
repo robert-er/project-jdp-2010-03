@@ -29,6 +29,7 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.isBlocked = isBlocked;
     }
 }
 
