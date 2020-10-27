@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,7 +23,10 @@ public class User {
     private String email;
     private boolean isBlocked;
     private String randomKey;
-    private LocalDate timeOfCreationRandomKey;
+    private LocalDateTime timeOfCreationRandomKey;
+    private LocalDateTime signUpDate;
+
+  //  private Cart cart;
 
     public User(String nickname, String name, String surname, String email, boolean isBlocked) {
         this.nickname = nickname;
@@ -30,6 +34,7 @@ public class User {
         this.surname = surname;
         this.email = email;
         this.isBlocked = isBlocked;
+        this.signUpDate = LocalDateTime.now();
     }
 }
 
