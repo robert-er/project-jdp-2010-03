@@ -13,17 +13,11 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PRODUCT_ID", unique = true)
     private Long id;
-
-    @Column(name = "NAME")
-    private String name;
-
-    @Column(name = "PRICE")
-    private Double price;
-
-    @Column(name = "AMOUNT")
-    private Integer amount;
+    private String title;
+    private Long price;
+    private String description;
+    private Long quantity;
 
     //trzeba odkomentować po dodaniu encji Cart
     /*@ManyToOne
@@ -40,9 +34,10 @@ public class Product {
     @JoinColumn(name = "ORDER_ID")
     private Order order;*/
 
-    public Product(String name, Double price, Integer amount) {
-        this.name = name;
+    public Product(String title, Long price, String description, Long quantity) {
+        this.title = title;
         this.price = price;
-        this.amount = amount;
+        this.description = description;
+        this.quantity = quantity;
     }
 }
