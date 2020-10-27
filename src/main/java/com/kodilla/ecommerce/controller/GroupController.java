@@ -15,8 +15,8 @@ public class GroupController {
 
     @GetMapping
     public List<GroupDto> getGroups() {
-        GroupDto groupDto1 = new GroupDto(3,"example1", null);
-        GroupDto groupDto2 = new GroupDto(4,"example2", null);
+        GroupDto groupDto1 = new GroupDto(3,"example1", "desc1", null);
+        GroupDto groupDto2 = new GroupDto(4,"example2", "desc2", null);
         List<GroupDto> groupDtoArrayList = new ArrayList<>();
         groupDtoArrayList.add(groupDto1);
         groupDtoArrayList.add(groupDto2);
@@ -25,7 +25,7 @@ public class GroupController {
 
     @GetMapping("{groupId}")
     public GroupDto getGroup(@RequestParam Long groupId) throws GroupNotFoundException {
-        return new GroupDto(3,"example", null) ;
+        return new GroupDto(3,"example","desc1", null) ;
     }
 
     @PostMapping
@@ -34,6 +34,6 @@ public class GroupController {
 
     @PutMapping
     public GroupDto updateGroup(@RequestBody GroupDto groupDto) {
-        return new GroupDto(6, "updated DTO", null);
+        return new GroupDto(6, "updated DTO","desc1", null);
     }
 }

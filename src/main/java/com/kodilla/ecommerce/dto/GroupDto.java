@@ -13,10 +13,12 @@ import java.util.List;
 public class GroupDto {
     private long id;
     private String name;
+    private String description;
     private List<ProductDto> products;
 
-    public GroupDto(String name, List<ProductDto> products) {
+    public GroupDto(String name, String description, List<ProductDto> products) {
         this.name = name;
+        this.description = description;
         this.products = products;
     }
 }
