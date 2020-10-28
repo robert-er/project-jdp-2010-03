@@ -26,10 +26,11 @@ public class Order {
     private Cart cart;
 
     private Status status;
+
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
-            name = "CART_PRODUCT",
-            joinColumns = { @JoinColumn(name = "cart_id") },
+            name = "ORDER_PRODUCT",
+            joinColumns = { @JoinColumn(name = "order_id") },
             inverseJoinColumns = { @JoinColumn(name = "product_id") }
     )
     private List<Product> products;
