@@ -24,8 +24,12 @@ public class GroupController {
     }
 
     @GetMapping("{groupId}")
-    public GroupDto getGroup(@RequestParam Long groupId) throws GroupNotFoundException {
-        return new GroupDto(3,"example","desc1", null) ;
+    public GroupDto getGroup(@PathVariable Long groupId) throws GroupNotFoundException {
+        if (groupId == 3) {
+            return new GroupDto(3, "example", "desc1", null);
+        } else {
+            return new GroupDto(0, "test", "test", null);
+        }
     }
 
     @PostMapping
