@@ -22,5 +22,5 @@ public class Cart {
             joinColumns = { @JoinColumn(name = "cart_id") },
             inverseJoinColumns = { @JoinColumn(name = "product_id") }
     )
-    List<Product> products;
+    private List<Product> products;
 }
