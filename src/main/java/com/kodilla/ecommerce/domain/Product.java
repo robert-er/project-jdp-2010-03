@@ -19,4 +19,6 @@ public class Product {
 
     @ManyToMany(mappedBy = "products")
     private List<Cart> carts;
+
+    //relacja do Group One to Many
 }

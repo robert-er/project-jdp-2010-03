@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -25,6 +26,13 @@ public class Order {
     private Cart cart;
 
     private Status status;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "CART_PRODUCT",
+            joinColumns = { @JoinColumn(name = "cart_id") },
+            inverseJoinColumns = { @JoinColumn(name = "product_id") }
+    )
+    private List<Product> products;
 
     private enum Status {
         CONFIRMED, PAID, SENT, CANCELLED
