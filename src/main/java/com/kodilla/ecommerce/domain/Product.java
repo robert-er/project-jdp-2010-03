@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @Getter
@@ -15,7 +16,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private Long price;
+    private BigDecimal price;
     private String description;
     private Long quantity;
 
@@ -34,7 +35,7 @@ public class Product {
     @JoinColumn(name = "ORDER_ID")
     private Order order;*/
 
-    public Product(String title, Long price, String description, Long quantity) {
+    public Product(String title, BigDecimal price, String description, Long quantity) {
         this.title = title;
         this.price = price;
         this.description = description;
