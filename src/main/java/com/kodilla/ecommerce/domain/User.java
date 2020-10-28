@@ -55,4 +55,3 @@ public class User {
         return Objects.hash(name, surname, email);
     }
 }
-
