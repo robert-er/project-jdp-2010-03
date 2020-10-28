@@ -17,7 +17,7 @@ public class CartController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getElementsFromEmptyCart")
     public CartDto getElementsFromEmptyCart() {
-        CartDto cartDto = new CartDto();
+        CartDto cartDto = new CartDto(1l);
         return cartDto;
     }
 

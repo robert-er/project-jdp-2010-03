@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,23 +21,21 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Long id;
-    /*
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_ID")
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    //Produkty
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
-            name = "PRODUCTS",
-            joinColumns = {@JoinColumn(name = "CART_ID", referencedColumnName = "CART_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")}
+            name = "CART_PRODUCT",
+            joinColumns = { @JoinColumn(name = "cart_id") },
+            inverseJoinColumns = { @JoinColumn(name = "product_id") }
     )
-    private List<Product> productList;
+    private List<Product> products;
 
-    //Relacja one to one order
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "ORDER_ID")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "order_id")
     private Order order;
-*/
+
 }
