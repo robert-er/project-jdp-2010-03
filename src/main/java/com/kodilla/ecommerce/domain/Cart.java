@@ -38,4 +38,9 @@ public class Cart {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    public Cart(User user, List<Product> products, Order order) {
+        this.user = user;
+        this.products = products;
+        this.order = order;
+    }
 }
