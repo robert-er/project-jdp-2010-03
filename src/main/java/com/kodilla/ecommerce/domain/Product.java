@@ -30,9 +30,9 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     private List<Order> orders;
 
-//    @JsonBackReference
-//    @NotNull
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name="group_id")
-//    private Group group;
+    @JsonBackReference
+    @NotNull
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="group_id")
+    private Group group;
 }

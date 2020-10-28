@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -24,10 +24,10 @@ public class User {
     private String name;
     private String surname;
     private String email;
-    private LocalDateTime signUpDate;
     private boolean isBlocked;
     private String randomKey;
     private LocalDateTime timeOfCreationRandomKey;
+    private LocalDateTime signUpDate;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cart_id")
@@ -39,6 +39,15 @@ public class User {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Order> orders;
+
+    public User(String nickname, String name, String surname, String email, boolean isBlocked) {
+        this.nickname = nickname;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.isBlocked = isBlocked;
+        this.signUpDate = LocalDateTime.now();
+    }
 
     @Override
     public boolean equals(Object o) {
