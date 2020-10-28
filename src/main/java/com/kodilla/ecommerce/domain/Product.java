@@ -27,8 +27,8 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     private List<Cart> carts;
 
-//    @ManyToMany(mappedBy = "products")
-//    private List<Order> orders;
+    @ManyToMany(mappedBy = "products")
+    private List<Order> orders;
 
     @JsonBackReference
     @NotNull
