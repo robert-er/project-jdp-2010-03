@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -22,8 +23,8 @@ public class Cart {
     @Column(name = "ID")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
+
+    @OneToOne(mappedBy = "cart")
     private User user;
 
     @ManyToMany(cascade = { CascadeType.ALL })
@@ -34,8 +35,8 @@ public class Cart {
     )
     private List<Product> products;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "order_id")
+
+    @OneToOne(mappedBy = "cart")
     private Order order;
 
     public Cart(User user, List<Product> products, Order order) {
