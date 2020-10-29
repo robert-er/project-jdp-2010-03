@@ -34,12 +34,9 @@ public class Cart {
     )
     private List<Product> products = new ArrayList<>();
 
-    @OneToOne(mappedBy = "cart")
-    private Order order;
 
-    public Cart(User user, List<Product> products, Order order) {
+    public Cart(User user, List<Product> products) {
         this.user = user;
         this.products = products;
-        this.order = order;
     }
 }
