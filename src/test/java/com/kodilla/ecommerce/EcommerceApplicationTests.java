@@ -8,6 +8,7 @@ class EcommerceApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println("22222222222EcommerceApplicationTests.contextLoads");
     }
 
 }
