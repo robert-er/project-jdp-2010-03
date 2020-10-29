@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,18 +23,16 @@ public class Cart {
     @Column(name = "ID")
     private Long id;
 
-
     @OneToOne(mappedBy = "cart")
     private User user;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "CART_PRODUCT",
             joinColumns = { @JoinColumn(name = "cart_id") },
             inverseJoinColumns = { @JoinColumn(name = "product_id") }
     )
-    private List<Product> products;
-
+    private List<Product> products = new ArrayList<>();
 
     @OneToOne(mappedBy = "cart")
     private Order order;
