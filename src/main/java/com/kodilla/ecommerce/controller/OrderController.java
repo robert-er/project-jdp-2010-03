@@ -36,8 +36,8 @@ public class OrderController {
 
     }
 
-    @PutMapping
-    public OrderDto updateOrder(@RequestParam Long id, @RequestBody OrderDto orderDto) {
+    @PutMapping("{id}")
+    public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) {
         return orderDto;
     }
 }
