@@ -27,13 +27,11 @@ public class OrderController {
     }
 
     @PostMapping
-    public Long addOrder(@RequestBody OrderDto orderDto) {
-        return 1L;
+    public void addOrder(@RequestBody OrderDto orderDto) {
     }
 
-    @DeleteMapping
-    public void deleteOrder(@RequestParam Long id) {
-
+    @DeleteMapping("{id}")
+    public void deleteOrder(@PathVariable Long id) {
     }
 
     @PutMapping("{id}")
