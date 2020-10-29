@@ -28,7 +28,7 @@ public class User {
     private String randomKey;
     private LocalDateTime timeOfCreationRandomKey;
     private LocalDateTime signUpDate;
-  
+
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cart_id")
     private Cart cart;
