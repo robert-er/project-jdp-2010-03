@@ -15,29 +15,27 @@ public class OrderController {
 
     @GetMapping("{id}")
     public OrderDto getOrder(@PathVariable Long id) {
-        return new OrderDto("test name", "test description");
+        return new OrderDto(1L, "test name", "test description");
     }
 
     @GetMapping
     public List<OrderDto> getAllOrders() {
         List<OrderDto> orders = new ArrayList<>();
-        orders.add(new OrderDto("name1", "description1"));
-        orders.add(new OrderDto("name2", "description2"));
+        orders.add(new OrderDto(2L, "name1", "description1"));
+        orders.add(new OrderDto(3L, "name2", "description2"));
         return orders;
     }
 
     @PostMapping
-    public Long addOrder(@RequestBody OrderDto orderDto) {
-        return 1L;
+    public void addOrder(@RequestBody OrderDto orderDto) {
     }
 
-    @DeleteMapping
-    public void deleteOrder(@RequestParam Long id) {
-
+    @DeleteMapping("{id}")
+    public void deleteOrder(@PathVariable Long id) {
     }
 
-    @PutMapping
-    public OrderDto updateOrder(@RequestParam Long id, @RequestBody OrderDto orderDto) {
+    @PutMapping("{id}")
+    public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) {
         return orderDto;
     }
 }
