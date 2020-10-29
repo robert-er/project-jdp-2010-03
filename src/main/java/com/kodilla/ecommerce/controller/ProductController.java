@@ -16,7 +16,12 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getProducts")
     public List<ProductDto> getProducts() {
-        return new ArrayList<>();
+       List<ProductDto> products = new ArrayList<>();
+       products.add(new ProductDto(1L, "First Product", 345L, "Example description", 20L));
+       products.add(new ProductDto(2L, "Second Product", 390L, "Example description", 10L));
+       products.add(new ProductDto(3L, "Third Product", 345L, "Example description", 80L));
+       products.add(new ProductDto(4L, "Fourth Product", 375L, "Example description", 30L));
+       return products;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getProduct")

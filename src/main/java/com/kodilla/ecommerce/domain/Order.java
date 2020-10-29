@@ -24,11 +24,6 @@ public class Order {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="user_id")
     private User user;
-
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
     private Status status;
 
     @ManyToMany(cascade = { CascadeType.ALL })
