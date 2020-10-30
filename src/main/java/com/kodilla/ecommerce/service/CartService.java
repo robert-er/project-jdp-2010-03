@@ -13,6 +13,4 @@ public interface CartService {
     void addProductToCart(Long id, Long productId) throws NotFoundException;
     void deleteProductFromCart(Long id, Long productId) throws NotFoundException;
     void createOrderFromCart(Long id);
-
-
 }

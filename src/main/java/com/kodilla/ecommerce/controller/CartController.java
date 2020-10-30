@@ -3,11 +3,11 @@ package com.kodilla.ecommerce.controller;
 import com.kodilla.ecommerce.dto.CartDto;
 import com.kodilla.ecommerce.dto.ProductDto;
 import com.kodilla.ecommerce.mapper.CartMapper;
+import com.kodilla.ecommerce.mapper.ProductMapper;
 import com.kodilla.ecommerce.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,6 +18,7 @@ public class CartController {
 
     private final CartMapper cartMapper;
     private final CartService cartService;
+    private final ProductMapper productMapper;
 
     @PostMapping
     public CartDto createCart(@RequestBody CartDto cartDto) {
@@ -26,10 +27,7 @@ public class CartController {
 
     @GetMapping("{id}")
     public List<ProductDto> getElementsFromCart(@PathVariable Long id) {
-        //odkomentować po utworzeniu productMapper
-
-     //   return productMapper.mapToProductDtoList(cartService.getElementsFromCart(id));
-        return new ArrayList<>();
+        return productMapper.mapToProductDtoList(cartService.getElementsFromCart(id));
     }
 
     @PostMapping("{id}")
