@@ -1,10 +1,12 @@
 package com.kodilla.ecommerce.dto;
 
 
+import com.kodilla.ecommerce.domain.Cart;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Data
@@ -20,7 +22,8 @@ public class UserDto {
     private LocalDateTime timeOfCreationRandomKey;
     private LocalDateTime signUpDate;
 
-    //  private Cart cart;
+    private CartDto cart;
+    private List<OrderDto> orders;
 
     public UserDto(String nickname, String name, String surname, String email, boolean isBlocked) {
         this.nickname = nickname;

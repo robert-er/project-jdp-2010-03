@@ -1,7 +1,14 @@
 package com.kodilla.ecommerce.controller;
 
+import com.kodilla.ecommerce.domain.User;
 import com.kodilla.ecommerce.dto.UserDto;
+import com.kodilla.ecommerce.exception.NotFoundException;
+import com.kodilla.ecommerce.mapper.UserMapper;
+import com.kodilla.ecommerce.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -10,14 +17,24 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/v1/user")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserMapper userMapper;
+
     @RequestMapping(method = RequestMethod.POST, value = "createUser",consumes = APPLICATION_JSON_VALUE)
     public void createUser(@RequestBody UserDto userDto){
-
+         userService.saveUser(userMapper.mapToUser(userDto));
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
-    public void blockUser (@RequestParam Long id){
-
+    public void blockUser (@RequestParam Long id) throws NotFoundException {
+        if (userService.getUserById(id).isBlocked()) {
+            System.out.println("User already blocked");
+        } else {
+            userService.getUserById(id).setBlocked(true);
+        }
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "generateRandomKey")
