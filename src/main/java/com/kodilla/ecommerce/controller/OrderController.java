@@ -1,7 +1,11 @@
 package com.kodilla.ecommerce.controller;
 
 import com.kodilla.ecommerce.dto.OrderDto;
+import com.kodilla.ecommerce.exception.OrderNotFoundException;
+import com.kodilla.ecommerce.mapper.OrderMapper;
+import com.kodilla.ecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -13,29 +17,37 @@ import java.util.List;
 @RequestMapping("/v1/order")
 public class OrderController {
 
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private OrderMapper orderMapper;
+
     @GetMapping("{id}")
-    public OrderDto getOrder(@PathVariable Long id) {
-        return new OrderDto(1L, "test name", "test description");
+    public OrderDto getOrder(@PathVariable Long id) throws OrderNotFoundException {
+        return orderMapper.mapToOrderDto(orderService.getOrderById(id).orElseThrow(OrderNotFoundException::new));
     }
 
     @GetMapping
     public List<OrderDto> getAllOrders() {
-        List<OrderDto> orders = new ArrayList<>();
-        orders.add(new OrderDto(2L, "name1", "description1"));
-        orders.add(new OrderDto(3L, "name2", "description2"));
-        return orders;
+        return orderMapper.mapToOrderDtoList(orderService.getAllOrders());
     }
 
     @PostMapping
     public void addOrder(@RequestBody OrderDto orderDto) {
+        orderService.saveOrder(orderMapper.mapToOrder(orderDto));
     }
 
     @DeleteMapping("{id}")
-    public void deleteOrder(@PathVariable Long id) {
+    public void deleteOrder(@PathVariable Long id) throws OrderNotFoundException {
+        if (orderService.getOrderById(id).isPresent()) {
+            orderService.deleteById(id);
+        } else {
+            throw new OrderNotFoundException("Error with delete order");
+        }
     }
 
     @PutMapping("{id}")
     public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) {
-        return orderDto;
+        return orderMapper.mapToOrderDto(orderService.saveOrder(orderMapper.mapToOrder(orderDto)));
     }
 }

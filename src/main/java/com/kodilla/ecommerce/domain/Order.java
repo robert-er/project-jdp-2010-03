@@ -18,6 +18,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private String description;
 
     @JsonBackReference
     @NotNull
@@ -34,8 +36,15 @@ public class Order {
     )
     private List<Product> products;
 
-    private enum Status {
+    public enum Status {
         CONFIRMED, PAID, SENT, CANCELLED
+    }
+
+    public Order(Long id, String name, String description, Status status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
     }
 }
 
