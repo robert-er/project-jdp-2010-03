@@ -17,12 +17,11 @@ public class CartController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getElementsFromEmptyCart")
     public CartDto getElementsFromEmptyCart() {
-        CartDto cartDto = new CartDto(1l);
-        return cartDto;
+        return new CartDto(1l);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addProductsToCart")
-    public void addProductsToCart(@RequestBody CartDto cartDto) {
+    public void addProductToCart(@RequestBody Product cartDto) {
 
     }
 
