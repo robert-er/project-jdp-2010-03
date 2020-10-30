@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -13,7 +12,12 @@ import java.util.List;
 @Getter
 @Setter
 public class CartDto {
+
     private Long id;
-    //trzeba dodać listę produków
-    //trzeba dodać relację do Usera
+    private Long userId;
+    private List<Long> productIdList;
+
+    public CartDto(Long userId) {
+        this.userId = userId;
+    }
 }
