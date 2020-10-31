@@ -6,6 +6,7 @@ import com.kodilla.ecommerce.mapper.CartMapper;
 import com.kodilla.ecommerce.mapper.ProductMapper;
 import com.kodilla.ecommerce.service.CartService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class CartController {
 
     private final CartMapper cartMapper;
     private final CartService cartService;
+    @Autowired
     private final ProductMapper productMapper;
 
     @PostMapping
@@ -31,13 +33,15 @@ public class CartController {
     }
 
     @PostMapping("{id}")
-    public void addProductToCart(@PathVariable Long id, @RequestParam Long productId) {
-        cartService.addProductToCart(id, productId);
+    public void addProductToCart(@PathVariable Long id,
+                                 @RequestParam Long productId, @RequestParam Long quantity) {
+        cartService.addProductToCart(id, productId, quantity);
     }
 
     @DeleteMapping("{id}")
-    public void deleteProductFromCart(@PathVariable Long id, @RequestParam Long productId) {
-        cartService.deleteProductFromCart(id, productId);
+    public void deleteProductFromCart(@PathVariable Long id,
+                                      @RequestParam Long productId, @RequestParam Long quantity) {
+        cartService.deleteProductFromCart(id, productId, quantity);
     }
 
     @PostMapping("createOrder/{id}")

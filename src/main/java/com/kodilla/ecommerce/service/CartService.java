@@ -9,8 +9,8 @@ import java.util.List;
 public interface CartService {
 
     Cart createCart(Cart cart);
-    List<Product> getElementsFromCart(Long id);
-    void addProductToCart(Long id, Long productId) throws NotFoundException;
-    void deleteProductFromCart(Long id, Long productId) throws NotFoundException;
+    List<Product> getElementsFromCart(Long id) throws NotFoundException;
+    void addProductToCart(Long id, Long productId, Long quantity) throws NotFoundException;
+    void deleteProductFromCart(Long id, Long productId, Long quantity) throws NotFoundException;
     void createOrderFromCart(Long id);
 }

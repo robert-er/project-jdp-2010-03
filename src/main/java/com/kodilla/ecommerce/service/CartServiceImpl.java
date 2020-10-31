@@ -7,10 +7,12 @@ import com.kodilla.ecommerce.repository.CartRepository;
 import com.kodilla.ecommerce.repository.OrderRepository;
 import com.kodilla.ecommerce.repository.ProductRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
@@ -24,7 +26,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<Product> getElementsFromCart(Long id) {
+    public List<Product> getElementsFromCart(Long id) throws NotFoundException {
         if(cartRepository.existsById(id)) {
             return cartRepository.findById(id).get().getProducts();
         } else {
@@ -33,10 +35,24 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addProductToCart(Long id, Long productId) throws NotFoundException {
+    public void addProductToCart(Long id, Long productId, Long quantity) throws NotFoundException {
         if(cartRepository.existsById(id)) {
             if(productRepository.existsById(productId)) {
-                cartRepository.findById(id).get().getProducts().add(productRepository.findById(productId).get());
+                if(productRepository.findById(productId).get().getQuantity() >=  quantity) {
+                    Optional<Product> product = cartRepository.findById(id).get().getProducts().stream()
+                            .filter(p -> p.getId().equals(productId))
+                            .findFirst();
+                    if(product.isPresent()) {
+                        cartRepository.findById(id).get().getProducts().stream()
+                                .filter(p -> p.getId().equals(productId))
+                                .forEach(p -> p.setQuantity(p.getQuantity() + quantity));
+                    } else {
+                        cartRepository.findById(id).get()
+                                .getProducts().add(productRepository.findById(productId).get());
+                    }
+                } else {
+                    throw new NotFoundException("Not enough quantity (" + quantity + ") of product id: " + productId);
+                }
             } else {
                 throw new NotFoundException("Product id: " + productId + " not found");
             }
@@ -46,12 +62,29 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void deleteProductFromCart(Long id, Long productId) throws NotFoundException {
+    public void deleteProductFromCart(Long id, Long productId, Long quantity) throws NotFoundException {
         if(cartRepository.existsById(id)) {
             if(productRepository.existsById(productId)) {
-                cartRepository.findById(id).get().getProducts().remove(productRepository.findById(productId).get());
+                Optional<Product> product = cartRepository.findById(id).get().getProducts().stream()
+                        .filter(p -> p.getId().equals(productId))
+                        .findFirst();
+                if(product.isPresent()) {
+                    cartRepository.findById(id).get().getProducts().stream()
+                            .filter(p -> p.getId().equals(productId))
+                            .forEach(p -> p.setQuantity(p.getQuantity() - quantity));
+                    Long productQuantity = cartRepository.findById(id).get().getProducts().stream()
+                            .filter(p -> p.getId().equals(productId))
+                            .findFirst()
+                            .get().getQuantity();
+                    if(productQuantity <= 0L) {
+                        cartRepository.findById(id).get().getProducts()
+                                .remove(productRepository.findById(productId).get());
+                    }
+                } else {
+                    throw new NotFoundException("Product id: " + productId + " not found in the Cart");
+                }
             } else {
-                throw new NotFoundException("Product id: " + productId + " not found");
+                throw new NotFoundException("Product id: " + productId + " not found in Product database");
             }
         } else {
             throw new NotFoundException("Cart id: " + id + "not found");
@@ -63,13 +96,17 @@ public class CartServiceImpl implements CartService {
         if(cartRepository.existsById(id)) {
             orderService.createOrder(cartRepository.findById(id).get());
             if(orderRepository.findByUserId(cartRepository.findById(id).get().getUser().getId()).isPresent()) {
-                cartRepository.deleteById(id);
+                deleteCartById(id);
              } else {
                 throw new NotFoundException("Create order failed. Order with cart id: " + id + " not found");
             }
         } else {
             throw new NotFoundException("Cart id: " + id + "not found");
         }
+    }
+
+    private void deleteCartById(Long id) {
+        cartRepository.deleteById(id);
     }
 
     private Cart save (Cart cart) {
