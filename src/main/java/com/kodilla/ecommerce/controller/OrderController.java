@@ -5,10 +5,8 @@ import com.kodilla.ecommerce.exception.OrderNotFoundException;
 import com.kodilla.ecommerce.mapper.OrderMapper;
 import com.kodilla.ecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -17,10 +15,8 @@ import java.util.List;
 @RequestMapping("/v1/order")
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
-    @Autowired
-    private OrderMapper orderMapper;
+    private final OrderService orderService;
+    private final OrderMapper orderMapper;
 
     @GetMapping("{id}")
     public OrderDto getOrder(@PathVariable Long id) throws OrderNotFoundException {

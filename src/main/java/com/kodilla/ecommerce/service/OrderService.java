@@ -2,16 +2,16 @@ package com.kodilla.ecommerce.service;
 
 import com.kodilla.ecommerce.domain.Order;
 import com.kodilla.ecommerce.repository.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     public Optional<Order> getOrderById(final Long orderId) {
         return orderRepository.findById(orderId);
@@ -24,5 +24,4 @@ public class OrderService {
     public void deleteById(final Long orderId) {
         orderRepository.deleteById(orderId);
     }
-
 }

@@ -12,11 +12,11 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
     List<Order> findAll();
 
     @Override
-    Optional<Order> findById(Long OrderId);
+    Optional<Order> findById(Long orderId);
 
     @Override
-    Order save(Order Order);
+    <S extends Order> S save(S order);
 
     @Override
-    void deleteById(Long OrderId);
+    void deleteById(Long orderId);
 }
