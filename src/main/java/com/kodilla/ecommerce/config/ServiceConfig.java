@@ -20,7 +20,7 @@ public class ServiceConfig {
     }
 
     @Bean
-    protected OrderService createOrderService() {
-        return new OrderServiceImpl();
+    protected OrderService createOrderService(OrderRepository orderRepository) {
+        return new OrderServiceImpl(orderRepository);
     }
 }

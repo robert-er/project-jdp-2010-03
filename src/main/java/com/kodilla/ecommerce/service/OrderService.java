@@ -5,5 +5,5 @@ import com.kodilla.ecommerce.domain.Order;
 
 public interface OrderService {
 
-    Order createOrder(Cart cart);
+    void createOrder(Cart cart);
 }
