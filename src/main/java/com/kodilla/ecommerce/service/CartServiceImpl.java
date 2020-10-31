@@ -6,7 +6,6 @@ import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.repository.CartRepository;
 import com.kodilla.ecommerce.repository.OrderRepository;
 import com.kodilla.ecommerce.repository.ProductRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
