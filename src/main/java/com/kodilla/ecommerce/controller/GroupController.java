@@ -1,12 +1,11 @@
 package com.kodilla.ecommerce.controller;
 import com.kodilla.ecommerce.dto.GroupDto;
-import com.kodilla.ecommerce.domain.GroupNotFoundException;
+import com.kodilla.ecommerce.exception.NotFoundException;
 import org.springframework.web.bind.annotation.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,7 +23,7 @@ public class GroupController {
     }
 
     @GetMapping("{groupId}")
-    public GroupDto getGroup(@PathVariable Long groupId) throws GroupNotFoundException {
+    public GroupDto getGroup(@PathVariable Long groupId) throws NotFoundException {
         if (groupId == 3) {
             return new GroupDto(3, "example", "desc1", null);
         } else {
