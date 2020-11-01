@@ -1,7 +1,30 @@
 package com.kodilla.ecommerce.repository;
 
 import com.kodilla.ecommerce.domain.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+
+@Transactional
+@Repository
+public interface ProductRepository extends CrudRepository<Product, Long> {
+
+    @Override
+    List<Product> findAll();
+
+    @Override
+    Optional<Product> findById(Long aLong);
+
+    @Override
+    Product save (Product product);
+
+    @Override
+    void deleteById(Long aLong);
+
+    @Override
+    boolean existsById(Long aLong);
+
 }
