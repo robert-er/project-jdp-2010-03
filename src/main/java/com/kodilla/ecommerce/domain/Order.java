@@ -34,7 +34,7 @@ public class Order {
     )
     private List<Product> products;
 
-    private enum Status {
+    public enum Status {
         CONFIRMED, PAID, SENT, CANCELLED
     }
 }
