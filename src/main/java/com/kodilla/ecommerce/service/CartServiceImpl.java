@@ -46,8 +46,11 @@ public class CartServiceImpl implements CartService {
                                 .filter(p -> p.getId().equals(productId))
                                 .forEach(p -> p.setQuantity(p.getQuantity() + quantity));
                     } else {
-                        cartRepository.findById(id).get()
-                                .getProducts().add(productRepository.findById(productId).get());
+                        product = productRepository.findById(productId);
+                        product.get().setQuantity(quantity);
+                        cartRepository.findById(id).get().getProducts().add(product.get());
+                        productRepository.findById(productId).get()
+                                .setQuantity(productRepository.findById(productId).get().getQuantity() - quantity);
                     }
                 } else {
                     throw new NotFoundException("Not enough quantity (" + quantity + ") of product id: " + productId);
@@ -79,6 +82,8 @@ public class CartServiceImpl implements CartService {
                         cartRepository.findById(id).get().getProducts()
                                 .remove(productRepository.findById(productId).get());
                     }
+                    productRepository.findById(productId).get()
+                            .setQuantity(productRepository.findById(productId).get().getQuantity() + quantity);
                 } else {
                     throw new NotFoundException("Product id: " + productId + " not found in the Cart");
                 }
@@ -91,17 +96,17 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void createOrderFromCart(Long id) {
-        if(cartRepository.existsById(id)) {
-            orderService.createOrder(cartRepository.findById(id).get());
-            if(orderRepository.findByUserId(cartRepository.findById(id).get().getUser().getId()).isPresent()) {
+    public void createOrderFromCart(Long id) throws NotFoundException {
+            orderService.createOrder(cartRepository
+                                        .findById(id)
+                                        .orElseThrow(() -> new NotFoundException("Cart id: " + id + "not found")));
+            if(orderRepository.findByUserId(cartRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Cart id: " + id + "not found"))
+                    .getUser().getId()).isPresent()) {
                 deleteCartById(id);
-             } else {
+            } else {
                 throw new NotFoundException("Create order failed. Order with cart id: " + id + " not found");
             }
-        } else {
-            throw new NotFoundException("Cart id: " + id + "not found");
-        }
     }
 
     private void deleteCartById(Long id) {
