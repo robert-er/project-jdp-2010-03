@@ -31,6 +31,5 @@ public class UserDto {
         this.surname = surname;
         this.email = email;
         this.isBlocked = isBlocked;
-        this.signUpDate = LocalDateTime.now();
     }
 }

@@ -4,6 +4,7 @@ import com.kodilla.ecommerce.domain.User;
 import com.kodilla.ecommerce.dto.UserDto;
 import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.exception.UserAlreadyBlocked;
+import com.kodilla.ecommerce.exception.UserIsNotBlocked;
 import com.kodilla.ecommerce.mapper.UserMapper;
 import com.kodilla.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "createUser",consumes = APPLICATION_JSON_VALUE)
     public void createUser(@RequestBody UserDto userDto){
-         userService.saveUser(userMapper.mapToUser(userDto));
+         userService.createUser(userMapper.mapToUser(userDto));
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "unblockUser")
-    public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey) throws NotFoundException {
+    public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey) throws NotFoundException, UserIsNotBlocked {
         userService.unblockUser(id, generatedKey);
     }
 }
