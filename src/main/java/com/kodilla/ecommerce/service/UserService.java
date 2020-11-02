@@ -53,9 +53,8 @@ public class UserService {
     public String generateRandomKey(final Long id) {
         User user = getUserById(id);
         LocalDateTime now = LocalDateTime.now();
-        if (user.getTimeOfCreationRandomKey() == null || LocalDateTimeDiffLessThanHour(user.getTimeOfCreationRandomKey(), now)) {
-            String key = String.valueOf(ThreadLocalRandom.current().nextInt(0, 4000000));
-            // Można pomyśleć o dodaniu hashcode'a dla większego randomu
+        if (user.getTimeOfCreationRandomKey() == null || localDateTimeDiffLessThanHour(user.getTimeOfCreationRandomKey(), now)) {
+            String key = String.valueOf(ThreadLocalRandom.current().nextInt(0, 4000000) + user.hashCode());
             user.setRandomKey(key);
             user.setTimeOfCreationRandomKey(now);
             saveUser(user);
@@ -68,18 +67,19 @@ public class UserService {
     public void unblockUser(final Long id, final String generatedKey) throws NotFoundException, UserIsNotBlocked {
         if (userService.getUserById(id).isBlocked()) {
             User user = userRepository.findById(id).get();
-            if (user.getRandomKey().equals(generatedKey)) {
+            LocalDateTime now = LocalDateTime.now();
+            if (user.getRandomKey().equals(generatedKey) && !localDateTimeDiffLessThanHour(user.getTimeOfCreationRandomKey(), now) ) {
             user.setBlocked(false);
             saveUser(user);
             } else {
-                throw new NotFoundException("The key does not match original value, please contact IT");
+                throw new NotFoundException("Either Your key is wrong, or 1 hour timestamp expired");
             }
         } else {
             throw new UserIsNotBlocked("User is not blocked");
         }
     }
 
-    public boolean LocalDateTimeDiffLessThanHour(LocalDateTime last, LocalDateTime now) {
+    public boolean localDateTimeDiffLessThanHour(LocalDateTime last, LocalDateTime now) {
         if (Duration.between(last, now).toSeconds() > 3600) {
             return true;
         } else {
