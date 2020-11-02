@@ -17,10 +17,10 @@ public class GroupController {
     @Autowired
     private GroupMapper groupMapper;
 
-    @GetMapping
-    public List<GroupDto> getGroups() {
-        return groupMapper.mapToGroupDtoList(groupServiceImpl.getAllGroups());
-    }
+//    @GetMapping
+//    public List<GroupDto> getGroups() {
+//        return groupMapper.mapToGroupDtoList(groupServiceImpl.getAllGroups());
+//    }
 
     @GetMapping("{groupId}")
     public GroupDto getGroup(@PathVariable Long groupId) throws GroupNotFoundException {

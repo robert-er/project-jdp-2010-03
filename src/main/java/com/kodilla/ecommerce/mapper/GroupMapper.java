@@ -29,11 +29,11 @@ public class GroupMapper {
         return groupDto;
     }
 
-    public List<GroupDto> mapToGroupDtoList(final List<Group> groupList) {
-        return groupList.stream()
-                .map(t -> new GroupDto(t.getName(), t.getDescription(), t.setProducts(new ArrayList<>())
-                .collect(Collectors.toList());
-    }
+//    public List<GroupDto> mapToGroupDtoList(final List<Group> groupList) {
+//        return groupList.stream()
+//                .map(t -> new GroupDto(t.getName(), t.getDescription(), t.setProducts(new ArrayList<>())
+//                .collect(Collectors.toList());
+//    }
 
 }
 
