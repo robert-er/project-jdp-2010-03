@@ -26,7 +26,7 @@ public class Order {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="user_id")
     private User user;
-    private Status status;
+    private OrderStatus.Status status;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -36,11 +36,7 @@ public class Order {
     )
     private List<Product> products;
 
-    public enum Status {
-        CONFIRMED, PAID, SENT, CANCELLED
-    }
-
-    public Order(Long id, String name, String description, Status status) {
+    public Order(Long id, String name, String description, OrderStatus.Status status) {
         this.id = id;
         this.name = name;
         this.description = description;

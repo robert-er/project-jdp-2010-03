@@ -35,15 +35,15 @@ public class OrderController {
 
     @DeleteMapping("{id}")
     public void deleteOrder(@PathVariable Long id) throws OrderNotFoundException {
-        if (orderService.getOrderById(id).isPresent()) {
-            orderService.deleteById(id);
-        } else {
-            throw new OrderNotFoundException("Error with delete order");
-        }
+        orderService.getOrderById(id).orElseThrow(OrderNotFoundException::new);
     }
 
     @PutMapping("{id}")
-    public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) {
-        return orderMapper.mapToOrderDto(orderService.saveOrder(orderMapper.mapToOrder(orderDto)));
+    public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) throws OrderNotFoundException {
+        if (orderService.getOrderById(id).isPresent()) {
+            return orderMapper.mapToOrderDto(orderService.updateOrderById(id, orderMapper.mapToOrder(orderDto)));
+        } else {
+            throw new OrderNotFoundException();
+        }
     }
 }

@@ -21,6 +21,16 @@ public class OrderService {
 
     public Order saveOrder(final Order order) { return orderRepository.save(order);}
 
+    public Order updateOrderById(Long orderId, Order order) {
+        Order foundOrder = orderRepository.findById(orderId).get();
+        foundOrder.setName(order.getName());
+        foundOrder.setDescription(order.getDescription());
+        foundOrder.setProducts(order.getProducts());
+        foundOrder.setStatus(order.getStatus());
+        foundOrder.setUser(order.getUser());
+        return orderRepository.save(order);
+    }
+
     public void deleteById(final Long orderId) {
         orderRepository.deleteById(orderId);
     }
