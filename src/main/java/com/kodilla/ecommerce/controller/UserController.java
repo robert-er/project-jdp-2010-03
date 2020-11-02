@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
@@ -25,22 +25,22 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-    @RequestMapping(method = RequestMethod.POST, value = "createUser",consumes = APPLICATION_JSON_VALUE)
+    @PostMapping
     public void createUser(@RequestBody UserDto userDto){
-         userService.createUser(userMapper.mapToUser(userDto));
+        userService.createUser(userMapper.mapToUser(userDto));
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
+    @PutMapping("/block/")
     public void blockUser (@RequestParam Long id) throws UserAlreadyBlocked {
         userService.blockUser(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "generateRandomKey")
+    @PutMapping("/key/")
     public String generateRandomKey(@RequestParam Long id){
         return userService.generateRandomKey(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "unblockUser")
+    @PutMapping("/unblock/")
     public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey) throws NotFoundException, UserIsNotBlocked {
         userService.unblockUser(id, generatedKey);
     }
