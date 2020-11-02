@@ -1,5 +1,6 @@
 package com.kodilla.ecommerce.dto;
 
+import com.kodilla.ecommerce.domain.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,5 @@ public class GroupDto {
         this.description = description;
         this.products = products;
     }
+
 }
