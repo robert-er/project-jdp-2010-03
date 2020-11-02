@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor
 @Getter
@@ -39,5 +40,22 @@ public class Product {
         this.price = price;
         this.description = description;
         this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id.equals(product.id) &&
+                Objects.equals(title, product.title) &&
+                Objects.equals(price, product.price) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(group, product.group);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, price, description, group);
     }
 }

@@ -35,13 +35,13 @@ public class CartController {
     @PostMapping("{id}")
     public void addProductToCart(@PathVariable Long id,
                                  @RequestParam Long productId, @RequestParam Long quantity) {
-        cartService.addProductToCart(id, productId, quantity);
+        cartService.increaseProductQuantityInCart(id, productId, quantity);
     }
 
     @DeleteMapping("{id}")
     public void deleteProductFromCart(@PathVariable Long id,
                                       @RequestParam Long productId, @RequestParam Long quantity) {
-        cartService.deleteProductFromCart(id, productId, quantity);
+        cartService.decreaseProductQuantityInCart(id, productId, quantity);
     }
 
     @PostMapping("createOrder/{id}")

@@ -10,7 +10,7 @@ public interface CartService {
 
     Cart createCart(Cart cart);
     List<Product> getElementsFromCart(Long id) throws NotFoundException;
-    void addProductToCart(Long id, Long productId, Long quantity) throws NotFoundException;
-    void deleteProductFromCart(Long id, Long productId, Long quantity) throws NotFoundException;
+    void increaseProductQuantityInCart(Long id, Long productId, Long quantity) throws NotFoundException;
+    void decreaseProductQuantityInCart(Long id, Long productId, Long quantity) throws NotFoundException;
     void createOrderFromCart(Long id);
 }
