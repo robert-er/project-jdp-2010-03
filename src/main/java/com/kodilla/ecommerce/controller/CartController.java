@@ -1,8 +1,15 @@
 package com.kodilla.ecommerce.controller;
 
 import com.kodilla.ecommerce.dto.CartDto;
+import com.kodilla.ecommerce.dto.ProductDto;
+import com.kodilla.ecommerce.mapper.CartMapper;
+import com.kodilla.ecommerce.mapper.ProductMapper;
+import com.kodilla.ecommerce.service.CartService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -10,31 +17,35 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CartController {
 
-    @RequestMapping(method = RequestMethod.POST, value = "createCart")
-    public void createCart(@RequestBody CartDto cartDto) {
+    private final CartMapper cartMapper;
+    private final CartService cartService;
+    @Autowired
+    private final ProductMapper productMapper;
 
+    @PostMapping
+    public CartDto createCart(@RequestBody CartDto cartDto) {
+        return cartMapper.mapToCartDto(cartService.createCart(cartMapper.mapToCart(cartDto)));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getElementsFromEmptyCart")
-    public CartDto getElementsFromEmptyCart() {
-        CartDto cartDto = new CartDto(1l);
-        return cartDto;
+    @GetMapping("{id}")
+    public List<ProductDto> getElementsFromCart(@PathVariable Long id) {
+        return productMapper.mapToProductDtoList(cartService.getElementsFromCart(id));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "addProductsToCart")
-    public void addProductsToCart(@RequestBody CartDto cartDto) {
-
+    @PostMapping("{id}")
+    public void addProductToCart(@PathVariable Long id,
+                                 @RequestParam Long productId, @RequestParam Long quantity) {
+        cartService.addProductToCart(id, productId, quantity);
     }
 
-
-    @RequestMapping(method = RequestMethod.DELETE, value = "deleteProductFromCart")
-    public void deleteProductFromCart(@RequestParam Long productId) {
-
+    @DeleteMapping("{id}")
+    public void deleteProductFromCart(@PathVariable Long id,
+                                      @RequestParam Long productId, @RequestParam Long quantity) {
+        cartService.deleteProductFromCart(id, productId, quantity);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "createOrderFromCart")
-    public void createOrderFromCart(@RequestBody CartDto cartDto) {
-
+    @PostMapping("createOrder/{id}")
+    public void createOrderFromCart(@PathVariable Long id) {
+        cartService.createOrderFromCart(id);
     }
-
 }
