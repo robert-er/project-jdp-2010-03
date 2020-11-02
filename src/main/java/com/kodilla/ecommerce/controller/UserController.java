@@ -1,20 +1,14 @@
 package com.kodilla.ecommerce.controller;
 
-import com.kodilla.ecommerce.domain.User;
 import com.kodilla.ecommerce.dto.UserDto;
 import com.kodilla.ecommerce.exception.NotFoundException;
-import com.kodilla.ecommerce.exception.UserAlreadyBlocked;
-import com.kodilla.ecommerce.exception.UserIsNotBlocked;
+import com.kodilla.ecommerce.exception.UserAlreadyBlockedException;
+import com.kodilla.ecommerce.exception.UserIsNotBlockedException;
 import com.kodilla.ecommerce.mapper.UserMapper;
 import com.kodilla.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
@@ -30,18 +24,18 @@ public class UserController {
         userService.createUser(userMapper.mapToUser(userDto));
     }
 
-    @PutMapping("/block/")
-    public void blockUser (@RequestParam Long id) throws UserAlreadyBlocked {
+    @PutMapping("block")
+    public void blockUser (@RequestParam Long id) throws UserAlreadyBlockedException {
         userService.blockUser(id);
     }
 
-    @PutMapping("/key/")
+    @PutMapping("key")
     public String generateRandomKey(@RequestParam Long id){
         return userService.generateRandomKey(id);
     }
 
-    @PutMapping("/unblock/")
-    public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey) throws NotFoundException, UserIsNotBlocked {
+    @PutMapping("unblock")
+    public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey) throws NotFoundException, UserIsNotBlockedException {
         userService.unblockUser(id, generatedKey);
     }
 }

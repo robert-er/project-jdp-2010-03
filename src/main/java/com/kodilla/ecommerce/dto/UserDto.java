@@ -22,8 +22,6 @@ public class UserDto {
     private LocalDateTime timeOfCreationRandomKey;
     private LocalDateTime signUpDate;
 
-    private CartDto cart;
-    private List<OrderDto> orders;
 
     public UserDto(String nickname, String name, String surname, String email, boolean isBlocked) {
         this.nickname = nickname;

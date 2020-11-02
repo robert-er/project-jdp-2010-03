@@ -2,31 +2,31 @@ package com.kodilla.ecommerce.service;
 
 import com.kodilla.ecommerce.domain.User;
 import com.kodilla.ecommerce.exception.NotFoundException;
-import com.kodilla.ecommerce.exception.UserAlreadyBlocked;
-import com.kodilla.ecommerce.exception.UserIsNotBlocked;
+import com.kodilla.ecommerce.exception.UserAlreadyBlockedException;
+import com.kodilla.ecommerce.exception.UserIsNotBlockedException;
 import com.kodilla.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.Math.abs;
 
 @Service
 public class UserService {
+
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserService userService;
-
     public User getUserById(final Long id) throws NotFoundException{
-        if (userRepository.findById(id).isPresent()) {
-            return userRepository.findById(id).get();
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
         } else {
-        throw new NotFoundException("User not found");
+            throw new NotFoundException("User not found");
         }
     }
 
@@ -40,11 +40,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void blockUser(final Long id) throws UserAlreadyBlocked {
-        if (userService.getUserById(id).isBlocked()) {
-            throw new UserAlreadyBlocked("User already blocked");
+    public void blockUser(final Long id) throws UserAlreadyBlockedException {
+        User user = getUserById(id);
+        if (user.isBlocked()) {
+            throw new UserAlreadyBlockedException("User already blocked");
         } else {
-            User user = userRepository.findById(id).get();
             user.setBlocked(true);
             saveUser(user);
         }
@@ -64,29 +64,24 @@ public class UserService {
         }
     }
 
-    public void unblockUser(final Long id, final String generatedKey) throws NotFoundException, UserIsNotBlocked {
-        if (userService.getUserById(id).isBlocked()) {
-            User user = userRepository.findById(id).get();
+    public void unblockUser(final Long id, final String generatedKey) throws NotFoundException, UserIsNotBlockedException {
+        User user = getUserById(id);
+        if (user.isBlocked()) {
             LocalDateTime now = LocalDateTime.now();
             if (user.getRandomKey().equals(generatedKey) && !localDateTimeDiffLessThanHour(user.getTimeOfCreationRandomKey(), now) ) {
-            user.setBlocked(false);
-            saveUser(user);
+                user.setBlocked(false);
+                saveUser(user);
             } else {
                 throw new NotFoundException("Either Your key is wrong, or 1 hour timestamp expired");
             }
         } else {
-            throw new UserIsNotBlocked("User is not blocked");
+            throw new UserIsNotBlockedException("User is not blocked");
         }
     }
 
     public boolean localDateTimeDiffLessThanHour(LocalDateTime last, LocalDateTime now) {
-        if (Duration.between(last, now).toSeconds() > 3600) {
-            return true;
-        } else {
-            return false;
-        }
+        return Duration.between(last, now).toSeconds() > 3600;
     }
-
 }
 
 
