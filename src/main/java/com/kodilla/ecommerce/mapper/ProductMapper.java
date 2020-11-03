@@ -10,17 +10,27 @@ import java.util.stream.Collectors;
 public class ProductMapper {
     public Product mapToProduct(final ProductDto productDto){
 
-        Product product = new Product(productDto.getTitle(),productDto.getPrice(),productDto.getDescription(),productDto.getQuantity());
-        product.setId(productDto.getId());
-        product.setCarts(productDto.getCarts());
-        product.setGroup(productDto.getGroup());
-        product.setOrders(productDto.getOrders());
+        Product product = new Product(productDto.getId(),
+                productDto.getTitle(),
+                productDto.getPrice(),
+                productDto.getDescription(),
+                productDto.getQuantityInStock(),
+                productDto.getCarts(),
+                productDto.getGroup(),
+                productDto.getOrders());
 
         return product;
     }
 
     public ProductDto mapToProductDto (final Product product){
-        return new ProductDto(product.getId(),product.getTitle(),product.getPrice(),product.getDescription(),product.getQuantity(),product.getCarts(),product.getGroup(),product.getOrders());
+        return new ProductDto(product.getId(),
+                product.getTitle(),
+                product.getPrice(),
+                product.getDescription(),
+                product.getQuantityInStock(),
+                product.getCartItems(),
+                product.getGroup(),
+                product.getOrderItems());
     }
 
     public List<ProductDto> mapToProductDtoList(List<Product> products) {
@@ -30,10 +40,10 @@ public class ProductMapper {
                         product.getTitle(),
                         product.getPrice(),
                         product.getDescription(),
-                        product.getQuantity(),
-                        product.getCarts(),
+                        product.getQuantityInStock(),
+                        product.getCartItems(),
                         product.getGroup(),
-                        product.getOrders()))
+                        product.getOrderItems()))
                 .collect(Collectors.toList());
     }
 }
