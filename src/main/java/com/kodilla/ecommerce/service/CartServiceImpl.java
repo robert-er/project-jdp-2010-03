@@ -10,6 +10,7 @@ import com.kodilla.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -24,7 +25,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart createCart(Cart cart) {
-        return cartRepository.findByUserId(cart.getUser().getId()).orElse(save(cart));
+        return cartRepository.findByUserId(cart.getUser().getId()).orElseGet(() -> save(cart));
     }
 
     @Override

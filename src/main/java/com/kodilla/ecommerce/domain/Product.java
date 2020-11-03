@@ -25,13 +25,13 @@ public class Product {
     private String description;
     private Long quantity;
 
-    @JsonBackReference
+    @JsonBackReference(value = "product-group")
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="group_id")
     private Group group;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "product-item")
     @OneToMany(targetEntity = CartItem.class,
             mappedBy = "product",
             cascade = CascadeType.ALL,

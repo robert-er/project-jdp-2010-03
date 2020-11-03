@@ -16,5 +16,4 @@ public class ProductDto {
     private Long price;
     private String description;
     private Long quantity;
-
 }

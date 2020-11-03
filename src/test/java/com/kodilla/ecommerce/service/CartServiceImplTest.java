@@ -65,7 +65,7 @@ class CartServiceImplTest {
                 .orElseThrow(() -> new NotFoundException(
                         "testCartServiceImpl.should_add_product_to_cart: cart not found, id:  " + createdCart.getId()))
                 .getItems().stream()
-                .filter(p -> p.getId().equals(createdProduct.getId()))
+                .filter(p -> p.getProduct().getId().equals(createdProduct.getId()))
                 .mapToLong(CartItem::getQuantity)
                 .findFirst();
         Long quantityInStock = productRepository.findById(product.getId())

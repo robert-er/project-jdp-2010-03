@@ -20,10 +20,11 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "cart")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "cart-item")
     @OneToMany(targetEntity = CartItem.class,
             mappedBy = "cart",
             cascade = CascadeType.ALL,

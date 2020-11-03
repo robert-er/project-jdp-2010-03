@@ -20,8 +20,6 @@ public class UserDto {
     private LocalDateTime timeOfCreationRandomKey;
     private LocalDateTime signUpDate;
 
-    //  private Cart cart;
-
     public UserDto(String nickname, String name, String surname, String email, boolean isBlocked) {
         this.nickname = nickname;
         this.name = name;

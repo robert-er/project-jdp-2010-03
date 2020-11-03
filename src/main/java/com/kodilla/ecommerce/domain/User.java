@@ -29,14 +29,10 @@ public class User {
     private LocalDateTime timeOfCreationRandomKey;
     private LocalDateTime signUpDate;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
-    @JsonManagedReference
+    @JsonManagedReference(value = "user-order")
     @OneToMany(targetEntity = Order.class,
             mappedBy = "user",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY)
     private List<Order> orders;
 
