@@ -1,12 +1,10 @@
 package com.kodilla.ecommerce.config;
 
+import com.kodilla.ecommerce.repository.CartItemRepository;
 import com.kodilla.ecommerce.repository.CartRepository;
 import com.kodilla.ecommerce.repository.OrderRepository;
 import com.kodilla.ecommerce.repository.ProductRepository;
-import com.kodilla.ecommerce.service.CartService;
-import com.kodilla.ecommerce.service.CartServiceImpl;
-import com.kodilla.ecommerce.service.OrderService;
-import com.kodilla.ecommerce.service.OrderServiceImpl;
+import com.kodilla.ecommerce.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,12 +13,18 @@ public class ServiceConfig {
 
     @Bean
     protected CartService createCartService(CartRepository cartRepository, ProductRepository productRepository,
-                                            OrderRepository orderRepository, OrderService orderService) {
-        return new CartServiceImpl(cartRepository, productRepository, orderRepository, orderService);
+                                            OrderRepository orderRepository, OrderService orderService,
+                                            CartItemService cartItemService) {
+        return new CartServiceImpl(cartRepository, productRepository, orderRepository, orderService, cartItemService);
     }
 
     @Bean
     protected OrderService createOrderService(OrderRepository orderRepository) {
         return new OrderServiceImpl(orderRepository);
+    }
+
+    @Bean
+    protected CartItemService createCartItemService(CartItemRepository cartItemRepository) {
+        return new CartItemServiceImpl(cartItemRepository);
     }
 }

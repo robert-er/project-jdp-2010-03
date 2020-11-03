@@ -17,7 +17,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void createOrder(Cart cart) {
         Order order = new Order();
-        order.setProducts(cart.getProducts());
+      //  order.setProducts(cart.getProducts());
         order.setUser(cart.getUser());
         order.setStatus(Order.Status.CONFIRMED);
         saveOrder(order);

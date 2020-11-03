@@ -2,6 +2,7 @@ package com.kodilla.ecommerce.repository;
 
 import com.kodilla.ecommerce.domain.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

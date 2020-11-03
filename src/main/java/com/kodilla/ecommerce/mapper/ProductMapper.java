@@ -4,14 +4,14 @@ import com.kodilla.ecommerce.domain.Product;
 import com.kodilla.ecommerce.dto.ProductDto;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class ProductMapper {
 
-    public List<ProductDto> mapToProductDtoList(List<Product> products) {
+    public Map<Long, ProductDto> mapToProductDtoList(Map<Long, Product> products) {
         //potrzebna implementacja
-        return new ArrayList<>();
+        return new HashMap<>();
     }
 }
