@@ -1,12 +1,7 @@
 package com.kodilla.ecommerce.dto;
 
-
-import com.kodilla.ecommerce.domain.Cart;
 import lombok.Data;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Data

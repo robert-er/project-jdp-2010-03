@@ -13,8 +13,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static java.lang.Math.abs;
-
 @Service
 public class UserService {
 
@@ -22,12 +20,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public User getUserById(final Long id) throws NotFoundException{
-        Optional<User> user = userRepository.findById(id);
-        if (user.isPresent()) {
-            return user.get();
-        } else {
-            throw new NotFoundException("User not found");
-        }
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id: " + id + " does not exist"));
     }
 
     public User createUser(final User user) {
