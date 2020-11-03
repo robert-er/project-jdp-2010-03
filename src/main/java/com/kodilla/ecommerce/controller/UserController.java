@@ -1,32 +1,41 @@
 package com.kodilla.ecommerce.controller;
 
 import com.kodilla.ecommerce.dto.UserDto;
+import com.kodilla.ecommerce.exception.NotFoundException;
+import com.kodilla.ecommerce.exception.UserAlreadyBlockedException;
+import com.kodilla.ecommerce.exception.UserIsNotBlockedException;
+import com.kodilla.ecommerce.mapper.UserMapper;
+import com.kodilla.ecommerce.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
 
-    @RequestMapping(method = RequestMethod.POST, value = "createUser",consumes = APPLICATION_JSON_VALUE)
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @PostMapping
     public void createUser(@RequestBody UserDto userDto){
-
+        userService.createUser(userMapper.mapToUser(userDto));
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "blockUser")
-    public void blockUser (@RequestParam Long id){
-
+    @PutMapping("block")
+    public void blockUser (@RequestParam Long id) throws UserAlreadyBlockedException {
+        userService.blockUser(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "generateRandomKey")
+    @PutMapping("key")
     public String generateRandomKey(@RequestParam Long id){
-        return "";
+        return userService.generateRandomKey(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "unblockUser")
-    public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey){
-
+    @PutMapping("unblock")
+    public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey) throws NotFoundException, UserIsNotBlockedException {
+        userService.unblockUser(id, generatedKey);
     }
 }
