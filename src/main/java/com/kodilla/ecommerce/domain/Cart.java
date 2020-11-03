@@ -30,7 +30,6 @@ public class Cart {
             fetch = FetchType.EAGER)
     private List<CartItem> items;
 
-
     public Cart(User user) {
         this.user = user;
     }
