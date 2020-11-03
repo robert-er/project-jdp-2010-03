@@ -1,30 +1,30 @@
 package com.kodilla.ecommerce.controller;
 import com.kodilla.ecommerce.dto.GroupDto;
+import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.mapper.GroupMapper;
-import com.kodilla.ecommerce.service.GroupServiceImpl;
+import com.kodilla.ecommerce.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/group")
 public class GroupController {
 
     @Autowired
-    private GroupServiceImpl groupServiceImpl;
+    private GroupService groupServiceImpl;
     @Autowired
     private GroupMapper groupMapper;
 
-//    @GetMapping
-//    public List<GroupDto> getGroups() {
-//        return groupMapper.mapToGroupDtoList(groupServiceImpl.getAllGroups());
-//    }
+    @GetMapping(value = "getGroups")
+    public List<GroupDto> getGroups() {
+        return groupMapper.mapToGroupDtoList(groupServiceImpl.getAllGroups());
+    }
 
     @GetMapping("{groupId}")
-    public GroupDto getGroup(@PathVariable Long groupId) throws GroupNotFoundException {
-        return groupMapper.mapToGroupDto(groupServiceImpl.getGroup(groupId).orElseThrow(GroupNotFoundException::new));
+    public GroupDto getGroup(@PathVariable Long groupId) throws NotFoundException {
+        return groupMapper.mapToGroupDto(groupServiceImpl.getGroup(groupId));
     }
 
     @PostMapping

@@ -11,8 +11,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "PRODUCT_GROUPS")
@@ -29,12 +29,5 @@ public class Group {
             mappedBy = "group",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private List<Product> products = new ArrayList<>();
-
-    public Group(String name, String description, List<Product> products) {
-        this.name = name;
-        this.description = description;
-        this.products = products;
-    }
-
+    private List<Product> products;
 }
