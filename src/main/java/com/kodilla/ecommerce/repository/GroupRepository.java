@@ -2,7 +2,6 @@ package com.kodilla.ecommerce.repository;
 
 import com.kodilla.ecommerce.domain.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Optional;
