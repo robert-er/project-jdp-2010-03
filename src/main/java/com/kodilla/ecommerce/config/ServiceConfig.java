@@ -27,4 +27,9 @@ public class ServiceConfig {
     protected CartItemService createCartItemService(CartItemRepository cartItemRepository) {
         return new CartItemServiceImpl(cartItemRepository);
     }
+
+    @Bean
+    protected ProductService createProductService(ProductRepository productRepository) {
+        return new ProductServiceImpl(productRepository);
+    }
 }

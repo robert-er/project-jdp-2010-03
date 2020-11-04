@@ -13,4 +13,5 @@ public interface CartService {
     void increaseProductQuantityInCart(Long id, Long productId, Long quantity) throws NotFoundException;
     void decreaseProductQuantityInCart(Long id, Long productId, Long quantity) throws NotFoundException;
     void createOrderFromCart(Long id);
+    Cart findById(Long id);
 }

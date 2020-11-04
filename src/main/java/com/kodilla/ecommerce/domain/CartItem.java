@@ -1,6 +1,5 @@
 package com.kodilla.ecommerce.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,13 +20,11 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonBackReference(value = "cart-item")
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="cart_id")
     private Cart cart;
 
-    @JsonBackReference(value = "product-item")
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="product_id")

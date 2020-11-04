@@ -1,7 +1,6 @@
 package com.kodilla.ecommerce.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +30,6 @@ public class Product {
     @JoinColumn(name="group_id")
     private Group group;
 
-    @JsonManagedReference(value = "product-item")
     @OneToMany(targetEntity = CartItem.class,
             mappedBy = "product",
             cascade = CascadeType.ALL,

@@ -92,6 +92,12 @@ public class CartServiceImpl implements CartService {
             }
     }
 
+    @Override
+    public Cart findById(Long id) {
+        return cartRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"));
+    }
+
     private void deleteCartById(Long id) {
         cartRepository.deleteById(id);
     }

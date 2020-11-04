@@ -5,14 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
+import java.math.BigDecimal;
+
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItemDto {
+public class ProductInCartItemDto {
 
     private Long id;
-    private Long cartId;
-    private ProductInCartItemDto product;
-    private Long quantity;
+    private String title;
+    private BigDecimal price;
+    private String description;
+    private GroupInCartItemDto group;
 }
