@@ -21,29 +21,28 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "getProducts")
+    @GetMapping
     public List<ProductDto> getProducts() {
         return productMapper.mapToProductDtoList(productService.getProducts());
     }
 
-
-    @RequestMapping(method = RequestMethod.GET, value = "getProduct/{productId}")
+    @GetMapping("{productId}")
     public ProductDto getProduct(@PathVariable Long productId) throws NotFoundException {
         return productMapper.mapToProductDto(productService.getProduct(productId).orElseThrow(NotFoundException::new));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "deleteProduct{productId}")
+    @DeleteMapping("{productId}")
     public void deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateProduct")
+    @PutMapping
     public ProductDto updateProduct(@RequestBody ProductDto productDto) {
       return productMapper.mapToProductDto(productService.saveProduct
               (productMapper.mapToProduct(productDto)));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "createProduct", consumes = APPLICATION_JSON_VALUE)
+    @PostMapping
     public void createProduct(@RequestBody ProductDto productDto) {
         productService.saveProduct(productMapper.mapToProduct(productDto));
     }
