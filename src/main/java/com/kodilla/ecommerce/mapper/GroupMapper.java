@@ -8,12 +8,18 @@ import java.util.stream.Collectors;
 
 @Component
 public class GroupMapper {
+
+    private final ProductMapper productMapper;
+
+    public GroupMapper(ProductMapper productMapper) {
+        this.productMapper = productMapper;
+    }
+
     public Group mapToGroup(final GroupDto groupDto) {
 
         Group group = new Group();
         group.setName(groupDto.getName());
         group.setDescription(groupDto.getDescription());
-//        group.setProducts(groupDto.getProducts());
         return group;
     }
 
@@ -21,16 +27,15 @@ public class GroupMapper {
         GroupDto groupDto = new GroupDto();
         groupDto.setName(group.getName());
         groupDto.setDescription(group.getDescription());
-//        groupDto.setProducts(group.getProducts());
+        groupDto.setProducts(productMapper.mapToProductDtoList(group.getProducts()));
         return groupDto;
     }
+
+   public List<GroupDto> mapToGroupDtoList(final List<Group> groupList) {
+        return groupList.stream()
+                .map(this::mapToGroupDto)
+                .collect(Collectors.toList());
+    }
+
 }
-
-//   public List<GroupDto> mapToGroupDtoList(final List<Group> groupList) {
-//        return groupList.stream()
-//                 .map(t -> new GroupDto(t.getName(), t.getDescription(), t.getProducts()))
-//                        .collect(Collectors.toList());
-//    }
-
-//}
 
