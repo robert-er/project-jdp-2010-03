@@ -10,7 +10,6 @@ import com.kodilla.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -31,14 +30,14 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<CartItem> getElementsFromCart(Long id) throws NotFoundException {
             return cartRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException("Cart id: " + id + "not found"))
+                    .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"))
                     .getItems();
     }
 
     @Override
     public void increaseProductQuantityInCart(Long id, Long productId, Long quantity) throws NotFoundException {
         Cart cart = cartRepository.findById(id)
-            .orElseThrow(() -> new NotFoundException("Cart id: " + id + "not found"));
+            .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"));
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new NotFoundException("Product id: " + productId + " not found in Product database"));
         Long quantityInStock = product.getQuantity();
@@ -62,7 +61,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void decreaseProductQuantityInCart(Long id, Long productId, Long quantity) throws NotFoundException {
         Cart cart = cartRepository.findById(id)
-            .orElseThrow(() -> new NotFoundException("Cart id: " + id + "not found"));
+            .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"));
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new NotFoundException("Product id: " + productId + " not found in Product database"));
         CartItem item = cartItemService.getCartItem(cart, product)
@@ -83,9 +82,9 @@ public class CartServiceImpl implements CartService {
     public void createOrderFromCart(Long id) throws NotFoundException {
             orderService.createOrder(cartRepository
                                         .findById(id)
-                                        .orElseThrow(() -> new NotFoundException("Cart id: " + id + "not found")));
+                                        .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found")));
             if(orderRepository.findByUserId(cartRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException("Cart id: " + id + "not found"))
+                    .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"))
                     .getUser().getId()).isPresent()) {
                 deleteCartById(id);
             } else {
