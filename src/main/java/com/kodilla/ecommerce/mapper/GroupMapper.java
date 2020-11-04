@@ -21,7 +21,7 @@ public class GroupMapper {
         GroupDto groupDto = new GroupDto();
         groupDto.setName(group.getName());
         groupDto.setDescription(group.getDescription());
-//         groupDto.setProducts(group.getProducts());
+//        groupDto.setProducts(group.getProducts());
         return groupDto;
     }
 }

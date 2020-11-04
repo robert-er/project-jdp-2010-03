@@ -18,7 +18,9 @@ public class GroupDto {
     private List<ProductDto> products;
 
     public GroupDto(String name, String description, List<ProductDto> products) {
-
+        this.name = name;
+        this.description = description;
+        this.products = products;
     }
 
 }
