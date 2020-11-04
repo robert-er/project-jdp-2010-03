@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -20,13 +19,8 @@ public class GroupService {
     }
 
     public Group getGroup(final Long id) throws NotFoundException {
-        Optional<Group> group = repository.findById(id);
-
-        if (group.isPresent()) {
-            return group.get();
-        } else {
-            throw new NotFoundException("Group not found");
-        }
+        return repository.findById(id).orElseThrow(()
+                -> new NotFoundException("Group not found"));
     }
 
     public Group saveGroup(final Group group) {

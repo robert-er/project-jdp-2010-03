@@ -18,6 +18,7 @@ public class GroupMapper {
     public Group mapToGroup(final GroupDto groupDto) {
 
         Group group = new Group();
+        group.setId(groupDto.getId());
         group.setName(groupDto.getName());
         group.setDescription(groupDto.getDescription());
         return group;
