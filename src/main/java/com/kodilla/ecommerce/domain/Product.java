@@ -1,14 +1,15 @@
 package com.kodilla.ecommerce.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sun.istack.NotNull;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -22,11 +23,14 @@ public class Product {
     private Long id;
     private String title;
     private BigDecimal price;
-
     private String description;
     private Long quantityInStock;
 
-    @OneToMany(mappedBy = "products")
+    @JsonManagedReference
+    @OneToMany(targetEntity = CartItem.class,
+            mappedBy = "product",
+    cascade = CascadeType.PERSIST,
+    fetch = FetchType.LAZY)
     private List<CartItem> cartItems;
 
     @JsonBackReference
@@ -35,7 +39,8 @@ public class Product {
     @JoinColumn(name="group_id")
     private Group group;
 
-    @OneToMany(mappedBy = "products")
+    @JsonBackReference
+    @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems;
 
 
