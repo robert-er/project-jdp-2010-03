@@ -1,5 +1,4 @@
 package com.kodilla.ecommerce.mapper;
-
 import com.kodilla.ecommerce.domain.Group;
 import com.kodilla.ecommerce.dto.GroupDto;
 import org.springframework.stereotype.Component;
@@ -22,15 +21,16 @@ public class GroupMapper {
         GroupDto groupDto = new GroupDto();
         groupDto.setName(group.getName());
         groupDto.setDescription(group.getDescription());
-//        groupDto.setProducts(group.getProducts());
+//         groupDto.setProducts(group.getProducts());
         return groupDto;
     }
-
-   public List<GroupDto> mapToGroupDtoList(final List<Group> groupList) {
-        return groupList.stream()
-                .map(t -> new GroupDto(t.getName(), t.getDescription(), t.getProducts()))
-                        .collect(Collectors.toList());
-    }
-
 }
+
+//   public List<GroupDto> mapToGroupDtoList(final List<Group> groupList) {
+//        return groupList.stream()
+//                 .map(t -> new GroupDto(t.getName(), t.getDescription(), t.getProducts()))
+//                        .collect(Collectors.toList());
+//    }
+
+//}
 

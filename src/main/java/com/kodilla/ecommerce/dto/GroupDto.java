@@ -17,7 +17,7 @@ public class GroupDto {
     private String description;
     private List<ProductDto> products;
 
-    public GroupDto(String name, String description, List<Product> products) {
+    public GroupDto(String name, String description, List<ProductDto> products) {
 
     }
 
