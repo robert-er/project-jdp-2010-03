@@ -35,11 +35,8 @@ public class OrderController {
 
     @DeleteMapping("{id}")
     public void deleteOrder(@PathVariable Long id) throws OrderNotFoundException {
-        if (orderService.getOrderById(id).isPresent()) {
-            orderService.deleteById(id);
-        } else {
-            throw new OrderNotFoundException();
-        }
+        orderService.getOrderById(id).orElseThrow(OrderNotFoundException::new);
+        orderService.deleteById(id);
     }
 
     @PutMapping("{id}")
