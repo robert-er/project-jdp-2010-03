@@ -1,6 +1,5 @@
 package com.kodilla.ecommerce.dto;
 
-import com.kodilla.ecommerce.domain.Order;
 import com.kodilla.ecommerce.domain.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -15,9 +15,6 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
     Optional<Order> findById(Long orderId);
 
     @Override
-    <S extends Order> S save(S order);
-
-    @Override
     void deleteById(Long orderId);
 }
 
