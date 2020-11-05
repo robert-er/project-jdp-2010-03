@@ -1,19 +1,17 @@
 package com.kodilla.ecommerce.mapper;
 import com.kodilla.ecommerce.domain.Group;
 import com.kodilla.ecommerce.dto.GroupDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Component
 public class GroupMapper {
 
     private final ProductMapper productMapper;
-
-    public GroupMapper(ProductMapper productMapper) {
-        this.productMapper = productMapper;
-    }
 
     public Group mapToGroup(final GroupDto groupDto) {
 
