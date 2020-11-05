@@ -3,16 +3,16 @@ package com.kodilla.ecommerce.service;
 import com.kodilla.ecommerce.domain.Group;
 import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.repository.GroupRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class GroupService {
 
-    @Autowired
-    private GroupRepository repository;
+    private final GroupRepository repository;
 
     public List<Group> getAllGroups() {
         return repository.findAll();
