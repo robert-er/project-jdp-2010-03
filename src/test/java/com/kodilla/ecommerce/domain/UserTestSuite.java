@@ -19,7 +19,7 @@ public class UserTestSuite {
     User user = new User("Janek", "Jan", "Kowalski", "jankowalski@gmail.com", false);
 
     @Test
-    public void CreateUserTest() {
+    public void createUserTest() {
         //Given
 
         //When
