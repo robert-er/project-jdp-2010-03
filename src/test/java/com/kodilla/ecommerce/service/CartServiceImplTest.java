@@ -74,7 +74,7 @@ class CartServiceImplTest {
                                         createdProduct.getId()))
                 .getQuantity();
         assertEquals(3L, quantityInCart.getAsLong());
-        assertEquals(7L, quantityInStock);
+        assertEquals(10L, quantityInStock);
         //CleanUp
         cleanUp(createdCart.getId(), createdProduct.getId(), createdUser.getId());
     }
