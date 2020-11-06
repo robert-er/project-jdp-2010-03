@@ -10,10 +10,11 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfig {
 
     @Bean
-    protected CartService createCartService(CartRepository cartRepository, ProductRepository productRepository,
-                                            OrderRepository orderRepository, OrderService orderService,
+    protected CartService createCartService(CartRepository cartRepository,
+                                            ProductRepository productRepository,
+                                            OrderService orderService,
                                             CartItemService cartItemService) {
-        return new CartServiceImpl(cartRepository, productRepository, orderRepository, orderService, cartItemService);
+        return new CartServiceImpl(cartRepository, productRepository, orderService, cartItemService);
     }
 
     @Bean

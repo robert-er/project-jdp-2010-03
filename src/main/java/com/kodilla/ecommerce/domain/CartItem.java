@@ -29,6 +29,7 @@ public class CartItem {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="product_id")
     private Product product;
+    @NotNull
     private Long quantity;
 
     public CartItem(@NotNull Cart cart, @NotNull Product product, Long quantity) {

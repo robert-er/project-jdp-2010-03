@@ -5,20 +5,17 @@ import com.kodilla.ecommerce.domain.CartItem;
 import com.kodilla.ecommerce.domain.Product;
 import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.repository.CartRepository;
-import com.kodilla.ecommerce.repository.OrderRepository;
 import com.kodilla.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
-    private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final CartItemService cartItemService;
 
