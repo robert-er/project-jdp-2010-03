@@ -4,5 +4,5 @@ import com.kodilla.ecommerce.domain.Cart;
 
 public interface OrderService {
 
-    void createOrder(Cart cart);
+    boolean createOrder(Cart cart);
 }

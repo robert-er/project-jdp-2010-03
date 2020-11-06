@@ -53,9 +53,8 @@ public class CartServiceImpl implements CartService {
             cartItemService.updateCartItem(item);
         } else {
             CartItem item = new CartItem(cart, product, quantity);
-            addProductToCart(cart, item);
+            addCartItemToCart(cart, item);
         }
-        changeProductQuantityInDB(product,  -quantity);
     }
 
     @Override
@@ -70,26 +69,24 @@ public class CartServiceImpl implements CartService {
         Long quantityInCart = item.getQuantity();
 
         if(quantityInCart <= quantity) {
+            removeCartItemFromCart(cart, item);
             cartItemService.deleteCartItem(item.getId());
         } else {
             item.setQuantity(item.getQuantity() - quantity);
             cartItemService.updateCartItem(item);
         }
-        changeProductQuantityInDB(product, quantity);
     }
 
     @Override
     public void createOrderFromCart(Long id) throws NotFoundException {
-            orderService.createOrder(cartRepository
-                                        .findById(id)
-                                        .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found")));
-            if(orderRepository.findByUserId(cartRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"))
-                    .getUser().getId()).isPresent()) {
-                deleteCartById(id);
-            } else {
-                throw new NotFoundException("Create order failed. Order with cart id: " + id + " not found");
-            }
+        boolean isOrderCreated = orderService.createOrder(cartRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found")));
+        if(isOrderCreated) {
+            deleteCartById(id);
+        } else {
+            throw new NotFoundException("Create order failed. Order with cart id: " + id + " not found");
+        }
     }
 
     @Override
@@ -106,11 +103,6 @@ public class CartServiceImpl implements CartService {
         return cartRepository.save(cart);
     }
 
-    private void changeProductQuantityInDB(Product product, Long quantity) throws NotFoundException {
-        product.setQuantity(product.getQuantity() + quantity);
-        productRepository.save(product);
-    }
-
     private boolean isProductInCart(Cart cart, Long productId) {
         return cart.getItems().stream()
                 .map(CartItem::getProduct)
@@ -118,8 +110,13 @@ public class CartServiceImpl implements CartService {
                 .anyMatch(value -> value.equals(productId));
     }
 
-    private void addProductToCart(Cart cart, CartItem item) throws NotFoundException {
+    private void addCartItemToCart(Cart cart, CartItem item) {
         cart.getItems().add(item);
+        cartRepository.save(cart);
+    }
+
+    private void removeCartItemFromCart(Cart cart, CartItem item) {
+        cart.getItems().remove(item);
         cartRepository.save(cart);
     }
 }
