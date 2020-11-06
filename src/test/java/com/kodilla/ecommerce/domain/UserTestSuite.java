@@ -16,12 +16,10 @@ public class UserTestSuite {
     @Autowired
     private UserRepository userRepository;
 
-    User user = new User("Janek", "Jan", "Kowalski", "jankowalski@gmail.com", false);
-
     @Test
     public void createUserTest() {
         //Given
-
+        User user = new User("Janek", "Jan", "Kowalski", "jankowalski@gmail.com", false);
         //When
         userRepository.save(user);
         Long userLong = user.getId();
@@ -31,9 +29,7 @@ public class UserTestSuite {
         assertTrue(userRepository.findById(userLong).isPresent());
 
         //CleanUp
-     /*   try {
-            userRepository.deleteById(userLong);
-        } catch (Exception e) {
-        }*/
+        //userRepository.deleteById(userLong);
+
     }
 }
