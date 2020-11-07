@@ -1,5 +1,6 @@
 package com.kodilla.ecommerce.controller;
 
+import com.kodilla.ecommerce.domain.Order;
 import com.kodilla.ecommerce.dto.OrderDto;
 import com.kodilla.ecommerce.exception.OrderNotFoundException;
 import com.kodilla.ecommerce.mapper.OrderMapper;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -30,8 +32,8 @@ public class OrderController {
 
     @PostMapping
     public void addOrder(@RequestBody OrderDto orderDto) {
-        orderService.saveOrder(orderMapper.mapToOrder(orderDto));
-    }
+            orderService.saveOrder(orderMapper.mapToOrder(orderDto));
+        }
 
     @DeleteMapping("{id}")
     public void deleteOrder(@PathVariable Long id) throws OrderNotFoundException {
@@ -41,6 +43,8 @@ public class OrderController {
 
     @PutMapping("{id}")
     public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) throws OrderNotFoundException {
-        return orderMapper.mapToOrderDto(orderService.updateOrderById(id, orderMapper.mapToOrder(orderDto)).orElseThrow(OrderNotFoundException::new));
+        Order orderToUpdate = orderMapper.mapToOrder(orderDto);
+        Order updatedOrder = orderService.updateOrderById(id, orderToUpdate);
+        return orderMapper.mapToOrderDto(updatedOrder);
     }
 }

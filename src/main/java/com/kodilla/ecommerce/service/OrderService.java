@@ -1,6 +1,7 @@
 package com.kodilla.ecommerce.service;
 
 import com.kodilla.ecommerce.domain.Order;
+import com.kodilla.ecommerce.exception.OrderNotFoundException;
 import com.kodilla.ecommerce.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,14 +22,14 @@ public class OrderService {
 
     public Order saveOrder(final Order order) { return orderRepository.save(order);}
 
-    public Optional<Order> updateOrderById(Long orderId, Order order) {
-        Order foundOrder = orderRepository.findById(orderId).get();
+    public Order updateOrderById(final Long orderId, Order order) throws OrderNotFoundException {
+        Order foundOrder = orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
         foundOrder.setName(order.getName());
         foundOrder.setDescription(order.getDescription());
         foundOrder.setProducts(order.getProducts());
-        foundOrder.setStatus(order.getStatus());
+        foundOrder.setOrderStatus(order.getOrderStatus());
         foundOrder.setUser(order.getUser());
-        return Optional.of(orderRepository.save(foundOrder));
+        return orderRepository.save(foundOrder);
     }
 
     public void deleteById(final Long orderId) {

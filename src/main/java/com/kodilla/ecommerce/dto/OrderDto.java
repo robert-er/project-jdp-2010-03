@@ -10,5 +10,5 @@ public class OrderDto {
     private Long id;
     private String name;
     private String description;
-    private OrderStatus.Status status;
+    private OrderStatus orderStatus;
 }

@@ -26,7 +26,7 @@ public class Order {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="user_id")
     private User user;
-    private OrderStatus.Status status;
+    private OrderStatus orderStatus;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -36,11 +36,11 @@ public class Order {
     )
     private List<Product> products;
 
-    public Order(Long id, String name, String description, OrderStatus.Status status) {
+    public Order(Long id, String name, String description, OrderStatus orderStatus) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.status = status;
+        this.orderStatus = orderStatus;
     }
 }
 
