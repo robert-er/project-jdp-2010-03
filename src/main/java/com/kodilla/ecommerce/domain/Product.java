@@ -26,7 +26,7 @@ public class Product {
 
     @JsonBackReference(value = "product-group")
     @NotNull
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="group_id")
     private Group group;
 
