@@ -5,19 +5,18 @@ import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.exception.UserAlreadyBlockedException;
 import com.kodilla.ecommerce.exception.UserIsNotBlockedException;
 import com.kodilla.ecommerce.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public User getUserById(final Long id) throws NotFoundException{
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id: " + id + " does not exist"));

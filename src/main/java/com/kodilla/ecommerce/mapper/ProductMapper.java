@@ -1,17 +1,23 @@
 package com.kodilla.ecommerce.mapper;
 
 import com.kodilla.ecommerce.domain.Product;
-import com.kodilla.ecommerce.dto.ProductDto;
+import com.kodilla.ecommerce.dto.ProductInCartItemDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
+@RequiredArgsConstructor
 public class ProductMapper {
 
-    public List<ProductDto> mapToProductDtoList(List<Product> products) {
-        //potrzebna implementacja
-        return new ArrayList<>();
+    private final GroupMapper groupMapper;
+
+    public ProductInCartItemDto mapToProductInCartItemDto(Product product) {
+        ProductInCartItemDto productInCartItemDto = new ProductInCartItemDto();
+        productInCartItemDto.setId(product.getId());
+        productInCartItemDto.setTitle(product.getTitle());
+        productInCartItemDto.setPrice(product.getPrice());
+        productInCartItemDto.setDescription(product.getDescription());
+        productInCartItemDto.setGroup(groupMapper.mapToGroupInCartDto(product.getGroup()));
+        return productInCartItemDto;
     }
 }
