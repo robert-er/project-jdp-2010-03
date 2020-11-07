@@ -1,11 +1,7 @@
 package com.kodilla.ecommerce.dto;
 
-
 import lombok.Data;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 
 @Data
 public class UserDto {
@@ -26,6 +22,5 @@ public class UserDto {
         this.surname = surname;
         this.email = email;
         this.isBlocked = isBlocked;
-        this.signUpDate = LocalDateTime.now();
     }
 }
