@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -23,10 +24,22 @@ public class GroupService {
                 -> new NotFoundException("Group not found"));
     }
 
-    public Group saveGroup(final Group group) {
-        return repository.save(group);
+    public Group saveGroup(final Group group) throws NotFoundException {
+
+        Long id = group.getId();
+        Optional groupId = repository.findById(id);
+
+        if (groupId.isPresent()) {
+            throw new NotFoundException("The group already exists!");
+        } else {
+
+        } return repository.save(group);
+
     }
 
+    public Group updateGroup(final Group group) {
+        return repository.save(group);
+    }
 
 }
 

@@ -24,6 +24,7 @@ public class GroupMapper {
 
     public GroupDto mapToGroupDto(final Group group) {
         GroupDto groupDto = new GroupDto();
+        groupDto.setId(group.getId());
         groupDto.setName(group.getName());
         groupDto.setDescription(group.getDescription());
         groupDto.setProducts(productMapper.mapToProductDtoList(group.getProducts()));
