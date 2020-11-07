@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 public class ProductMapper {
     public Product mapToProduct(final ProductDto productDto){
 
-        Product product = new Product(productDto.getId(),
-                productDto.getTitle(),
-                productDto.getPrice(),
-                productDto.getDescription(),
-                productDto.getQuantityInStock(),
-                productDto.getCarts(),
-                productDto.getGroup(),
-                productDto.getOrders());
+        Product product = new Product();
+              product.setTitle(productDto.getTitle());
+              product.setPrice(productDto.getPrice());
+              product.setDescription(productDto.getDescription());
+              product.setQuantityInStock(productDto.getQuantityInStock());
+              product.setCartItems(productDto.getCartItems());
+              product.setGroup(productDto.getGroup());
+              product.setOrderItems(productDto.getOrderItems());
 
         return product;
     }

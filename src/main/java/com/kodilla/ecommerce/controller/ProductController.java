@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+
 @RestController
 @RequestMapping("/v1/product")
 public class ProductController {
@@ -28,7 +29,7 @@ public class ProductController {
 
     @GetMapping("{productId}")
     public ProductDto getProduct(@PathVariable Long productId) throws NotFoundException {
-        return productMapper.mapToProductDto(productService.getProduct(productId).orElseThrow(NotFoundException::new));
+        return productMapper.mapToProductDto(productService.getProduct(productId));
     }
 
     @DeleteMapping("{productId}")
@@ -36,15 +37,16 @@ public class ProductController {
         productService.deleteProduct(productId);
     }
 
-    @PutMapping
-    public ProductDto updateProduct(@RequestBody ProductDto productDto) {
-      return productMapper.mapToProductDto(productService.saveProduct
-              (productMapper.mapToProduct(productDto)));
+    @PutMapping("{productId}")
+    public ProductDto updateProduct(@PathVariable Long productId,@RequestBody ProductDto productDto) {
+      return productMapper.mapToProductDto(productService.updateProduct(productId, productMapper.mapToProduct(productDto)));
     }
 
-    @PostMapping
+ //   @PostMapping
+    @RequestMapping(value = "createProduct", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createProduct(@RequestBody ProductDto productDto) {
         productService.saveProduct(productMapper.mapToProduct(productDto));
     }
+
 
 }

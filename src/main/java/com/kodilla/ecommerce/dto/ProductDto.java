@@ -20,7 +20,20 @@ public class ProductDto {
     private BigDecimal price;
     private String description;
     private Long quantityInStock;
-    private List<CartItem> carts;
+    private List<CartItem> cartItems;
     private Group group;
-    private List<OrderItem> orders;
+    private List<OrderItem> orderItems;
+
+    public ProductDto(String title,
+                      BigDecimal price,
+                      String description,
+                      Long quantityInStock,
+                      Group group
+    ) {
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.quantityInStock = quantityInStock;
+        this.group = group;
+    }
 }

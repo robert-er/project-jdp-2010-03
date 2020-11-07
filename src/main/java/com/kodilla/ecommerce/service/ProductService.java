@@ -1,12 +1,13 @@
 package com.kodilla.ecommerce.service;
 
 import com.kodilla.ecommerce.domain.Product;
+import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class ProductService {
@@ -19,15 +20,30 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional <Product> getProduct(final Long productId){
-        return productRepository.findById(productId);
+    public Product getProduct(final Long productId){
+        return productRepository.findById(productId).orElseThrow(NotFoundException::new);
     }
 
-    public void deleteProduct(Long productId){
+    public void deleteProduct(final Long productId){
         productRepository.deleteById(productId);
     }
 
-    public Product saveProduct(Product product){
+    public Product saveProduct(final Product product){
         return productRepository.save(product);
+    }
+
+    public Product updateProduct(final Long productId,final Product product) {
+
+        Product productToUpdate = productRepository.findById(productId).get();
+        productToUpdate.setCartItems(product.getCartItems());
+        productToUpdate.setGroup(product.getGroup());
+        productToUpdate.setDescription(product.getDescription());
+        productToUpdate.setId(product.getId());
+        productToUpdate.setOrderItems(product.getOrderItems());
+        productToUpdate.setPrice(product.getPrice());
+        productToUpdate.setQuantityInStock(product.getQuantityInStock());
+        productToUpdate.setTitle(product.getTitle());
+
+        return productRepository.save(productToUpdate);
     }
 }
