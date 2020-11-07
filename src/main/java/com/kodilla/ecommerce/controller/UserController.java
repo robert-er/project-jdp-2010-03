@@ -6,18 +6,16 @@ import com.kodilla.ecommerce.exception.UserAlreadyBlockedException;
 import com.kodilla.ecommerce.exception.UserIsNotBlockedException;
 import com.kodilla.ecommerce.mapper.UserMapper;
 import com.kodilla.ecommerce.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/v1/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserMapper userMapper;
+    private final UserService userService;
+    private final UserMapper userMapper;
 
     @PostMapping
     public void createUser(@RequestBody UserDto userDto){

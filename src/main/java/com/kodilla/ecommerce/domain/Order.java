@@ -1,12 +1,12 @@
 package com.kodilla.ecommerce.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @NoArgsConstructor
@@ -19,23 +19,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonBackReference
+    @JsonBackReference(value = "user-order")
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="user_id")
     private User user;
-    private Status status;
+    private OrderStatus status;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "ORDER_PRODUCT",
-            joinColumns = { @JoinColumn(name = "order_id") },
-            inverseJoinColumns = { @JoinColumn(name = "product_id") }
-    )
-    private List<Product> products;
-
-    public enum Status {
-        CONFIRMED, PAID, SENT, CANCELLED
-    }
+    @OneToMany(targetEntity = OrderItem.class,
+            mappedBy = "order",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    private List<OrderItem> items;
 }
 

@@ -3,7 +3,6 @@ package com.kodilla.ecommerce.dto;
 import lombok.Data;
 import java.time.LocalDateTime;
 
-
 @Data
 public class UserDto {
 
@@ -16,7 +15,6 @@ public class UserDto {
     private String randomKey;
     private LocalDateTime timeOfCreationRandomKey;
     private LocalDateTime signUpDate;
-
 
     public UserDto(String nickname, String name, String surname, String email, boolean isBlocked) {
         this.nickname = nickname;
