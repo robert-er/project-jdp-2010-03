@@ -9,7 +9,6 @@ import com.kodilla.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
@@ -18,8 +17,10 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemMapper orderItemMapper;
     private final OrderItemRepository orderItemRepository;
 
-    public Optional<Order> getOrderById(final Long orderId) {
-        return orderRepository.findById(orderId);
+    public Order getOrderById(final Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Order id: " + orderId +
+                        " not found in Order database"));
     }
 
     public List<Order> getAllOrders() { return orderRepository.findAll(); }

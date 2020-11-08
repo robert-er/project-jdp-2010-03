@@ -20,10 +20,8 @@ public class OrderController {
     private final OrderMapper orderMapper;
 
     @GetMapping("/{id}")
-    public OrderDto getOrder(@PathVariable Long id) throws NotFoundException {
-        return orderMapper.mapToOrderDto(orderService.getOrderById(id)
-                .orElseThrow(() -> new NotFoundException("Order id: " + id +
-                " not found in Order database")));
+    public OrderDto getOrder(@PathVariable Long id) {
+        return orderMapper.mapToOrderDto(orderService.getOrderById(id));
     }
 
     @GetMapping
@@ -37,14 +35,13 @@ public class OrderController {
         }
 
     @DeleteMapping("{id}")
-    public void deleteOrder(@PathVariable Long id) throws NotFoundException {
-        orderService.getOrderById(id).orElseThrow(() -> new NotFoundException("Order id: " + id +
-                " not found in Order database"));
+    public void deleteOrder(@PathVariable Long id) {
+        orderService.getOrderById(id);
         orderService.deleteById(id);
     }
 
     @PutMapping("{id}")
-    public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) throws NotFoundException {
+    public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) {
         Order orderToUpdate = orderMapper.mapToOrder(orderDto);
         Order updatedOrder = orderService.updateOrderById(id, orderToUpdate);
         return orderMapper.mapToOrderDto(updatedOrder);
