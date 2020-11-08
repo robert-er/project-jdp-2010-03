@@ -37,7 +37,7 @@ public class CartServiceImpl implements CartService {
             .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"));
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new NotFoundException("Product id: " + productId + " not found in Product database"));
-        Long quantityInStock = product.getQuantity();
+        Long quantityInStock = product.getQuantityInStock();
         if(quantityInStock < quantity) {
             throw new NotFoundException("Not enough quantity (" + quantity + ") of product id: " + productId);
         }

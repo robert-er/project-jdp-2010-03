@@ -9,41 +9,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
-@Service
-public class ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+public interface ProductService {
 
 
-    public List<Product> getProducts(){
-        return productRepository.findAll();
-    }
 
-    public Product getProduct(final Long productId){
-        return productRepository.findById(productId).orElseThrow(NotFoundException::new);
-    }
-
-    public void deleteProduct(final Long productId){
-        productRepository.deleteById(productId);
-    }
-
-    public Product saveProduct(final Product product){
-        return productRepository.save(product);
-    }
-
-    public Product updateProduct(final Long productId,final Product product) {
-
-        Product productToUpdate = productRepository.findById(productId).get();
-        productToUpdate.setCartItems(product.getCartItems());
-        productToUpdate.setGroup(product.getGroup());
-        productToUpdate.setDescription(product.getDescription());
-        productToUpdate.setId(product.getId());
-        productToUpdate.setOrderItems(product.getOrderItems());
-        productToUpdate.setPrice(product.getPrice());
-        productToUpdate.setQuantityInStock(product.getQuantityInStock());
-        productToUpdate.setTitle(product.getTitle());
-
-        return productRepository.save(productToUpdate);
-    }
+    List<Product> getProducts();
+    Product getProduct(final Long productId);
+    void deleteProduct(final Long productId);
+    Product saveProduct(final Product product);
+    Product updateProduct(final Long productId,final Product product);
 }

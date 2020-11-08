@@ -31,7 +31,7 @@ public class ServiceConfig {
     }
 
     @Bean
-    protected ProductService createProductService(ProductRepository productRepository) {
+    protected ProductServiceImpl createProductService(ProductRepository productRepository) {
         return new ProductServiceImpl(productRepository);
     }
 }

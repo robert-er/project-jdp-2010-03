@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
         Long quantityInStock = productRepository.findById(product.getId())
                 .orElseThrow(() -> new NotFoundException("Product id: " + product.getId()
                         + " not found in Product database"))
-                .getQuantity();
+                .getQuantityInStock();
         if(quantityInStock < quantity) {
             throw new NotFoundException("Not enough quantity (" + quantity + ") of product id: " + product.getId());
         } else {
@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void changeProductQuantityInDB(Product product, Long quantity) {
-        product.setQuantity(product.getQuantity() - quantity);
+        product.setQuantityInStock(product.getQuantityInStock() - quantity);
         productRepository.save(product);
     }
 }

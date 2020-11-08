@@ -24,12 +24,7 @@ public class ProductDto {
     private Group group;
     private List<OrderItem> orderItems;
 
-    public ProductDto(String title,
-                      BigDecimal price,
-                      String description,
-                      Long quantityInStock,
-                      Group group
-    ) {
+    public ProductDto(String title, BigDecimal price, String description, Long quantityInStock, Group group) {
         this.title = title;
         this.price = price;
         this.description = description;
