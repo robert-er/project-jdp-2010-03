@@ -21,6 +21,7 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference(value = "cart-item")
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="cart_id")

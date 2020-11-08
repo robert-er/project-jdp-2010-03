@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @Entity(name = "ORDER_ITEMS")
 @AllArgsConstructor
@@ -35,18 +34,4 @@ public class OrderItem {
 
     private Long quantity;
     private BigDecimal subtotal;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderItem orderItem = (OrderItem) o;
-        return order.equals(orderItem.order) &&
-                product.equals(orderItem.product);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(order, product);
-    }
 }
