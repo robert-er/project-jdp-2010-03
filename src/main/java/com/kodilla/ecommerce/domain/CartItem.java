@@ -1,5 +1,6 @@
 package com.kodilla.ecommerce.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,16 +22,17 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference(value = "cart-item")
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="cart_id")
     private Cart cart;
 
+    @JsonBackReference(value = "product-item")
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="product_id")
     private Product product;
-    @NotNull
     private Long quantity;
 
     public CartItem(@NotNull Cart cart, @NotNull Product product, Long quantity) {
@@ -43,8 +46,7 @@ public class CartItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CartItem cartItem = (CartItem) o;
-        return cart.equals(cartItem.cart) &&
-                product.equals(cartItem.product);
+        return cart.equals(cartItem.cart) && product.equals(cartItem.product);
     }
 
     @Override

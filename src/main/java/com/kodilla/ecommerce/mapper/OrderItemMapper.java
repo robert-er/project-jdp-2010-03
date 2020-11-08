@@ -1,25 +1,20 @@
 package com.kodilla.ecommerce.mapper;
 
-import com.kodilla.ecommerce.domain.CartItem;
 import com.kodilla.ecommerce.domain.OrderItem;
+import com.kodilla.ecommerce.dto.OrderItemDto;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class OrderItemMapper {
-
-    public List<OrderItem> mapToOrderItem(List<CartItem> cartItems) {
-        return cartItems.stream()
-                .map(this::mapToOrderItem)
-                .collect(Collectors.toList());
+    public OrderItem mapToOrderItem(final OrderItemDto orderItemDto){
+        return new OrderItem(orderItemDto.getId(),
+                orderItemDto.getOrder(),
+                orderItemDto.getProduct(),
+                orderItemDto.getQuantity(),
+                orderItemDto.getSubtotal());
     }
 
-    private OrderItem mapToOrderItem(CartItem cartItem) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setProduct(cartItem.getProduct());
-        orderItem.setQuantity(cartItem.getQuantity());
-        return orderItem;
+    public OrderItemDto mapToOrderItemDto(final OrderItem orderItem){
+        return new OrderItemDto(orderItem.getId(),orderItem.getOrder(),orderItem.getProduct(),orderItem.getQuantity(),orderItem.getSubtotal());
     }
 }
