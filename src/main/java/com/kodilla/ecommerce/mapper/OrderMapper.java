@@ -14,7 +14,7 @@ public class OrderMapper {
                 null,
                 orderDto.getName(),
                 orderDto.getDescription(),
-                orderDto.getOrderStatus()
+                orderDto.getStatus()
         );
     }
 
@@ -23,13 +23,13 @@ public class OrderMapper {
                 order.getId(),
                 order.getName(),
                 order.getDescription(),
-                order.getOrderStatus()
+                order.getStatus()
         );
     }
 
     public List<OrderDto> mapToOrderDtoList(final List<Order> orderList) {
         return orderList.stream()
-                .map(t -> new OrderDto(t.getId(), t.getName(), t.getDescription(), t.getOrderStatus()))
+                .map(t -> new OrderDto(t.getId(), t.getName(), t.getDescription(), t.getStatus()))
                 .collect(Collectors.toList());
     }
 }
