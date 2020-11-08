@@ -22,7 +22,7 @@ public class Order {
     private String description;
 
     @JsonBackReference(value = "user-order")
-    //@NotNull
+    @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="user_id")
     private User user;
