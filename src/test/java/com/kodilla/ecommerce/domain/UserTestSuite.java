@@ -1,8 +1,7 @@
 package com.kodilla.ecommerce.domain;
 
-import com.kodilla.ecommerce.repository.CartRepository;
+import com.kodilla.ecommerce.repository.OrderRepository;
 import com.kodilla.ecommerce.repository.UserRepository;
-import com.kodilla.ecommerce.service.CartService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 
+import static com.kodilla.ecommerce.domain.OrderStatus.PAID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -22,14 +22,9 @@ public class UserTestSuite {
     private UserRepository userRepository;
 
     @Autowired
-    private CartRepository cartRepository;
+    private OrderRepository orderRepository;
 
-    @Autowired
-    private CartService cartService;
-
-    private final User user = new User();
-    private final User user2 = new User("Janek", "Jan", "Kowalski", "jankowalski@gmail.com", false);
-    private final User user3 = new User("Ala", "Ala", "Kowalska", "alakowalski@gmail.com", false);
+        final User user = new User();
 
     @Test
     public void createUserTest() {
@@ -146,7 +141,7 @@ public class UserTestSuite {
 
     @Test
     public void checkUserRandomKeyTest() {
-/*        //Given
+        //Given
         String randomKey = "4253523523552352";
         //When
         user.setRandomKey(randomKey);
@@ -157,29 +152,62 @@ public class UserTestSuite {
         assertEquals(user.getRandomKey(), randomKey);
 
         //CleanUp
-        userRepository.deleteById(userLong);*/
+        userRepository.deleteById(userLong);
     }
 
     @Test
-    public void checkUserCartIdTest() {
-     /*   //Given
-        Long cartId = 2L;
+    public void checkUserOneOrderTest() {
+        //Given
+        Order order = new Order();
+        order.setUser(user);
+
         //When
-        Cart cart = new Cart(user);
-
-        Cart cartCreated = cartService.createCart(cart);
-
         userRepository.save(user);
+        orderRepository.save(order);
 
         Long userLong = user.getId();
-        Long cartLong = cart.getId();
-*/
+
+        //Then
+        assertEquals(order.getUser().getId(), user.getId());
+        System.out.println("expected: " + order.getUser().getId());
+        System.out.println("actual: " + user.getId());
+
+        //Clean-up
+        userRepository.deleteById(userLong);
     }
 
     @Test
-    public void createUserAndCartTest() {
-        // check where cart_id is assigned
+    public void checkUserManyOrdersTest() {
+        //Given
+        OrderStatus status = PAID;
+
+        Order order1 = new Order();
+        order1.setUser(user);
+        order1.setStatus(status);
+
+        Order order2 = new Order();
+        order2.setUser(user);
+        order2.setStatus(status);
+
+        Order order3 = new Order();
+        order3.setUser(user);
+        order3.setStatus(status);
+
+        //When
+        userRepository.save(user);
+        orderRepository.save(order1);
+        orderRepository.save(order2);
+        orderRepository.save(order3);
+
+        Long userLong = user.getId();
+
+        //Then
+        assertEquals(order1.getUser().getId(), user.getId());
+        assertEquals(order2.getUser().getId(), user.getId());
+        assertEquals(order3.getUser().getId(), user.getId());
+
+        //Clean-up
+        userRepository.deleteById(userLong);
+
     }
-
-
 }

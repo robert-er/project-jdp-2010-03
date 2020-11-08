@@ -21,7 +21,7 @@ public class Order {
 
     @JsonBackReference(value = "user-order")
     @NotNull
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
     private OrderStatus status;
