@@ -37,8 +37,17 @@ public class GroupService {
 
     }
 
-    public Group updateGroup(final Group group) {
-        return repository.save(group);
+    public Group updateGroup(final Group group) throws NotFoundException {
+
+        Long id = group.getId();
+        Optional groupId = repository.findById(id);
+
+        if (!groupId.isPresent()) {
+            throw new NotFoundException("The group does not exist!");
+        } else {
+
+        } return repository.save(group);
+
     }
 
 }

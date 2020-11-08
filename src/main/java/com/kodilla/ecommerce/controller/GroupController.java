@@ -15,7 +15,7 @@ public class GroupController {
     private final GroupService groupService;
     private final GroupMapper groupMapper;
 
-    @GetMapping(value = "getGroups")
+    @GetMapping
     public List<GroupDto> getGroups() {
         return groupMapper.mapToGroupDtoList(groupService.getAllGroups());
     }
@@ -25,12 +25,12 @@ public class GroupController {
         return groupMapper.mapToGroupDto(groupService.getGroup(groupId));
     }
 
-    @PostMapping(value = "createGroup")
+    @PostMapping
     public void createGroup(@RequestBody GroupDto groupDto) {
         groupService.saveGroup(groupMapper.mapToGroup(groupDto));
     }
 
-    @PutMapping(value = "updateGroup")
+    @PutMapping
     public GroupDto updateGroup(@RequestBody GroupDto groupDto) {
         return groupMapper.mapToGroupDto(groupService.updateGroup(groupMapper.mapToGroup(groupDto)));
     }
