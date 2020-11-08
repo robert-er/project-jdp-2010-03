@@ -1,6 +1,5 @@
 package com.kodilla.ecommerce.domain;
 
-import com.kodilla.ecommerce.dto.CartDto;
 import com.kodilla.ecommerce.repository.CartRepository;
 import com.kodilla.ecommerce.repository.UserRepository;
 import com.kodilla.ecommerce.service.CartService;
@@ -10,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
@@ -25,32 +27,14 @@ public class UserTestSuite {
     @Autowired
     private CartService cartService;
 
-
-    @Test
-    public void createUserAndCartTest() {
-        //Given
-        User user = new User("Janek", "Jan", "Kowalski", "jankowalski@gmail.com", false);
-        cartService.createCart(new Cart(null, user, null));
-        //When
-        userRepository.save(user);
-        //cartRepository.save(cart);
-        Long userIdLong = user.getId();
-        //Long cartIdLong = cart.getId();
-
-        //Then
-        assertTrue(userRepository.findById(userIdLong).isPresent());
-        //assertTrue(cartRepository.findById(cartIdLong).isPresent());
-
-        //CleanUp
-        /*userRepository.deleteById(userIdLong);
-        cartRepository.deleteById(cartIdLong);*/
-
-    }
+    private final User user = new User();
+    private final User user2 = new User("Janek", "Jan", "Kowalski", "jankowalski@gmail.com", false);
+    private final User user3 = new User("Ala", "Ala", "Kowalska", "alakowalski@gmail.com", false);
 
     @Test
     public void createUserTest() {
         //Given
-        User user = new User("Janek", "Jan", "Kowalski", "jankowalski@gmail.com", false);
+
         //When
         userRepository.save(user);
         Long userLong = user.getId();
@@ -63,23 +47,139 @@ public class UserTestSuite {
         userRepository.deleteById(userLong);
 
     }
-
 
     @Test
-    public void saveUserTest() {
+    public void checkUserEmailTest() {
         //Given
-        User user = new User("Ala", "Ala", "Kowalska", "alakowalski@gmail.com", false);
+        String mail = "przyklad@przyklad.com";
         //When
+        user.setEmail(mail);
         userRepository.save(user);
         Long userLong = user.getId();
 
         //Then
-        System.out.println(userLong);
-        assertTrue(userRepository.findById(userLong).isPresent());
+        assertEquals(user.getEmail(), mail);
 
         //CleanUp
         userRepository.deleteById(userLong);
-
     }
+
+    @Test
+    public void checkUserIsBlockedTest() {
+        //Given
+        Boolean isBlocked = true;
+        //When
+        user.setBlocked(true);
+        userRepository.save(user);
+        Long userLong = user.getId();
+
+        //Then
+        assertEquals(user.isBlocked(), isBlocked);
+
+        //CleanUp
+        userRepository.deleteById(userLong);
+    }
+
+    @Test
+    public void checkUserNameTest() {
+        //Given
+        String name = "Jonathan";
+        //When
+        user.setName(name);
+        userRepository.save(user);
+        Long userLong = user.getId();
+
+        //Then
+        assertEquals(user.getName(), name);
+
+        //CleanUp
+        userRepository.deleteById(userLong);
+    }
+
+    @Test
+    public void checkUserNicknameTest() {
+        //Given
+        String nickName = "Jey";
+        //When
+        user.setNickname(nickName);
+        userRepository.save(user);
+        Long userLong = user.getId();
+
+        //Then
+        assertEquals(user.getNickname(), nickName);
+
+        //CleanUp
+        userRepository.deleteById(userLong);
+    }
+
+    @Test
+    public void checkUserTimeOfCreationRandomKeyTest() {
+        //Given
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 12, 12, 12, 12);
+        //When
+        user.setTimeOfCreationRandomKey(localDateTime);
+        userRepository.save(user);
+        Long userLong = user.getId();
+
+        //Then
+        assertEquals(user.getTimeOfCreationRandomKey(), localDateTime);
+
+        //CleanUp
+        userRepository.deleteById(userLong);
+    }
+
+    @Test
+    public void checkUserSignUpDateTest() {
+        //Given
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 02, 2, 2, 2);
+        //When
+        user.setSignUpDate(localDateTime);
+        userRepository.save(user);
+        Long userLong = user.getId();
+
+        //Then
+        assertEquals(user.getSignUpDate(), localDateTime);
+
+        //CleanUp
+        userRepository.deleteById(userLong);
+    }
+
+    @Test
+    public void checkUserRandomKeyTest() {
+/*        //Given
+        String randomKey = "4253523523552352";
+        //When
+        user.setRandomKey(randomKey);
+        userRepository.save(user);
+        Long userLong = user.getId();
+
+        //Then
+        assertEquals(user.getRandomKey(), randomKey);
+
+        //CleanUp
+        userRepository.deleteById(userLong);*/
+    }
+
+    @Test
+    public void checkUserCartIdTest() {
+     /*   //Given
+        Long cartId = 2L;
+        //When
+        Cart cart = new Cart(user);
+
+        Cart cartCreated = cartService.createCart(cart);
+
+        userRepository.save(user);
+
+        Long userLong = user.getId();
+        Long cartLong = cart.getId();
+*/
+    }
+
+    @Test
+    public void createUserAndCartTest() {
+        // check where cart_id is assigned
+    }
+
 
 }
