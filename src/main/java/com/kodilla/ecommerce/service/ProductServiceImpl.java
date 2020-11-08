@@ -14,23 +14,27 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
 
-
+    @Override
     public List<Product> getProducts(){
         return productRepository.findAll();
     }
 
+    @Override
     public Product getProduct(final Long productId) {
         return productRepository.findById(productId).orElseThrow(() -> new NotFoundException("Product with id: " + productId + " is not present in DB"));
     }
 
+    @Override
     public void deleteProduct(final Long productId){
         productRepository.deleteById(productId);
     }
 
+    @Override
     public Product saveProduct(final Product product){
         return productRepository.save(product);
     }
 
+    @Override
     public Product updateProduct(final Long productId,final Product product) {
 
         Product productToUpdate = productRepository.findById(productId).get();

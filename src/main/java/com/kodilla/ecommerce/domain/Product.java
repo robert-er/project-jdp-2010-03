@@ -27,23 +27,28 @@ public class Product {
     private String description;
     private Long quantityInStock;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "cartItem-product")
     @OneToMany(targetEntity = CartItem.class,
             mappedBy = "product",
             cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY)
     private List<CartItem> cartItems;
 
-    @JsonBackReference
+    @JsonBackReference(value = "product-group")
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="group_id")
     private Group group;
 
-    @JsonBackReference
+    @JsonManagedReference(value = "orderItem-product")
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems;
 
-
+    public Product(String title, BigDecimal price, String description, Long quantityInStock){
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.quantityInStock = quantityInStock;
+    }
 
 }

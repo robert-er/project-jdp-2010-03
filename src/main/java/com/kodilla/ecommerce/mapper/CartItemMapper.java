@@ -3,7 +3,7 @@ package com.kodilla.ecommerce.mapper;
 import com.kodilla.ecommerce.domain.CartItem;
 import com.kodilla.ecommerce.dto.CartItemDto;
 import com.kodilla.ecommerce.service.CartService;
-import com.kodilla.ecommerce.service.ProductServiceImpl;
+import com.kodilla.ecommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class CartItemMapper {
 
     private final CartService cartService;
-    private final ProductServiceImpl productService;
+    private final ProductService productService;
     private final ProductMapper productMapper;
 
     public CartItem mapToCartItem(CartItemDto cartItemDto) {

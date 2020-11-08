@@ -1,5 +1,6 @@
 package com.kodilla.ecommerce.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    @JsonBackReference(value = "orderItem-product")
     @ManyToOne(cascade = CascadeType.PERSIST)
     @NotNull
     @JoinColumn(name = "product_id")
