@@ -2,9 +2,8 @@ package com.kodilla.ecommerce.controller;
 
 import com.kodilla.ecommerce.domain.Order;
 import com.kodilla.ecommerce.dto.OrderDto;
-import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.mapper.OrderMapper;
-import com.kodilla.ecommerce.service.OrderServiceImpl;
+import com.kodilla.ecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +15,7 @@ import java.util.List;
 @RequestMapping("/v1/order")
 public class OrderController {
 
-    private final OrderServiceImpl orderService;
+    private final OrderService orderService;
     private final OrderMapper orderMapper;
 
     @GetMapping("/{id}")

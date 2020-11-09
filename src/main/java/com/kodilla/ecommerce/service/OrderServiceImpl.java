@@ -17,16 +17,20 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemMapper orderItemMapper;
     private final OrderItemRepository orderItemRepository;
 
+    @Override
     public Order getOrderById(final Long orderId) {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order id: " + orderId +
                         " not found in Order database"));
     }
 
+    @Override
     public List<Order> getAllOrders() { return orderRepository.findAll(); }
 
+    @Override
     public Order saveOrder(final Order order) { return orderRepository.save(order);}
 
+    @Override
     public Order updateOrderById(final Long orderId, Order order) throws NotFoundException {
         Order foundOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order id: " + orderId +
@@ -40,6 +44,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(foundOrder);
     }
 
+    @Override
     public void deleteById(final Long orderId) {
         orderRepository.deleteById(orderId);
     }
