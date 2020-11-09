@@ -27,9 +27,9 @@ public class GroupService {
     public Group saveGroup(final Group group) throws NotFoundException {
 
         Long id = group.getId();
-        Optional groupId = repository.findById(id);
+        Optional<Group> idNumber = repository.findById(id);
 
-        if (groupId.isPresent()) {
+        if (idNumber.isPresent()) {
             throw new NotFoundException("The group already exists!");
         } else {
 
@@ -40,9 +40,9 @@ public class GroupService {
     public Group updateGroup(final Group group) throws NotFoundException {
 
         Long id = group.getId();
-        Optional groupId = repository.findById(id);
+        Optional<Group> idNumber = repository.findById(id);
 
-        if (!groupId.isPresent()) {
+        if (idNumber.isEmpty()) {
             throw new NotFoundException("The group does not exist!");
         } else {
 
