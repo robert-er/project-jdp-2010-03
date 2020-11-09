@@ -46,7 +46,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteById(final Long orderId) {
-        orderRepository.deleteById(orderId);
+        if (orderRepository.existsById(orderId)) {
+            orderRepository.deleteById(orderId);
+        } else {
+            throw new NotFoundException("Order id: " + orderId + " not found in Order database");
+        }
     }
 
     @Override
