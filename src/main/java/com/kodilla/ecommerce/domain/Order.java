@@ -20,13 +20,13 @@ public class Order {
     private Long id;
     private String name;
     private String description;
+    private OrderStatus status;
 
     @JsonBackReference(value = "user-order")
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="user_id")
     private User user;
-    private OrderStatus status;
 
     @OneToMany(targetEntity = OrderItem.class,
             mappedBy = "order",
