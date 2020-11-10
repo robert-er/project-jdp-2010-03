@@ -1,12 +1,12 @@
 package com.kodilla.ecommerce.repository;
 
 import com.kodilla.ecommerce.domain.Group;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface GroupRepository extends CrudRepository<Group, Long> {
+public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Override
     List<Group> findAll();
@@ -15,6 +15,6 @@ public interface GroupRepository extends CrudRepository<Group, Long> {
     Optional<Group> findById(Long id);
 
     @Override
-    Group save (Group group);
+    <S extends Group> S save(S group);
 
 }

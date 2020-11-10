@@ -1,36 +1,41 @@
 package com.kodilla.ecommerce.mapper;
-
 import com.kodilla.ecommerce.domain.Group;
-import com.kodilla.ecommerce.domain.Product;
 import com.kodilla.ecommerce.dto.GroupDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Component
 public class GroupMapper {
+
+    private final ProductMapper productMapper;
+
     public Group mapToGroup(final GroupDto groupDto) {
 
-        return new Group(
-                groupDto.getName(),
-                groupDto.getDescription(),
-                groupDto.setProducts(new ArrayList<>());
+        Group group = new Group();
+        group.setId(groupDto.getId());
+        group.setName(groupDto.getName());
+        group.setDescription(groupDto.getDescription());
+        return group;
     }
-
 
     public GroupDto mapToGroupDto(final Group group) {
-        return new GroupDto(
-                group.getName(),
-                group.getDescription(),
-                group.setProducts(new ArrayList<>());
+        GroupDto groupDto = new GroupDto();
+        groupDto.setId(group.getId());
+        groupDto.setName(group.getName());
+        groupDto.setDescription(group.getDescription());
+        groupDto.setProducts(productMapper.mapToProductDtoList(group.getProducts()));
+        return groupDto;
     }
 
-    public List<GroupDto> mapToGroupDtoList(final List<Group> groupsList) {
-        return groupsList.stream()
-                .map(t -> new GroupDto(t.getName(), t.getDescription(), t.setProducts(new ArrayList<>())
-                       .collect(Collectors.toList());
+   public List<GroupDto> mapToGroupDtoList(final List<Group> groupList) {
+        return groupList.stream()
+                .map(this::mapToGroupDto)
+                .collect(Collectors.toList());
     }
 
 }
+
