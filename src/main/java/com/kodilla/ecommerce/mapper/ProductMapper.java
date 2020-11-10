@@ -6,28 +6,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class ProductMapper {
 
-    public ProductDto mapToProductDto(final Product product) {
-
-        ProductDto productDto = new ProductDto();
-        productDto.setId(product.getId());
-        productDto.setTitle(product.getTitle());
-        productDto.setPrice(product.getPrice());
-        productDto.setQuantity(product.getQuantity());
-        return productDto;
+    public List<ProductDto> mapToProductDtoList(List<Product> products) {
+        //potrzebna implementacja
+        return new ArrayList<>();
     }
-
-    public List<ProductDto> mapToProductDtoList(final List<Product> productList) {
-        if(productList == null) {
-            return new ArrayList<>();
-        }
-        return productList.stream()
-                .map(this::mapToProductDto)
-                .collect(Collectors.toList());
-    }
-
 }

@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,24 +16,20 @@ import java.util.List;
 public class Cart {
 
     @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "cart")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "CART_PRODUCT",
-            joinColumns = { @JoinColumn(name = "cart_id") },
-            inverseJoinColumns = { @JoinColumn(name = "product_id") }
-    )
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(targetEntity = CartItem.class,
+            mappedBy = "cart",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    private List<CartItem> items;
 
-
-    public Cart(User user, List<Product> products) {
+    public Cart(User user) {
         this.user = user;
-        this.products = products;
     }
 }

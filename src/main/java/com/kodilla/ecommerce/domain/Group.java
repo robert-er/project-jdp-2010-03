@@ -23,7 +23,7 @@ public class Group {
     private String name;
     private String description;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "product-group")
     @OneToMany(targetEntity = Product.class,
             mappedBy = "group",
             cascade = CascadeType.ALL,
