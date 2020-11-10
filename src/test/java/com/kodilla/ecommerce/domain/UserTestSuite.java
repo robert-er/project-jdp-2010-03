@@ -35,7 +35,6 @@ public class UserTestSuite {
         Long userLong = user.getId();
 
         //Then
-        System.out.println(userLong);
         assertTrue(userRepository.findById(userLong).isPresent());
 
         //CleanUp
@@ -47,6 +46,7 @@ public class UserTestSuite {
     public void checkUserEmailTest() {
         //Given
         String mail = "przyklad@przyklad.com";
+
         //When
         user.setEmail(mail);
         userRepository.save(user);
@@ -63,6 +63,7 @@ public class UserTestSuite {
     public void checkUserIsBlockedTest() {
         //Given
         Boolean isBlocked = true;
+
         //When
         user.setBlocked(true);
         userRepository.save(user);
@@ -79,6 +80,7 @@ public class UserTestSuite {
     public void checkUserNameTest() {
         //Given
         String name = "Jonathan";
+
         //When
         user.setName(name);
         userRepository.save(user);
@@ -95,6 +97,7 @@ public class UserTestSuite {
     public void checkUserNicknameTest() {
         //Given
         String nickName = "Jey";
+
         //When
         user.setNickname(nickName);
         userRepository.save(user);
@@ -111,6 +114,7 @@ public class UserTestSuite {
     public void checkUserTimeOfCreationRandomKeyTest() {
         //Given
         LocalDateTime localDateTime = LocalDateTime.of(2020, 12, 12, 12, 12);
+
         //When
         user.setTimeOfCreationRandomKey(localDateTime);
         userRepository.save(user);
@@ -126,7 +130,8 @@ public class UserTestSuite {
     @Test
     public void checkUserSignUpDateTest() {
         //Given
-        LocalDateTime localDateTime = LocalDateTime.of(2020, 02, 2, 2, 2);
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 2, 2, 2, 2);
+
         //When
         user.setSignUpDate(localDateTime);
         userRepository.save(user);
@@ -143,6 +148,7 @@ public class UserTestSuite {
     public void checkUserRandomKeyTest() {
         //Given
         String randomKey = "4253523523552352";
+
         //When
         user.setRandomKey(randomKey);
         userRepository.save(user);
@@ -169,8 +175,6 @@ public class UserTestSuite {
 
         //Then
         assertEquals(order.getUser().getId(), user.getId());
-        System.out.println("expected: " + order.getUser().getId());
-        System.out.println("actual: " + user.getId());
 
         //Clean-up
         userRepository.deleteById(userLong);
@@ -208,6 +212,5 @@ public class UserTestSuite {
 
         //Clean-up
         userRepository.deleteById(userLong);
-
     }
 }
