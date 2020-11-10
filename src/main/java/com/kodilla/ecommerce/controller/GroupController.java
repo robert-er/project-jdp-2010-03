@@ -27,7 +27,6 @@ public class GroupController {
 
     @PostMapping
     public void createGroup(@RequestBody GroupDto groupDto) {
-        groupService.saveGroup(groupMapper.mapToGroup(groupDto));
     }
 
     @PutMapping
