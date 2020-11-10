@@ -20,7 +20,7 @@ class GroupTest {
     private final Group group2 = new Group();
 
     @Test
-    void shouldSaveGroupInDatabase() {
+    public void shouldSaveGroupInDatabase() {
         //Given
         group1.setName("test name when saving group");
         //When
@@ -32,7 +32,7 @@ class GroupTest {
     }
 
     @Test
-    void shouldSetName() {
+    public void shouldSetName() {
         //Given
         String givenName = "Test name";
         //When
@@ -45,7 +45,7 @@ class GroupTest {
     }
 
     @Test
-    void shouldSetDescription() {
+    public void shouldSetDescription() {
         //Given
         String givenDescription = "Test description";
         //When
@@ -58,7 +58,7 @@ class GroupTest {
     }
 
     @Test
-    void shouldSetProducts() {
+    public void shouldSetProducts() {
         //Given
         Product product1 = new Product();
         product1.setTitle("test1");
