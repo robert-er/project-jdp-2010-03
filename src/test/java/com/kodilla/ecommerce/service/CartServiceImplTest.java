@@ -1,9 +1,6 @@
 package com.kodilla.ecommerce.service;
 
-import com.kodilla.ecommerce.domain.Cart;
-import com.kodilla.ecommerce.domain.CartItem;
-import com.kodilla.ecommerce.domain.Product;
-import com.kodilla.ecommerce.domain.User;
+import com.kodilla.ecommerce.domain.*;
 import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.repository.CartRepository;
 import com.kodilla.ecommerce.repository.ProductRepository;
@@ -33,7 +30,7 @@ class CartServiceImplTest {
     private ProductRepository productRepository;
 
     private User user = new User("nickname", "name", "surname", "email", false);
-    private Product product = new Product(1L,"product_title",
+    private Product product = new Product("product_title",
             BigDecimal.ONE, "product_description", 10L);
     private CartItem item = new CartItem();
 
@@ -55,6 +52,8 @@ class CartServiceImplTest {
     public void should_add_product_to_cart() {
         //Given
         User createdUser = userRepository.save(user);
+        Group group = new Group();
+        product.setGroup(group);
         Product createdProduct = productRepository.save(product);
         Cart cart = new Cart(user);
         Cart createdCart = cartService.createCart(cart);

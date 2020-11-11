@@ -44,8 +44,10 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    public Product(Long id, String title, BigDecimal price, String description, Long quantityInStock){
-        this.id = id;
+    public Product(
+         //   Long id,
+            String title, BigDecimal price, String description, Long quantityInStock){
+     //   this.id = id;
         this.title = title;
         this.price = price;
         this.description = description;
