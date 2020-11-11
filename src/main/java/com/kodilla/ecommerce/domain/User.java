@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -29,14 +28,10 @@ public class User {
     private LocalDateTime timeOfCreationRandomKey;
     private LocalDateTime signUpDate;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
-    @JsonManagedReference
+    @JsonManagedReference(value = "user-order")
     @OneToMany(targetEntity = Order.class,
             mappedBy = "user",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY)
     private List<Order> orders;
 
