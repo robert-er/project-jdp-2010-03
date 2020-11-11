@@ -20,7 +20,7 @@ public class ProductController {
        List<ProductDto> products = new ArrayList<>();
        products.add(new ProductDto(1L, "First Product", new BigDecimal(325), "Example description", 20L));
        products.add(new ProductDto(2L, "Second Product", new BigDecimal(354), "Example description", 10L));
-       products.add(new ProductDto(3L, "Third Product", new BigDecimal(344),"Example description", 80L));
+       products.add(new ProductDto(3L, "Third Product", new BigDecimal(324),"Example description", 80L));
        products.add(new ProductDto(4L, "Fourth Product", new BigDecimal(354), "Example description", 30L));
        return products;
     }
