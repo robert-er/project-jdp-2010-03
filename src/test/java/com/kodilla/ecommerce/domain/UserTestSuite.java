@@ -24,7 +24,7 @@ public class UserTestSuite {
     @Autowired
     private OrderRepository orderRepository;
 
-        final User user = new User();
+        final private User user = new User();
 
     @Test
     public void createUserTest() {

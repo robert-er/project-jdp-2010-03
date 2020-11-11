@@ -3,6 +3,7 @@ package com.kodilla.ecommerce.service;
 import com.kodilla.ecommerce.domain.User;
 import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.exception.UserAlreadyBlockedException;
+import com.kodilla.ecommerce.exception.UserAlreadyExists;
 import com.kodilla.ecommerce.exception.UserIsNotBlockedException;
 import com.kodilla.ecommerce.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +23,14 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id: " + id + " does not exist"));
     }
 
-    public User createUser(final User user) {
+    public User createUser(final User user) throws UserAlreadyExists {
         LocalDateTime now = LocalDateTime.now();
         user.setSignUpDate(now);
-        return userRepository.save(user);
+        if (!userRepository.findByEmail(user.getEmail()).isPresent()) {
+            return userRepository.save(user);
+        } else {
+            throw new UserAlreadyExists("User with that email already exists");
+        }
     }
 
     public User saveUser(final User user) {
