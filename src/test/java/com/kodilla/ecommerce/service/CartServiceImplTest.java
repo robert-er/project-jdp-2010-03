@@ -33,7 +33,7 @@ class CartServiceImplTest {
     private ProductRepository productRepository;
 
     private User user = new User("nickname", "name", "surname", "email", false);
-    private Product product = new Product("product_title",
+    private Product product = new Product(1L,"product_title",
             BigDecimal.ONE, "product_description", 10L);
     private CartItem item = new CartItem();
 
@@ -72,7 +72,7 @@ class CartServiceImplTest {
                 .orElseThrow(() -> new NotFoundException(
                                 "testCartServiceImpl.should_add_product_to_cart: product not found, id:  " +
                                         createdProduct.getId()))
-                .getQuantity();
+                .getQuantityInStock();
         assertEquals(3L, quantityInCart.getAsLong());
         assertEquals(10L, quantityInStock);
         //CleanUp
