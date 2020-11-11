@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 @Component
 public class ProductMapper {
 
-    private final GroupMapper groupMapper;
-
     public ProductDto mapToProductDto(final Product product) {
 
         ProductDto productDto = new ProductDto();
@@ -33,16 +31,6 @@ public class ProductMapper {
         return productList.stream()
                 .map(this::mapToProductDto)
                 .collect(Collectors.toList());
-    }
-
-    public ProductInCartItemDto mapToProductInCartItemDto(Product product) {
-        ProductInCartItemDto productInCartItemDto = new ProductInCartItemDto();
-        productInCartItemDto.setId(product.getId());
-        productInCartItemDto.setTitle(product.getTitle());
-        productInCartItemDto.setPrice(product.getPrice());
-        productInCartItemDto.setDescription(product.getDescription());
-        productInCartItemDto.setGroup(groupMapper.mapToGroupInCartDto(product.getGroup()));
-        return productInCartItemDto;
     }
 
 }
