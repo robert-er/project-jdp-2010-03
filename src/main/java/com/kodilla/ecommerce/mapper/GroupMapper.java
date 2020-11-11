@@ -32,7 +32,7 @@ public class GroupMapper {
         return groupDto;
     }
 
-   public List<GroupDto> mapToGroupDtoList(final List<Group> groupList) {
+    public List<GroupDto> mapToGroupDtoList(final List<Group> groupList) {
         return groupList.stream()
                 .map(this::mapToGroupDto)
                 .collect(Collectors.toList());
@@ -46,5 +46,5 @@ public class GroupMapper {
         return groupInCartItemDto;
     }
 
-}
 
+}
