@@ -12,14 +12,45 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final OrderItemMapper orderItemMapper;
     private final OrderItemRepository orderItemRepository;
 
-    public Order saveOrder(final Order order) {
-        return orderRepository.save(order);
+    @Override
+    public Order getOrderById(final Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Order id: " + orderId +
+                        " not found in Order database"));
+    }
+
+    @Override
+    public List<Order> getAllOrders() { return orderRepository.findAll(); }
+
+    @Override
+    public Order saveOrder(final Order order) { return orderRepository.save(order);}
+
+    @Override
+    public Order updateOrderById(final Long orderId, Order order) throws NotFoundException {
+        Order foundOrder = orderRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Order id: " + orderId +
+                " not found in Order database"));
+        foundOrder.setName(order.getName());
+        foundOrder.setDescription(order.getDescription());
+        foundOrder.setUser(order.getUser());
+        foundOrder.setStatus(order.getStatus());
+        foundOrder.setItems(order.getItems());
+
+        return orderRepository.save(foundOrder);
+    }
+
+    @Override
+    public void deleteById(final Long orderId) {
+        if (orderRepository.existsById(orderId)) {
+            orderRepository.deleteById(orderId);
+        } else {
+            throw new NotFoundException("Order id: " + orderId + " not found in Order database");
+        }
     }
 
     @Override
