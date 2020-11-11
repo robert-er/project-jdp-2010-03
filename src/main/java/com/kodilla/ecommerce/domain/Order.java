@@ -18,18 +18,27 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private String description;
+    private OrderStatus status;
 
     @JsonBackReference(value = "user-order")
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user;
-    private OrderStatus status;
 
     @OneToMany(targetEntity = OrderItem.class,
             mappedBy = "order",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     private List<OrderItem> items;
+
+    public Order(Long id, String name, String description, OrderStatus status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
 }
 
