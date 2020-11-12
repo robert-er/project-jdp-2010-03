@@ -12,11 +12,13 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"title", "description"})})
 @Entity(name = "PRODUCTS")
 public class Product {
     @Id
@@ -56,17 +58,13 @@ public class Product {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Product product = (Product) o;
-
-        if (title != null ? !title.equals(product.title) : product.title != null) return false;
-        return description != null ? description.equals(product.description) : product.description == null;
+        return title.equals(product.title) &&
+                description.equals(product.description);
     }
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        return result;
+        return Objects.hash(title, description);
     }
 }
