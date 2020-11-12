@@ -1,16 +1,17 @@
 package com.kodilla.ecommerce.domain;
 
-        import com.fasterxml.jackson.annotation.JsonBackReference;
-        import com.fasterxml.jackson.annotation.JsonManagedReference;
-        import lombok.AllArgsConstructor;
-        import lombok.Getter;
-        import lombok.NoArgsConstructor;
-        import lombok.Setter;
-        import javax.persistence.*;
-        import javax.validation.constraints.NotNull;
-        import java.math.BigDecimal;
-        import java.util.ArrayList;
-        import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,17 +38,14 @@ public class Product {
     @JsonBackReference(value = "product-group")
     @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="group_id")
+    @JoinColumn(name = "group_id")
     private Group group;
 
     @JsonManagedReference(value = "orderItem-product")
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    public Product(
-         //   Long id,
-            String title, BigDecimal price, String description, Long quantityInStock){
-     //   this.id = id;
+    public Product(String title, BigDecimal price, String description, Long quantityInStock) {
         this.title = title;
         this.price = price;
         this.description = description;

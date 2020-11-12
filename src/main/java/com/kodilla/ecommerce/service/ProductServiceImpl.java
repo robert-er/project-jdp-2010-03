@@ -8,12 +8,12 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
     @Override
-    public List<Product> getProducts(){
+    public List<Product> getProducts() {
         return productRepository.findAll();
     }
 
@@ -24,20 +24,21 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void deleteProduct(final Long productId){
-        productRepository.deleteById(productId);
+    public void deleteProduct(final Long productId) {
+
+        Product productToDelete = productRepository.findById(productId).get();
+        productRepository.delete(productToDelete);
     }
 
     @Override
-    public Product saveProduct(final Product product){
+    public Product saveProduct(final Product product) {
         return productRepository.save(product);
     }
 
     @Override
-    public Product updateProduct(final Long productId,final Product product) {
+    public Product updateProduct(final Long productId, final Product product) {
 
-        Product productToUpdate = productRepository.findById(productId).orElseThrow(
-                () -> new NotFoundException("Product with id: " + productId + " is not present in DB"));
+        Product productToUpdate = findById(productId);
         productToUpdate.setGroup(product.getGroup());
         productToUpdate.setDescription(product.getDescription());
         productToUpdate.setPrice(product.getPrice());
