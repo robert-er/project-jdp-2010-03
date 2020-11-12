@@ -26,7 +26,7 @@ class GroupTest {
         //When
         Group savedGroup = groupRepository.save(group1);
         //Then
-        assertNotEquals(savedGroup.getId(), null);
+        assertNotNull(savedGroup.getId());
         //CleanUp
         cleanUp(savedGroup);
     }
