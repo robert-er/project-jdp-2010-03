@@ -24,6 +24,7 @@ public class UserService {
     }
 
     public User createUser(final User user) throws UserAlreadyExists {
+        validateUser(user);
         LocalDateTime now = LocalDateTime.now();
         user.setSignUpDate(now);
         if (!userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -76,8 +77,16 @@ public class UserService {
         }
     }
 
-    public boolean localDateTimeDiffLessThanHour(LocalDateTime last, LocalDateTime now) {
+    private boolean localDateTimeDiffLessThanHour(LocalDateTime last, LocalDateTime now) {
         return Duration.between(last, now).toSeconds() > 3600;
+    }
+
+    private void validateUser(User user) {
+        if (user.getName().isBlank() ||
+                user.getSurname().isBlank() ||
+                user.getEmail().isBlank()) {
+            throw new NotFoundException("In order to register a new user You have to provide at least Name, Surname and Email");
+        }
     }
 }
 
