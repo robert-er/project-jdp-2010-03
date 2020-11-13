@@ -9,6 +9,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -135,8 +136,10 @@ class OrderTest {
         //When
         userRepository.deleteById(user.getId());
         //Then
-        assertNotNull(productId);
-        assertNotNull(groupId);
+        assertNotNull(productRepository.findById(productId));
+        assertNotNull(groupRepository.findById(groupId));
+        assertEquals(Optional.empty(), userRepository.findById(user.getId()));
+        assertEquals(Optional.empty(), orderItemRepository.findById(order.getId()));
         //CleanUp
         groupRepository.deleteById(groupId);
     }
