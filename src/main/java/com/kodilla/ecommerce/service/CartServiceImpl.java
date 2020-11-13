@@ -4,6 +4,7 @@ import com.kodilla.ecommerce.domain.Cart;
 import com.kodilla.ecommerce.domain.CartItem;
 import com.kodilla.ecommerce.domain.Product;
 import com.kodilla.ecommerce.exception.NotFoundException;
+import com.kodilla.ecommerce.exception.NotValidException;
 import com.kodilla.ecommerce.repository.CartRepository;
 import com.kodilla.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,18 +27,19 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartItem> getElementsFromCart(Long id) throws NotFoundException {
-            return cartRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"))
-                    .getItems();
+        return cartRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"))
+                .getItems();
     }
 
     @Override
     public void increaseProductQuantityInCart(Long id, Long productId, Long quantity) throws NotFoundException {
+        validateQuantity(quantity);
         Cart cart = cartRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"));
         Product product = productRepository.findById(productId)
-            .orElseThrow(() -> new NotFoundException("Product id: " + productId + " not found in Product database"));
-        Long quantityInStock = product.getQuantity();
+                .orElseThrow(() -> new NotFoundException("Product id: " + productId + " not found in Product database"));
+        Long quantityInStock = product.getQuantityInStock();
         if(quantityInStock < quantity) {
             throw new NotFoundException("Not enough quantity (" + quantity + ") of product id: " + productId);
         }
@@ -56,6 +58,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void decreaseProductQuantityInCart(Long id, Long productId, Long quantity) throws NotFoundException {
+        validateQuantity(quantity);
         Cart cart = cartRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Cart id: " + id + " not found"));
         Product product = productRepository.findById(productId)
@@ -115,5 +118,11 @@ public class CartServiceImpl implements CartService {
     private void removeCartItemFromCart(Cart cart, CartItem item) {
         cart.getItems().remove(item);
         cartRepository.save(cart);
+    }
+
+    private void validateQuantity(Long quantity) throws NotValidException {
+        if(quantity <= 0L) {
+            throw new NotValidException("Requested quantity " + quantity + " can not be lower or equal 0");
+        }
     }
 }
