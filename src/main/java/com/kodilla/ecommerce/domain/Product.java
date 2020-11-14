@@ -69,4 +69,5 @@ public class Product {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
+
 }
