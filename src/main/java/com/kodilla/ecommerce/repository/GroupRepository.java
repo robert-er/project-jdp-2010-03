@@ -16,5 +16,4 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Override
     <S extends Group> S save(S group);
-
 }
