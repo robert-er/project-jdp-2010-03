@@ -4,6 +4,7 @@ import com.kodilla.ecommerce.dto.ProductDto;
 import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.mapper.ProductMapper;
 import com.kodilla.ecommerce.service.ProductService;
+import com.kodilla.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ public class ProductController {
 
     private final ProductMapper productMapper;
     private final ProductService productService;
+    private final UserService userService;
 
     @GetMapping
     public List<ProductDto> getProducts() {
@@ -28,17 +30,23 @@ public class ProductController {
     }
 
     @DeleteMapping("{productId}")
-    public void deleteProduct(@PathVariable Long productId) {
+    public void deleteProduct(@PathVariable Long productId,
+                              @RequestParam Long userId, @RequestParam String generatedKey) {
+        userService.validateGeneratedKey(userId, generatedKey);
         productService.deleteProduct(productId);
     }
 
     @PutMapping("{productId}")
-    public ProductDto updateProduct(@PathVariable Long productId,@RequestBody ProductDto productDto) {
+    public ProductDto updateProduct(@PathVariable Long productId,@RequestBody ProductDto productDto,
+                                    @RequestParam Long userId, @RequestParam String generatedKey) {
+        userService.validateGeneratedKey(userId, generatedKey);
         return productMapper.mapToProductDto(productService.updateProduct(productId, productMapper.mapToProduct(productDto)));
     }
 
     @PostMapping
-    public void createProduct(@RequestBody ProductDto productDto) {
+    public void createProduct(@RequestBody ProductDto productDto,
+                              @RequestParam Long userId, @RequestParam String generatedKey) {
+        userService.validateGeneratedKey(userId, generatedKey);
         productService.saveProduct(productMapper.mapToProduct(productDto));
     }
 }

@@ -5,6 +5,7 @@ import com.kodilla.ecommerce.dto.CartItemDto;
 import com.kodilla.ecommerce.mapper.CartItemMapper;
 import com.kodilla.ecommerce.mapper.CartMapper;
 import com.kodilla.ecommerce.service.CartService;
+import com.kodilla.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -17,9 +18,12 @@ public class CartController {
     private final CartMapper cartMapper;
     private final CartService cartService;
     private final CartItemMapper cartItemMapper;
+    private final UserService userService;
 
     @PostMapping
-    public CartDto createCart(@RequestBody CartDto cartDto) {
+    public CartDto createCart(@RequestBody CartDto cartDto,
+                              @RequestParam Long userId, @RequestParam String generatedKey) {
+        userService.validateGeneratedKey(userId, generatedKey);
         return cartMapper.mapToCartDto(cartService.createCart(cartMapper.mapToCart(cartDto)));
     }
 
@@ -30,18 +34,24 @@ public class CartController {
 
     @PostMapping("{id}")
     public void addProductToCart(@PathVariable Long id,
-                                 @RequestParam Long productId, @RequestParam Long quantity) {
+                                 @RequestParam Long productId, @RequestParam Long quantity,
+                                 @RequestParam Long userId, @RequestParam String generatedKey) {
+        userService.validateGeneratedKey(userId, generatedKey);
         cartService.increaseProductQuantityInCart(id, productId, quantity);
     }
 
     @DeleteMapping("{id}")
     public void deleteProductFromCart(@PathVariable Long id,
-                                      @RequestParam Long productId, @RequestParam Long quantity) {
+                                      @RequestParam Long productId, @RequestParam Long quantity,
+                                      @RequestParam Long userId, @RequestParam String generatedKey) {
+        userService.validateGeneratedKey(userId, generatedKey);
         cartService.decreaseProductQuantityInCart(id, productId, quantity);
     }
 
     @PostMapping("createOrder/{id}")
-    public void createOrderFromCart(@PathVariable Long id) {
+    public void createOrderFromCart(@PathVariable Long id,
+                                    @RequestParam Long userId, @RequestParam String generatedKey) {
+        userService.validateGeneratedKey(userId, generatedKey);
         cartService.createOrderFromCart(id);
     }
 }

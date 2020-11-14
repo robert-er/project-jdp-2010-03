@@ -1,9 +1,6 @@
 package com.kodilla.ecommerce.controller;
 
 import com.kodilla.ecommerce.dto.UserDto;
-import com.kodilla.ecommerce.exception.NotFoundException;
-import com.kodilla.ecommerce.exception.UserAlreadyBlockedException;
-import com.kodilla.ecommerce.exception.UserIsNotBlockedException;
 import com.kodilla.ecommerce.mapper.UserMapper;
 import com.kodilla.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +20,8 @@ public class UserController {
     }
 
     @PutMapping("block")
-    public void blockUser (@RequestParam Long id) throws UserAlreadyBlockedException {
-        userService.blockUser(id);
+    public void blockUser (@RequestParam Long id, @RequestParam String generatedKey) {
+        userService.blockUser(id, generatedKey);
     }
 
     @PutMapping("key")
@@ -33,7 +30,7 @@ public class UserController {
     }
 
     @PutMapping("unblock")
-    public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey) throws NotFoundException, UserIsNotBlockedException {
+    public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey) {
         userService.unblockUser(id, generatedKey);
     }
 }
