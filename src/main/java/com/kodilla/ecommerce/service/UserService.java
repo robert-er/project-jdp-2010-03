@@ -79,9 +79,12 @@ public class UserService {
     }
 
     private void validateUser(User user) throws NotValidException {
-        if (user.getName().isBlank() || user.getName() == null ||
-        user.getSurname().isBlank() || user.getSurname() == null ||
-                user.getEmail().isBlank() || user.getEmail() == null) {
+        if (user.getName() == null ||
+                user.getSurname() == null ||
+                user.getEmail() == null ||
+                user.getName().isBlank() ||
+                user.getSurname().isBlank() ||
+                user.getEmail().isBlank()) {
             throw new NotValidException("In order to register a new user You have to provide at least Name, Surname and Email");
         }
     }
