@@ -1,10 +1,7 @@
 package com.kodilla.ecommerce.service;
 
 import com.kodilla.ecommerce.domain.User;
-import com.kodilla.ecommerce.exception.NotFoundException;
-import com.kodilla.ecommerce.exception.UserAlreadyBlockedException;
-import com.kodilla.ecommerce.exception.UserAlreadyExists;
-import com.kodilla.ecommerce.exception.UserIsNotBlockedException;
+import com.kodilla.ecommerce.exception.*;
 import com.kodilla.ecommerce.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -81,11 +78,11 @@ public class UserService {
         return Duration.between(last, now).toSeconds() > 3600;
     }
 
-    private void validateUser(User user) {
-        if (user.getName().isBlank() ||
-                user.getSurname().isBlank() ||
-                user.getEmail().isBlank()) {
-            throw new NotFoundException("In order to register a new user You have to provide at least Name, Surname and Email");
+    private void validateUser(User user) throws NotValidException {
+        if (user.getName().isBlank() || user.getName() == null ||
+        user.getSurname().isBlank() || user.getSurname() == null ||
+                user.getEmail().isBlank() || user.getEmail() == null) {
+            throw new NotValidException("In order to register a new user You have to provide at least Name, Surname and Email");
         }
     }
 }
