@@ -1,4 +1,5 @@
 package com.kodilla.ecommerce.domain;
+import com.kodilla.ecommerce.repository.GroupRepository;
 import com.kodilla.ecommerce.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
@@ -18,11 +19,15 @@ class ProductTest {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private GroupRepository groupRepository;
+
     private final Product product = new Product();
+    private final Product product1 = new Product();
     private final Group group = new Group();
 
     @Test
-    public void createProductTest() {
+    public void createAndDeleteProductTest() {
 
         //Given
 
@@ -40,83 +45,30 @@ class ProductTest {
     }
 
     @Test
-    public void shouldSetTitle() {
+    public void AddProductToGroupTest() {
 
         //Given
-        String title = "Product name";
+
+        List<Product> productList = new ArrayList<>();
+        productList.add(product);
+        productList.add(product1);
 
         //When
+
+        group.setProducts(productList);
         product.setGroup(group);
-        product.setTitle(title);
+        product1.setGroup(group);
         productRepository.save(product);
+        productRepository.save(product1);
+        groupRepository.save(group);
         Long productLong = product.getId();
 
         //Then
-        assertEquals(product.getTitle(), title);
+        assertTrue(group.getProducts().contains(product));
+        assertTrue(group.getProducts().contains(product1));
 
         //CleanUp
         productRepository.deleteById(productLong);
 
     }
-
-    @Test
-    public void shouldSetPrice() {
-
-        //Given
-        BigDecimal price = new BigDecimal(500);
-
-        //When
-        product.setGroup(group);
-        product.setPrice(price);
-        productRepository.save(product);
-        Long productLong = product.getId();
-
-        //Then
-        assertEquals(product.getPrice(), price);
-
-        //CleanUp
-        productRepository.deleteById(productLong);
-
-    }
-
-    @Test
-    public void shouldSetDescription() {
-
-        //Given
-        String description = "Product description";
-
-        //When
-        product.setGroup(group);
-        product.setDescription(description);
-        productRepository.save(product);
-        Long productLong = product.getId();
-
-        //Then
-        assertEquals(product.getDescription(), description);
-
-        //CleanUp
-        productRepository.deleteById(productLong);
-
-    }
-
-    @Test
-    public void shouldSetQuantityInStock() {
-
-        //Given
-        Long quantityInStock = 5L;
-
-        //When
-        product.setGroup(group);
-        product.setQuantityInStock(quantityInStock);
-        productRepository.save(product);
-        Long productLong = product.getId();
-
-        //Then
-        assertEquals(product.getQuantityInStock(), quantityInStock);
-
-        //CleanUp
-        productRepository.deleteById(productLong);
-
-    }
-
 }
