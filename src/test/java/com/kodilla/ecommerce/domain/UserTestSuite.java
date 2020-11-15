@@ -94,6 +94,23 @@ public class UserTestSuite {
     }
 
     @Test
+    public void checkUserSurnameTest() {
+        //Given
+        String surname = "Bruznik";
+
+        //When
+        user.setSurname(surname);
+        userRepository.save(user);
+        Long userLong = user.getId();
+
+        //Then
+        assertEquals(user.getSurname(), surname);
+
+        //CleanUp
+        userRepository.deleteById(userLong);
+    }
+
+    @Test
     public void checkUserNicknameTest() {
         //Given
         String nickName = "Jey";
