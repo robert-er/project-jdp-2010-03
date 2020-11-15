@@ -31,22 +31,22 @@ public class OrderController {
 
     @PostMapping
     public void addOrder(@RequestBody OrderDto orderDto,
-                         @RequestParam Long userId, @RequestParam String generatedKey) {
-        userService.validateGeneratedKey(userId, generatedKey);
+                         @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         orderService.saveOrder(orderMapper.mapToOrder(orderDto));
     }
 
     @DeleteMapping("{id}")
     public void deleteOrder(@PathVariable Long id,
-                            @RequestParam Long userId, @RequestParam String generatedKey) {
-        userService.validateGeneratedKey(userId, generatedKey);
+                            @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         orderService.deleteById(id);
     }
 
     @PutMapping("{id}")
     public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto,
-                                @RequestParam Long userId, @RequestParam String generatedKey) {
-        userService.validateGeneratedKey(userId, generatedKey);
+                                @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         Order orderToUpdate = orderMapper.mapToOrder(orderDto);
         Order updatedOrder = orderService.updateOrderById(id, orderToUpdate);
         return orderMapper.mapToOrderDto(updatedOrder);

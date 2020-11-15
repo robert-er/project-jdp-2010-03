@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void blockUser(final Long id, String generatedKey) throws UserAlreadyBlockedException, NotFoundException {
+    public void blockUser(final Long id, String generatedKey) throws UserAlreadyBlockedException {
         User user = getUserById(id);
         if (user.isBlocked()) {
             throw new UserAlreadyBlockedException("User already blocked");
@@ -51,7 +51,8 @@ public class UserServiceImpl implements UserService {
         LocalDateTime now = LocalDateTime.now();
         if (user.getTimeOfCreationRandomKey() == null ||
                 localDateTimeDiffLessThanHour(user.getTimeOfCreationRandomKey(), now)) {
-            String key = String.valueOf(ThreadLocalRandom.current().nextInt(0, 4000000) + user.hashCode());
+            String key = String
+                    .valueOf(Math.abs(ThreadLocalRandom.current().nextInt(0, 4000000) + user.hashCode()));
             user.setRandomKey(key);
             user.setTimeOfCreationRandomKey(now);
             saveUser(user);
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void unblockUser(final Long id, final String generatedKey) throws NotFoundException, UserIsNotBlockedException {
+    public void unblockUser(final Long id, final String generatedKey) throws UserIsNotBlockedException {
         User user = getUserById(id);
         if (user.isBlocked()) {
             validateGeneratedKey(id, generatedKey);
@@ -74,9 +75,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean validateGeneratedKey(Long id, String generatedKey) {
+    public boolean validateGeneratedKey(Long id, String key) throws NotFoundException {
         User user = getUserById(id);
-        if(user.getRandomKey() != null && user.getRandomKey().equals(generatedKey)
+        if(user.getRandomKey() != null && user.getRandomKey().equals(key)
                 && !localDateTimeDiffLessThanHour(user.getTimeOfCreationRandomKey(), LocalDateTime.now())) {
             return true;
         } else {

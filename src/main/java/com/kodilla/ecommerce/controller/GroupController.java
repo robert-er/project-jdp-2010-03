@@ -29,15 +29,15 @@ public class GroupController {
 
     @PostMapping
     public void createGroup(@RequestBody GroupDto groupDto,
-                            @RequestParam Long userId, @RequestParam String generatedKey) {
-        userService.validateGeneratedKey(userId, generatedKey);
+                            @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         groupService.saveGroup(groupMapper.mapToGroup(groupDto));
     }
 
     @PutMapping
     public GroupDto updateGroup(@RequestBody GroupDto groupDto,
-                                @RequestParam Long userId, @RequestParam String generatedKey) {
-        userService.validateGeneratedKey(userId, generatedKey);
+                                @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         return groupMapper.mapToGroupDto(groupService.updateGroup(groupMapper.mapToGroup(groupDto)));
     }
 }

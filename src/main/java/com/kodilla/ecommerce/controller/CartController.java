@@ -22,8 +22,8 @@ public class CartController {
 
     @PostMapping
     public CartDto createCart(@RequestBody CartDto cartDto,
-                              @RequestParam Long userId, @RequestParam String generatedKey) {
-        userService.validateGeneratedKey(userId, generatedKey);
+                              @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         return cartMapper.mapToCartDto(cartService.createCart(cartMapper.mapToCart(cartDto)));
     }
 
@@ -35,23 +35,23 @@ public class CartController {
     @PostMapping("{id}")
     public void addProductToCart(@PathVariable Long id,
                                  @RequestParam Long productId, @RequestParam Long quantity,
-                                 @RequestParam Long userId, @RequestParam String generatedKey) {
-        userService.validateGeneratedKey(userId, generatedKey);
+                                 @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         cartService.increaseProductQuantityInCart(id, productId, quantity);
     }
 
     @DeleteMapping("{id}")
     public void deleteProductFromCart(@PathVariable Long id,
                                       @RequestParam Long productId, @RequestParam Long quantity,
-                                      @RequestParam Long userId, @RequestParam String generatedKey) {
-        userService.validateGeneratedKey(userId, generatedKey);
+                                      @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         cartService.decreaseProductQuantityInCart(id, productId, quantity);
     }
 
     @PostMapping("createOrder/{id}")
     public void createOrderFromCart(@PathVariable Long id,
-                                    @RequestParam Long userId, @RequestParam String generatedKey) {
-        userService.validateGeneratedKey(userId, generatedKey);
+                                    @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         cartService.createOrderFromCart(id);
     }
 }

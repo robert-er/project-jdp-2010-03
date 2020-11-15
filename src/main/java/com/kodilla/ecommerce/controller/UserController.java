@@ -20,8 +20,8 @@ public class UserController {
     }
 
     @PutMapping("block")
-    public void blockUser (@RequestParam Long id, @RequestParam String generatedKey) {
-        userService.blockUser(id, generatedKey);
+    public void blockUser (@RequestParam Long id, @RequestParam String key) {
+        userService.blockUser(id, key);
     }
 
     @PutMapping("key")
@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @PutMapping("unblock")
-    public void unblockUser(@RequestParam Long id, @RequestParam String generatedKey) {
-        userService.unblockUser(id, generatedKey);
+    public void unblockUser(@RequestParam Long id, @RequestParam String key) {
+        userService.unblockUser(id, key);
     }
 }
