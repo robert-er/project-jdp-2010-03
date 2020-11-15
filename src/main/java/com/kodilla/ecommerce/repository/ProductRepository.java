@@ -1,6 +1,5 @@
 package com.kodilla.ecommerce.repository;
 
-import com.kodilla.ecommerce.domain.Group;
 import com.kodilla.ecommerce.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

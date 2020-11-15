@@ -23,10 +23,11 @@ class ProductTest {
 
     @Test
     public void createProductTest() {
+
         //Given
-        product.setGroup(group);
 
         //When
+        product.setGroup(group);
         productRepository.save(product);
         Long productLong = product.getId();
 
@@ -42,20 +43,19 @@ class ProductTest {
     public void shouldSetTitle() {
 
         //Given
-        product.setGroup(group);
-
         String title = "Product name";
-        product.setTitle(title);
-        productRepository.save(product);
 
         //When
-        String returnedTitle = product.getTitle();
+        product.setGroup(group);
+        product.setTitle(title);
+        productRepository.save(product);
+        Long productLong = product.getId();
 
         //Then
-        assertEquals(title, returnedTitle);
+        assertEquals(product.getTitle(), title);
 
         //CleanUp
-        productRepository.deleteById(product.getId());
+        productRepository.deleteById(productLong);
 
     }
 
@@ -63,20 +63,19 @@ class ProductTest {
     public void shouldSetPrice() {
 
         //Given
-        product.setGroup(group);
-
         BigDecimal price = new BigDecimal(500);
-        product.setPrice(price);
-        productRepository.save(product);
 
         //When
-        BigDecimal returnedPrice = product.getPrice();
+        product.setGroup(group);
+        product.setPrice(price);
+        productRepository.save(product);
+        Long productLong = product.getId();
 
         //Then
-        assertEquals(price, returnedPrice);
+        assertEquals(product.getPrice(), price);
 
         //CleanUp
-        productRepository.deleteById(product.getId());
+        productRepository.deleteById(productLong);
 
     }
 
@@ -84,20 +83,19 @@ class ProductTest {
     public void shouldSetDescription() {
 
         //Given
-        product.setGroup(group);
-
         String description = "Product description";
-        product.setDescription(description);
-        productRepository.save(product);
 
         //When
-        String returnedDescription = product.getDescription();
+        product.setGroup(group);
+        product.setDescription(description);
+        productRepository.save(product);
+        Long productLong = product.getId();
 
         //Then
-        assertEquals(description, returnedDescription);
+        assertEquals(product.getDescription(), description);
 
         //CleanUp
-        productRepository.deleteById(product.getId());
+        productRepository.deleteById(productLong);
 
     }
 
@@ -105,20 +103,19 @@ class ProductTest {
     public void shouldSetQuantityInStock() {
 
         //Given
-        product.setGroup(group);
-
         Long quantityInStock = 5L;
-        product.setQuantityInStock(quantityInStock);
-        productRepository.save(product);
 
         //When
-        Long returnedQuantityInStock = product.getQuantityInStock();
+        product.setGroup(group);
+        product.setQuantityInStock(quantityInStock);
+        productRepository.save(product);
+        Long productLong = product.getId();
 
         //Then
-        assertEquals(quantityInStock, returnedQuantityInStock);
+        assertEquals(product.getQuantityInStock(), quantityInStock);
 
         //CleanUp
-        productRepository.deleteById(product.getId());
+        productRepository.deleteById(productLong);
 
     }
 
