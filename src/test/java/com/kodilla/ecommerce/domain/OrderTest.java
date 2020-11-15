@@ -39,7 +39,8 @@ class OrderTest {
     @Test
     public void shouldGetId() {
         //Given
-        prepareOrder();
+        userRepository.save(user);
+        order.setUser(user);
         orderRepository.save(order);
         //When
         Long orderId = order.getId();
@@ -53,7 +54,8 @@ class OrderTest {
     public void shouldGetName() {
         //Given
         String name = "Order name";
-        prepareOrder();
+        userRepository.save(user);
+        order.setUser(user);
         order.setName(name);
         orderRepository.save(order);
         //When
@@ -68,7 +70,8 @@ class OrderTest {
     public void shouldGetDescription() {
         //Given
         String description = "Order description";
-        prepareOrder();
+        userRepository.save(user);
+        order.setUser(user);
         order.setDescription(description);
         orderRepository.save(order);
         //When
@@ -83,7 +86,8 @@ class OrderTest {
     public void shouldGetStatus() {
         //Given
         OrderStatus status = OrderStatus.CANCELLED;
-        prepareOrder();
+        userRepository.save(user);
+        order.setUser(user);
         order.setStatus(status);
         orderRepository.save(order);
         //When
@@ -97,7 +101,8 @@ class OrderTest {
     @Test
     public void shouldGetUser() {
         //Given
-        prepareOrder();
+        userRepository.save(user);
+        order.setUser(user);
         orderRepository.save(order);
         //When
         User returnedUser = order.getUser();
@@ -110,7 +115,8 @@ class OrderTest {
     @Test
     public void shouldGetItems() {
         //Given
-        prepareOrder();
+        userRepository.save(user);
+        order.setUser(user);
         List<OrderItem> orderItems = prepareItems();
         order.setItems(orderItems);
         orderRepository.save(order);
@@ -127,7 +133,8 @@ class OrderTest {
     @Test
     public void shouldDeleteUserAndOrderAndOrderItemsButRetainProductAndGroup() {
         //Given
-        prepareOrder();
+        userRepository.save(user);
+        order.setUser(user);
         List<OrderItem> orderItems = prepareItems();
         order.setItems(orderItems);
         orderRepository.save(order);
@@ -142,11 +149,6 @@ class OrderTest {
         assertEquals(Optional.empty(), orderItemRepository.findById(order.getId()));
         //CleanUp
         groupRepository.deleteById(groupId);
-    }
-
-    private void prepareOrder() {
-        userRepository.save(user);
-        order.setUser(user);
     }
 
     private List<OrderItem> prepareItems() {
