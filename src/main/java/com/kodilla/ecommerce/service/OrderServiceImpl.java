@@ -5,7 +5,6 @@ import com.kodilla.ecommerce.dto.OrderDto;
 import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.exception.NotValidException;
 import com.kodilla.ecommerce.mapper.OrderItemMapper;
-import com.kodilla.ecommerce.mapper.ProductMapper;
 import com.kodilla.ecommerce.repository.OrderItemRepository;
 import com.kodilla.ecommerce.repository.OrderRepository;
 import com.kodilla.ecommerce.repository.ProductRepository;
@@ -21,7 +20,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemMapper orderItemMapper;
     private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
-    private final ProductMapper productMapper;
 
     @Override
     public Order getOrderById(final Long orderId) {
@@ -59,8 +57,11 @@ public class OrderServiceImpl implements OrderService {
         OrderItem item = foundOrder.getItems().get(0);
         item.setProduct(product);
         item.setQuantity(quantity);
-        addOrderItemToOrder(foundOrder, item);
-        item.setOrder(foundOrder);
+
+        if (isEnoughProductQuantityInDB(item.getProduct(), item.getQuantity())) {
+            addOrderItemToOrder(foundOrder, item);
+            changeProductQuantityInDB(item.getProduct(), item.getQuantity());
+        }
 
         return foundOrder;
     }
@@ -110,7 +111,11 @@ public class OrderServiceImpl implements OrderService {
         OrderItem item = new OrderItem();
         item.setProduct(product);
         item.setQuantity(quantity);
-        addOrderItemToOrder(order, item);
+
+        if (isEnoughProductQuantityInDB(item.getProduct(), item.getQuantity())) {
+            addOrderItemToOrder(order, item);
+            changeProductQuantityInDB(item.getProduct(), item.getQuantity());
+        }
 
         return order;
     }

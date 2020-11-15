@@ -25,7 +25,7 @@ public class ServiceConfig {
                                               OrderItemRepository orderItemRepository,
                                               UserRepository userRepository,
                                               ProductMapper productMapper) {
-        return new OrderServiceImpl(orderRepository, productRepository, orderItemMapper, orderItemRepository, userRepository, productMapper);
+        return new OrderServiceImpl(orderRepository, productRepository, orderItemMapper, orderItemRepository, userRepository);
     }
 
     @Bean
