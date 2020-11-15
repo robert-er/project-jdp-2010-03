@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,9 +32,8 @@ public class User {
     @JsonManagedReference(value = "user-order")
     @OneToMany(targetEntity = Order.class,
             mappedBy = "user",
-            cascade = CascadeType.PERSIST,
-            fetch = FetchType.LAZY)
-    private List<Order> orders;
+            cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
     public User(String nickname, String name, String surname, String email, boolean isBlocked) {
         this.nickname = nickname;
