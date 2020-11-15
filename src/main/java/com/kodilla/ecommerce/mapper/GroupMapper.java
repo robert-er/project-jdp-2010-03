@@ -2,6 +2,7 @@ package com.kodilla.ecommerce.mapper;
 import com.kodilla.ecommerce.domain.Group;
 import com.kodilla.ecommerce.dto.GroupDto;
 import com.kodilla.ecommerce.dto.GroupInCartItemDto;
+import com.kodilla.ecommerce.dto.GroupInOrderItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +45,14 @@ public class GroupMapper {
         groupInCartItemDto.setName(group.getName());
         groupInCartItemDto.setDescription(group.getDescription());
         return groupInCartItemDto;
+    }
+
+    public GroupInOrderItemDto mapToGroupInOrderDto(Group group) {
+        GroupInOrderItemDto groupInOrderItemDto = new GroupInOrderItemDto();
+        groupInOrderItemDto.setId(group.getId());
+        groupInOrderItemDto.setName(group.getName());
+        groupInOrderItemDto.setDescription(group.getDescription());
+        return groupInOrderItemDto;
     }
 
 

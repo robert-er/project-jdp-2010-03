@@ -1,6 +1,5 @@
 package com.kodilla.ecommerce.controller;
 
-import com.kodilla.ecommerce.domain.Order;
 import com.kodilla.ecommerce.dto.OrderDto;
 import com.kodilla.ecommerce.mapper.OrderMapper;
 import com.kodilla.ecommerce.service.OrderService;
@@ -28,9 +27,10 @@ public class OrderController {
     }
 
     @PostMapping
-    public void addOrder(@RequestBody OrderDto orderDto) {
-            orderService.saveOrder(orderMapper.mapToOrder(orderDto));
-        }
+    public void addOrder(@RequestBody OrderDto orderDto,
+                                 @RequestParam Long productId, @RequestParam Long quantity) {
+        orderService.createOrderWithoutCart(orderDto, productId, quantity);
+    }
 
     @DeleteMapping("{id}")
     public void deleteOrder(@PathVariable Long id) {
@@ -38,9 +38,8 @@ public class OrderController {
     }
 
     @PutMapping("{id}")
-    public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) {
-        Order orderToUpdate = orderMapper.mapToOrder(orderDto);
-        Order updatedOrder = orderService.updateOrderById(id, orderToUpdate);
-        return orderMapper.mapToOrderDto(updatedOrder);
+    public void updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto,
+                         @RequestParam Long productId, @RequestParam Long quantity) {
+        orderService.updateOrderById(id, orderDto, productId, quantity);
     }
 }
