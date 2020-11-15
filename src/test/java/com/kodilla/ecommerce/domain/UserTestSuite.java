@@ -24,7 +24,7 @@ public class UserTestSuite {
     @Autowired
     private OrderRepository orderRepository;
 
-        final private User user = new User();
+        final private User user = new User(null, "John", "Kowalsky", "john@test.pl", false);
 
     @Test
     public void createUserTest() {
