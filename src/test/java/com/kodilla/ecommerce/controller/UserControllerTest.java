@@ -2,6 +2,7 @@ package com.kodilla.ecommerce.controller;
 
 import com.kodilla.ecommerce.dto.UserDto;
 import com.kodilla.ecommerce.exception.NotFoundException;
+import com.kodilla.ecommerce.repository.HistoryRepository;
 import com.kodilla.ecommerce.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ class UserControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private HistoryRepository historyRepository;
 
     private final TestRestTemplate restTemplate = new TestRestTemplate();
     private final Random random = new Random();
@@ -132,6 +136,7 @@ class UserControllerTest {
     }
 
     private void removeUser(Long id) {
+        historyRepository.deleteByUserId(id);
         userRepository.deleteById(id);
     }
 }
