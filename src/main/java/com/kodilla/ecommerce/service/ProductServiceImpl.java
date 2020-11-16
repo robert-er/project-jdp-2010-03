@@ -2,6 +2,7 @@ package com.kodilla.ecommerce.service;
 
 import com.kodilla.ecommerce.domain.Product;
 import com.kodilla.ecommerce.exception.NotFoundException;
+import com.kodilla.ecommerce.exception.ProductAlreadyExistException;
 import com.kodilla.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -30,8 +31,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product saveProduct(final Product product) {
-        return productRepository.save(product);
+    public Product saveProduct(final Product product) throws ProductAlreadyExistException {
+        try {
+            return productRepository.save(product);
+        }
+        catch (Exception e){
+            throw new ProductAlreadyExistException("The product is already present in DB");
+        }
     }
 
     @Override

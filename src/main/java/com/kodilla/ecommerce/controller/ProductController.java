@@ -2,6 +2,7 @@ package com.kodilla.ecommerce.controller;
 
 import com.kodilla.ecommerce.dto.ProductDto;
 import com.kodilla.ecommerce.exception.NotFoundException;
+import com.kodilla.ecommerce.exception.ProductAlreadyExistException;
 import com.kodilla.ecommerce.mapper.ProductMapper;
 import com.kodilla.ecommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public void createProduct(@RequestBody ProductDto productDto) {
+    public void createProduct(@RequestBody ProductDto productDto)  {
         productService.saveProduct(productMapper.mapToProduct(productDto));
     }
 }

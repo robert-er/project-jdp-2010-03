@@ -1,10 +1,7 @@
 package com.kodilla.ecommerce.service;
 
 import com.kodilla.ecommerce.domain.User;
-import com.kodilla.ecommerce.exception.NotFoundException;
-import com.kodilla.ecommerce.exception.UserAlreadyBlockedException;
-import com.kodilla.ecommerce.exception.UserAlreadyExists;
-import com.kodilla.ecommerce.exception.UserIsNotBlockedException;
+import com.kodilla.ecommerce.exception.*;
 import com.kodilla.ecommerce.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -76,7 +73,7 @@ public class UserService {
         }
     }
 
-    public boolean localDateTimeDiffLessThanHour(LocalDateTime last, LocalDateTime now) {
+    private boolean localDateTimeDiffLessThanHour(LocalDateTime last, LocalDateTime now) {
         return Duration.between(last, now).toSeconds() > 3600;
     }
 }

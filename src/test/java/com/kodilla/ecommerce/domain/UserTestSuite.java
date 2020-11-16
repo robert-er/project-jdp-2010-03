@@ -24,7 +24,7 @@ public class UserTestSuite {
     @Autowired
     private OrderRepository orderRepository;
 
-        final private User user = new User();
+        final private User user = new User(null, "John", "Kowalsky", "john@test.pl", false);
 
     @Test
     public void createUserTest() {
@@ -88,6 +88,23 @@ public class UserTestSuite {
 
         //Then
         assertEquals(user.getName(), name);
+
+        //CleanUp
+        userRepository.deleteById(userLong);
+    }
+
+    @Test
+    public void checkUserSurnameTest() {
+        //Given
+        String surname = "Bruznik";
+
+        //When
+        user.setSurname(surname);
+        userRepository.save(user);
+        Long userLong = user.getId();
+
+        //Then
+        assertEquals(user.getSurname(), surname);
 
         //CleanUp
         userRepository.deleteById(userLong);
