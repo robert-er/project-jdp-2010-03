@@ -17,60 +17,55 @@ class CartTest {
     private CartRepository cartRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CartItemRepository cartItemRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-    private final User user = new User();
-    private final Cart cart1 = new Cart(user);
+    private final User user = new User("JohnnyTheSinner", "John",
+            "Smith", "ohjohnny@gmail.com", false);
+    private final Cart cart = new Cart(user);
+
 
     @Test
     void shouldGetId() {
         //Given
-        user.setName("John");
-        user.setSurname("Smith");
-        user.setEmail("Shimt.jogn@mailc.com");
         userRepository.save(user);
-        Long idCartBeforeSaving = cart1.getId();
+        Long idCartBeforeSaving = cart.getId();
 
         //When
-        cartRepository.save(cart1);
-        Long retrievedIdAfterSaving = cart1.getId();
+        cartRepository.save(cart);
+        Long retrievedIdAfterSaving = cart.getId();
 
         //Then
         assertNull(idCartBeforeSaving);
         assertNotNull(retrievedIdAfterSaving);
 
         //CleanUp
-        cartRepository.delete(cart1);
+        cartRepository.delete(cart);
         userRepository.delete(user);
-
     }
 
     @Test
     void shouldGetUser() {
         //Given
-        user.setName("John");
-        user.setSurname("Smith");
-        user.setEmail("Shimt.jogn@mailc.com");
         userRepository.save(user);
-        Cart cartSaved = cartRepository.save(cart1);
+        Cart cartSaved = cartRepository.save(cart);
 
         //When
         User retrievedUser = cartSaved.getUser();
 
         //Then
-        assertEquals(user,retrievedUser);
+        assertEquals(user, retrievedUser);
 
         //CleanUp
-        cartRepository.delete(cart1);
+        cartRepository.delete(cart);
         userRepository.delete(user);
     }
 
     @Test
     void shouldGetItems() {
         //Given
-        user.setName("John");
-        user.setSurname("Smith");
-        user.setEmail("Shimt.jogn@mailc.com");
-        user.setRandomKey(user.getRandomKey());
         userRepository.save(user);
         Group group1 = new Group();
 
@@ -87,28 +82,96 @@ class CartTest {
         CartItem cartItem1 = new CartItem();
         cartItem1.setProduct(product1);
         cartItem1.setQuantity(1L);
-        cartItem1.setCart(cart1);
+        cartItem1.setCart(cart);
 
         CartItem cartItem2 = new CartItem();
         cartItem2.setProduct(product2);
         cartItem2.setQuantity(2L);
-        cartItem2.setCart(cart1);
+        cartItem2.setCart(cart);
+
+        List<CartItem> items = new ArrayList<>();
+        items.add(0,cartItem1);
+        items.add(1,cartItem2);
+
+        //When
+        cart.setItems(items);
+        Cart cartSaved = cartRepository.save(cart);
+
+        //Then
+        assertEquals(cartItem1, cartSaved.getItems().get(0));
+        assertEquals(cartItem2, cartSaved.getItems().get(1));
+
+        //CleanUp
+        cartRepository.delete(cart);
+        userRepository.delete(user);
+        productRepository.delete(product1);
+        productRepository.delete(product2);
+    }
+
+    @Test
+    void shouldAddItemCartInDBWhenSavingCart() {
+        //Given
+        Group group1 = new Group();
+        userRepository.save(user);
+
+        Product product1 = new Product();
+        product1.setTitle("title1");
+        product1.setDescription("description1");
+        product1.setGroup(group1);
+
+        CartItem cartItem1 = new CartItem();
+        cartItem1.setProduct(product1);
+        cartItem1.setQuantity(1L);
+        cartItem1.setCart(cart);
+        List<CartItem> items = new ArrayList<>();
+        items.add(cartItem1);
+        cart.setItems(items);
+
+        //When
+        cartRepository.save(cart);
+        CartItem retrievedCartItem = cartItemRepository.findByCartAndProduct(cart, product1).get();
+
+        //Then
+        assertNotNull(retrievedCartItem);
+
+        //CleanUp
+        cartRepository.delete(cart);
+        userRepository.delete(user);
+        productRepository.delete(product1);
+    }
+
+    @Test
+    void shouldDeleteCartItemFromDBWhenDeletingCart() {
+        //Given
+        Group group1 = new Group();
+        userRepository.save(user);
+
+        Product product1 = new Product();
+        product1.setTitle("title1");
+        product1.setDescription("description1");
+        product1.setGroup(group1);
+
+        CartItem cartItem1 = new CartItem();
+        cartItem1.setProduct(product1);
+        cartItem1.setQuantity(1L);
+        cartItem1.setCart(cart);
 
         List<CartItem> items = new ArrayList<>();
         items.add(cartItem1);
-        items.add(cartItem2);
+        cart.setItems(items);
+        cartRepository.save(cart);
+        CartItem retrievedCartItemBeforeDeleting = cartItemRepository.findByCartAndProduct(cart, product1).get();
 
         //When
-        cart1.setItems(items);
-        Cart cartSaved = cartRepository.save(cart1);
-        int numberOfCartItems = cartSaved.getItems().size();
+        cartRepository.delete(cart);
 
         //Then
-        assertEquals(2, numberOfCartItems);
+        assertNotNull(retrievedCartItemBeforeDeleting);
+        assertTrue(cartItemRepository.findByCartAndProduct(cart, product1).isEmpty());
 
         //CleanUp
-        cartRepository.delete(cart1);
         userRepository.delete(user);
+        productRepository.delete(product1);
     }
 }
 
