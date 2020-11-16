@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +23,15 @@ class ProductTest {
     @Autowired
     private GroupRepository groupRepository;
 
-    private final Product product = new Product();
-    private final Product product1 = new Product();
+    private final Product product = new Product("Test Product", new BigDecimal(300), "Test Description", 40L);
+    private final Product product1 = new Product("Second Test Product", new BigDecimal(500), "Test Description", 70L);
     private final Group group = new Group();
 
     @Test
     public void createProductTest() {
 
         //Given
-        
+
         //When
         product.setGroup(group);
         productRepository.save(product);
