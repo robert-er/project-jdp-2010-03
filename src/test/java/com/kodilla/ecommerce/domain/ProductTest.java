@@ -30,7 +30,6 @@ class ProductTest {
     public void createProductTest() {
 
         //Given
-
         //When
         product.setGroup(group);
         productRepository.save(product);
