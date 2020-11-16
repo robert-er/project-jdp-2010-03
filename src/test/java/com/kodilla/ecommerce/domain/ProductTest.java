@@ -27,7 +27,7 @@ class ProductTest {
     private final Group group = new Group();
 
     @Test
-    public void createAndDeleteProductTest() {
+    public void createProductTest() {
 
         //Given
 
@@ -48,13 +48,11 @@ class ProductTest {
     public void AddProductToGroupTest() {
 
         //Given
-
         List<Product> productList = new ArrayList<>();
         productList.add(product);
         productList.add(product1);
 
         //When
-
         group.setProducts(productList);
         product.setGroup(group);
         product1.setGroup(group);
