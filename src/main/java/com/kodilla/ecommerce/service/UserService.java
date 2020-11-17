@@ -1,6 +1,7 @@
 package com.kodilla.ecommerce.service;
 
 import com.kodilla.ecommerce.domain.User;
+
 import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.exception.UserAlreadyBlockedException;
 import com.kodilla.ecommerce.exception.UserIsNotBlockedException;

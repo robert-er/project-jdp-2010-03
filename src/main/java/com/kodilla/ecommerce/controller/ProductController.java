@@ -2,6 +2,7 @@ package com.kodilla.ecommerce.controller;
 
 import com.kodilla.ecommerce.dto.ProductDto;
 import com.kodilla.ecommerce.exception.NotFoundException;
+import com.kodilla.ecommerce.exception.ProductAlreadyExistException;
 import com.kodilla.ecommerce.mapper.ProductMapper;
 import com.kodilla.ecommerce.service.ProductService;
 import com.kodilla.ecommerce.service.UserService;
