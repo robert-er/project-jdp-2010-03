@@ -19,8 +19,9 @@ public class UserController {
         userService.createUser(userMapper.mapToUser(userDto));
     }
 
-    @PutMapping("block")
-    public void blockUser (@RequestParam Long id, @RequestParam String key) {
+    @PutMapping("block/{id}")
+    public void blockUser (@PathVariable Long id, @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         userService.blockUser(id, key);
     }
 
@@ -29,8 +30,9 @@ public class UserController {
         return userService.generateRandomKey(id);
     }
 
-    @PutMapping("unblock")
-    public void unblockUser(@RequestParam Long id, @RequestParam String key) {
+    @PutMapping("unblock/{id}")
+    public void unblockUser(@PathVariable Long id, @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         userService.unblockUser(id, key);
     }
 }
