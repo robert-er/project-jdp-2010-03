@@ -18,14 +18,14 @@ You can check endpoints operation on [http://localhost:8080](http://localhost:80
 ### 5. Endpoint description
 All information regarding endpoints are covered in Swagger documentation.
 Please visit [http://localhost:8080/swagger-ui.html#/](http://localhost:8080/swagger-ui.html#/) after project is started and click on desired function.
-![Main Swagger page ](.docs/swagger.png "swagger")
+![Main Swagger page ](./docs/swagger.png "swagger")
 
-###6. Future plans
+### 6. Future plans
 We are planning to improve our project with:
 1) Spring authentication 
 2) Transactional features
 3) Automatic mailing features
 4) Product promotional activities
 
-###7. Troubleshooting 
+### 7. Troubleshooting 
 If You encounter any problems regarding operation, please let us know. 
