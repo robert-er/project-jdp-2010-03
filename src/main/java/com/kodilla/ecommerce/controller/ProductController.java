@@ -5,6 +5,7 @@ import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.exception.ProductAlreadyExistException;
 import com.kodilla.ecommerce.mapper.ProductMapper;
 import com.kodilla.ecommerce.service.ProductService;
+import com.kodilla.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ public class ProductController {
 
     private final ProductMapper productMapper;
     private final ProductService productService;
+    private final UserService userService;
 
     @GetMapping
     public List<ProductDto> getProducts() {
@@ -24,22 +26,28 @@ public class ProductController {
     }
 
     @GetMapping("{productId}")
-    public ProductDto getProduct(@PathVariable Long productId) throws NotFoundException {
+    public ProductDto getProduct(@PathVariable Long productId) {
         return productMapper.mapToProductDto(productService.findById(productId));
     }
 
     @DeleteMapping("{productId}")
-    public void deleteProduct(@PathVariable Long productId) {
+    public void deleteProduct(@PathVariable Long productId,
+                              @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         productService.deleteProduct(productId);
     }
 
     @PutMapping("{productId}")
-    public ProductDto updateProduct(@PathVariable Long productId,@RequestBody ProductDto productDto) {
+    public ProductDto updateProduct(@PathVariable Long productId,@RequestBody ProductDto productDto,
+                                    @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         return productMapper.mapToProductDto(productService.updateProduct(productId, productMapper.mapToProduct(productDto)));
     }
 
     @PostMapping
-    public void createProduct(@RequestBody ProductDto productDto)  {
+    public void createProduct(@RequestBody ProductDto productDto,
+                              @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         productService.saveProduct(productMapper.mapToProduct(productDto));
     }
 }

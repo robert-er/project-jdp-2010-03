@@ -2,6 +2,7 @@ package com.kodilla.ecommerce.controller;
 import com.kodilla.ecommerce.dto.GroupDto;
 import com.kodilla.ecommerce.mapper.GroupMapper;
 import com.kodilla.ecommerce.service.GroupService;
+import com.kodilla.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ public class GroupController {
 
     private final GroupService groupService;
     private final GroupMapper groupMapper;
+    private final UserService userService;
 
     @GetMapping
     public List<GroupDto> getGroups() {
@@ -26,12 +28,16 @@ public class GroupController {
     }
 
     @PostMapping
-    public void createGroup(@RequestBody GroupDto groupDto) {
+    public void createGroup(@RequestBody GroupDto groupDto,
+                            @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         groupService.saveGroup(groupMapper.mapToGroup(groupDto));
     }
 
     @PutMapping
-    public GroupDto updateGroup(@RequestBody GroupDto groupDto) {
+    public GroupDto updateGroup(@RequestBody GroupDto groupDto,
+                                @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         return groupMapper.mapToGroupDto(groupService.updateGroup(groupMapper.mapToGroup(groupDto)));
     }
 }
