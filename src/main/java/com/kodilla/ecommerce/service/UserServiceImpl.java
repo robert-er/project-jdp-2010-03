@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
         if (user.isBlocked()) {
             throw new UserAlreadyBlockedException("User already blocked");
         } else {
-            validateGeneratedKey(id, generatedKey);
             user.setBlocked(true);
             saveUser(user);
         }
@@ -66,7 +65,6 @@ public class UserServiceImpl implements UserService {
     public void unblockUser(final Long id, final String generatedKey) throws UserIsNotBlockedException {
         User user = getUserById(id);
         if (user.isBlocked()) {
-            validateGeneratedKey(id, generatedKey);
             user.setBlocked(false);
             saveUser(user);
         } else {

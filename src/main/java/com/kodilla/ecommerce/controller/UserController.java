@@ -44,8 +44,9 @@ public class UserController {
         historyService.addEntryToHistory(userId, historyEntryMapper.mapToHistoryEntry(historyEntryDto, userId));
     }
 
-    @PutMapping("block")
-    public void blockUser (@RequestParam Long id, @RequestParam String key) {
+    @PutMapping("block/{id}")
+    public void blockUser (@PathVariable Long id, @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         userService.blockUser(id, key);
         HistoryEntryDto historyEntryDto = new HistoryEntryDto(LocalDateTime.now(),
                 HistoryType.USER, "blockUser");
@@ -60,8 +61,9 @@ public class UserController {
         return userService.generateRandomKey(id);
     }
 
-    @PutMapping("unblock")
-    public void unblockUser(@RequestParam Long id, @RequestParam String key) {
+    @PutMapping("unblock/{id}")
+    public void unblockUser(@PathVariable Long id, @RequestParam Long userId, @RequestParam String key) {
+        userService.validateGeneratedKey(userId, key);
         userService.unblockUser(id, key);
         HistoryEntryDto historyEntryDto = new HistoryEntryDto(LocalDateTime.now(),
                 HistoryType.USER, "unblockUser");

@@ -60,7 +60,7 @@ class UserControllerTest {
         //When
         HttpEntity<UserDto> entity = new HttpEntity<>(null, new HttpHeaders());
         ResponseEntity<String> response = restTemplate
-                .exchange(createURLWithPort("block?id=" + userId + "&key=" + randomKey),
+                .exchange(createURLWithPort("block/" + userId + "?userId=" + userId + "&key=" + randomKey),
                 HttpMethod.PUT, entity, String.class);
         boolean isBlocked = userRepository.findByNameAndSurnameAndEmail(generatedName, generatedSurname, email)
                 .orElseThrow(() -> new NotFoundException("User not found by name: " + generatedName
@@ -97,7 +97,7 @@ class UserControllerTest {
         //When
         HttpEntity<UserDto> entity = new HttpEntity<>(null, new HttpHeaders());
         ResponseEntity<String> response = restTemplate
-                .exchange(createURLWithPort("unblock?id=" + userId + "&key=" + randomKey),
+                .exchange(createURLWithPort("unblock/" + userId + "?userId=" + userId + "&key=" + randomKey),
                 HttpMethod.PUT, entity, String.class);
         boolean isBlocked = userRepository.findByNameAndSurnameAndEmail(generatedName, generatedSurname, email)
                 .orElseThrow(() -> new NotFoundException("User not found by name: " + generatedName
