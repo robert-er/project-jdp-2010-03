@@ -18,7 +18,8 @@ You can check endpoints operation on [http://localhost:8080](http://localhost:80
 ### 5. Endpoint description
 All information regarding endpoints are covered in Swagger documentation.
 Please visit [http://localhost:8080/swagger-ui.html#/](http://localhost:8080/swagger-ui.html#/) after project is started and click on desired function.
-![Main Swagger page ](./docs/swagger.png "swagger")
+
+![](./docs/swagger.png)
 
 ### 6. Future plans
 We are planning to improve our project with:
