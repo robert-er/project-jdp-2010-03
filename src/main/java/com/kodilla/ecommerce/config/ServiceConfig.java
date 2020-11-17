@@ -35,8 +35,6 @@ public class ServiceConfig {
         return new OrderServiceImpl(orderRepository, productRepository, orderItemMapper, orderItemRepository);
     }
 
-
-
     @Bean
     protected ProductService createProductService(ProductRepository productRepository) {
         return new ProductServiceImpl(productRepository);
@@ -45,5 +43,10 @@ public class ServiceConfig {
     @Bean
     protected UserService createUserService(UserRepository userRepository) {
         return new UserServiceImpl(userRepository);
+    }
+
+    @Bean
+    protected HistoryService createHistoryService(HistoryRepository historyRepository) {
+        return new HistoryServiceImpl(historyRepository);
     }
 }
