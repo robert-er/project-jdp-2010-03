@@ -27,9 +27,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public void addOrder(@RequestBody OrderDto orderDto,
-                                 @RequestParam Long productId, @RequestParam Long quantity) {
-        orderService.createOrderWithoutCart(orderDto, productId, quantity);
+    public void addOrder(@RequestBody OrderDto orderDto) {
+        orderService.createOrderWithoutCart(orderDto);
     }
 
     @DeleteMapping("{id}")
@@ -38,8 +37,7 @@ public class OrderController {
     }
 
     @PutMapping("{id}")
-    public void updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto,
-                         @RequestParam Long productId, @RequestParam Long quantity) {
-        orderService.updateOrderById(id, orderDto, productId, quantity);
+    public void updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) {
+        orderService.updateOrderById(id, orderDto);
     }
 }

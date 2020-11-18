@@ -12,8 +12,8 @@ public interface OrderService {
     Order getOrderById(final Long orderId);
     List<Order> getAllOrders();
     Order saveOrder(final Order order);
-    Order updateOrderById( final Long orderId, final OrderDto orderDto, Long productId, Long quantity) throws NotFoundException;
+    Order updateOrderById( final Long orderId, final OrderDto orderDto) throws NotFoundException;
     void deleteById(final Long orderId);
     boolean createOrder(Cart cart);
-    Order createOrderWithoutCart(final OrderDto orderDto, Long productId, Long quantity) throws NotFoundException;
+    Order createOrderWithoutCart(final OrderDto orderDto) throws NotFoundException;
 }

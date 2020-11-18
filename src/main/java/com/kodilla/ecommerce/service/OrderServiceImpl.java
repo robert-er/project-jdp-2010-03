@@ -35,17 +35,10 @@ public class OrderServiceImpl implements OrderService {
     public Order saveOrder(final Order order) { return orderRepository.save(order);}
 
     @Override
-    public Order updateOrderById(final Long orderId, final OrderDto orderDto, Long productId, Long quantity) throws NotFoundException {
+    public Order updateOrderById(final Long orderId, final OrderDto orderDto) throws NotFoundException {
         Order foundOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order id: " + orderId +
                 " not found in Order database"));
-        validateQuantity(quantity);
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new NotFoundException("Product id: " + productId + " not found in Product database"));
-        Long quantityInStock = product.getQuantityInStock();
-        if(quantityInStock < quantity) {
-            throw new NotFoundException("Not enough quantity (" + quantity + ") of product id: " + productId);
-        }
         User user = userRepository.findById(orderDto.getUserId())
                 .orElseThrow(() -> new NotFoundException("User id: " + orderDto.getUserId() + " not found"));
 
@@ -54,16 +47,15 @@ public class OrderServiceImpl implements OrderService {
         foundOrder.setUser(user);
         foundOrder.setStatus(orderDto.getStatus());
 
-        OrderItem item = foundOrder.getItems().get(0);
-        item.setProduct(product);
-        item.setQuantity(quantity);
-
-        if (isEnoughProductQuantityInDB(item.getProduct(), item.getQuantity())) {
-            addOrderItemToOrder(foundOrder, item);
-            changeProductQuantityInDB(item.getProduct(), item.getQuantity());
+        List<OrderItem> foundOrderList = foundOrder.getItems();
+        int listSize = foundOrderList.size();
+        for(int n = listSize - 1; n >= 0; n--) {
+            Long itemIdToRemove = foundOrderList.get(n).getId();
+            foundOrderList.remove(n);
+            orderItemRepository.deleteById(itemIdToRemove);
         }
 
-        return foundOrder;
+        return addProductsFromOrderDto(orderDto, foundOrder);
     }
 
     @Override
@@ -93,30 +85,40 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order createOrderWithoutCart(OrderDto orderDto, Long productId, Long quantity) throws NotFoundException {
-        validateQuantity(quantity);
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new NotFoundException("Product id: " + productId + " not found in Product database"));
-        Long quantityInStock = product.getQuantityInStock();
-        if(quantityInStock < quantity) {
-            throw new NotFoundException("Not enough quantity (" + quantity + ") of product id: " + productId);
-        }
+    public Order createOrderWithoutCart(OrderDto orderDto) throws NotFoundException {
         User user = userRepository.findById(orderDto.getUserId())
                 .orElseThrow(() -> new NotFoundException("User id: " + orderDto.getUserId() + " not found"));
+
         Order order = new Order();
         order.setUser(user);
         order.setName(orderDto.getName());
         order.setDescription(orderDto.getDescription());
         order.setStatus(orderDto.getStatus());
-        OrderItem item = new OrderItem();
-        item.setProduct(product);
-        item.setQuantity(quantity);
 
-        if (isEnoughProductQuantityInDB(item.getProduct(), item.getQuantity())) {
-            addOrderItemToOrder(order, item);
-            changeProductQuantityInDB(item.getProduct(), item.getQuantity());
+        return addProductsFromOrderDto(orderDto, order);
+    }
+
+    private Order addProductsFromOrderDto(OrderDto orderDto, Order order) {
+        for(int n=0; n < orderDto.getItems().size(); n++) {
+            OrderItem item = orderItemMapper.mapOrderItemDtoToOrderItem(orderDto.getItems().get(n));
+            Long productId = item.getProduct().getId();
+            Long quantity = item.getQuantity();
+            validateQuantity(item.getQuantity());
+            Product product = productRepository.findById(productId)
+                    .orElseThrow(() -> new NotFoundException("Product id: " + productId + " not found in Product database"));
+            Long quantityInStock = product.getQuantityInStock();
+            if(quantityInStock < quantity) {
+                throw new NotFoundException("Not enough quantity (" + quantity + ") of product id: " + item.getProduct().getId());
+            }
+
+            item.setProduct(product);
+            item.setQuantity(quantity);
+
+            if (isEnoughProductQuantityInDB(item.getProduct(), item.getQuantity())) {
+                addOrderItemToOrder(order, item);
+                changeProductQuantityInDB(item.getProduct(), item.getQuantity());
+            }
         }
-
         return order;
     }
 

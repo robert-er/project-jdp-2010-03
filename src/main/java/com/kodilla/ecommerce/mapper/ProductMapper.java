@@ -76,4 +76,14 @@ public class ProductMapper {
         return productInOrderItemDto;
     }
 
+    public Product mapProductInOrderItemDtoToProduct(ProductInOrderItemDto productInOrderItemDto) {
+        Product product = new Product();
+        product.setId(productInOrderItemDto.getId());
+        product.setTitle(productInOrderItemDto.getTitle());
+        product.setPrice(productInOrderItemDto.getPrice());
+        product.setDescription(productInOrderItemDto.getDescription());
+        product.setGroup(groupMapper.mapGroupInOrderItemDtotoGroup(productInOrderItemDto.getGroup()));
+        return product;
+    }
+
 }

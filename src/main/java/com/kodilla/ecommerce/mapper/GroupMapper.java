@@ -55,5 +55,13 @@ public class GroupMapper {
         return groupInOrderItemDto;
     }
 
+    public Group mapGroupInOrderItemDtotoGroup(GroupInOrderItemDto groupInOrderItemDto) {
+        Group group = new Group();
+        group.setId(groupInOrderItemDto.getId());
+        group.setName(groupInOrderItemDto.getName());
+        group.setDescription(groupInOrderItemDto.getDescription());
+        return group;
+    }
+
 
 }
