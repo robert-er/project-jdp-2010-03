@@ -5,6 +5,7 @@ import com.kodilla.ecommerce.dto.OrderDto;
 import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.exception.NotValidException;
 import com.kodilla.ecommerce.mapper.OrderItemMapper;
+import com.kodilla.ecommerce.mapper.OrderMapper;
 import com.kodilla.ecommerce.repository.OrderItemRepository;
 import com.kodilla.ecommerce.repository.OrderRepository;
 import com.kodilla.ecommerce.repository.ProductRepository;
@@ -20,6 +21,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemMapper orderItemMapper;
     private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
+    private final OrderMapper orderMapper;
 
     @Override
     public Order getOrderById(final Long orderId) {
@@ -38,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
     public Order updateOrderById(final Long orderId, final OrderDto orderDto) throws NotFoundException {
         Order foundOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order id: " + orderId +
-                " not found in Order database"));
+                        " not found in Order database"));
         User user = userRepository.findById(orderDto.getUserId())
                 .orElseThrow(() -> new NotFoundException("User id: " + orderDto.getUserId() + " not found"));
 
@@ -55,7 +57,12 @@ public class OrderServiceImpl implements OrderService {
             orderItemRepository.deleteById(itemIdToRemove);
         }
 
-        return addProductsFromOrderDto(orderDto, foundOrder);
+        if (orderDto.getItems() != null) {
+            return addProductsFromOrderDto(orderDto, foundOrder);
+        } else {
+            saveOrder(foundOrder);
+            return foundOrder;
+        }
     }
 
     @Override
@@ -86,16 +93,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrderWithoutCart(OrderDto orderDto) throws NotFoundException {
-        User user = userRepository.findById(orderDto.getUserId())
-                .orElseThrow(() -> new NotFoundException("User id: " + orderDto.getUserId() + " not found"));
-
-        Order order = new Order();
-        order.setUser(user);
-        order.setName(orderDto.getName());
-        order.setDescription(orderDto.getDescription());
-        order.setStatus(orderDto.getStatus());
-
-        return addProductsFromOrderDto(orderDto, order);
+        Order order = orderMapper.mapOrderDtoWithoutItems(orderDto);
+        if (orderDto.getItems() != null) {
+            return addProductsFromOrderDto(orderDto, order);
+        } else {
+            saveOrder(order);
+            return order;
+        }
     }
 
     private Order addProductsFromOrderDto(OrderDto orderDto, Order order) {
@@ -106,10 +110,6 @@ public class OrderServiceImpl implements OrderService {
             validateQuantity(item.getQuantity());
             Product product = productRepository.findById(productId)
                     .orElseThrow(() -> new NotFoundException("Product id: " + productId + " not found in Product database"));
-            Long quantityInStock = product.getQuantityInStock();
-            if(quantityInStock < quantity) {
-                throw new NotFoundException("Not enough quantity (" + quantity + ") of product id: " + item.getProduct().getId());
-            }
 
             item.setProduct(product);
             item.setQuantity(quantity);
