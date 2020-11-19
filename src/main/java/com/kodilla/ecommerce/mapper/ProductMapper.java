@@ -3,6 +3,7 @@ package com.kodilla.ecommerce.mapper;
 import com.kodilla.ecommerce.domain.Product;
 import com.kodilla.ecommerce.dto.ProductDto;
 import com.kodilla.ecommerce.dto.ProductInCartItemDto;
+import com.kodilla.ecommerce.dto.ProductInOrderItemDto;
 import com.kodilla.ecommerce.exception.NotFoundException;
 import com.kodilla.ecommerce.repository.GroupRepository;
 
@@ -64,4 +65,25 @@ public class ProductMapper {
         productInCartItemDto.setGroup(groupMapper.mapToGroupInCartDto(product.getGroup()));
         return productInCartItemDto;
     }
+
+    public ProductInOrderItemDto mapToProductInOrderItemDto(Product product) {
+        ProductInOrderItemDto productInOrderItemDto = new ProductInOrderItemDto();
+        productInOrderItemDto.setId(product.getId());
+        productInOrderItemDto.setTitle(product.getTitle());
+        productInOrderItemDto.setPrice(product.getPrice());
+        productInOrderItemDto.setDescription(product.getDescription());
+        productInOrderItemDto.setGroup(groupMapper.mapToGroupInOrderDto(product.getGroup()));
+        return productInOrderItemDto;
+    }
+
+    public Product mapProductInOrderItemDtoToProduct(ProductInOrderItemDto productInOrderItemDto) {
+        Product product = new Product();
+        product.setId(productInOrderItemDto.getId());
+        product.setTitle(productInOrderItemDto.getTitle());
+        product.setPrice(productInOrderItemDto.getPrice());
+        product.setDescription(productInOrderItemDto.getDescription());
+        product.setGroup(groupMapper.mapGroupInOrderItemDtotoGroup(productInOrderItemDto.getGroup()));
+        return product;
+    }
+
 }

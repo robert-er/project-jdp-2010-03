@@ -1,6 +1,7 @@
 package com.kodilla.ecommerce.config;
 
 import com.kodilla.ecommerce.mapper.OrderItemMapper;
+import com.kodilla.ecommerce.mapper.OrderMapper;
 import com.kodilla.ecommerce.repository.*;
 import com.kodilla.ecommerce.service.*;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +32,10 @@ public class ServiceConfig {
     protected OrderService createOrderService(OrderRepository orderRepository,
                                               ProductRepository productRepository,
                                               OrderItemMapper orderItemMapper,
-                                              OrderItemRepository orderItemRepository) {
-        return new OrderServiceImpl(orderRepository, productRepository, orderItemMapper, orderItemRepository);
+                                              OrderItemRepository orderItemRepository,
+                                              UserRepository userRepository,
+                                              OrderMapper orderMapper) {
+        return new OrderServiceImpl(orderRepository, productRepository, orderItemMapper, orderItemRepository, userRepository, orderMapper);
     }
 
     @Bean
