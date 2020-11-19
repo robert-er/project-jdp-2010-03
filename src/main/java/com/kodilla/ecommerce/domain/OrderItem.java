@@ -10,11 +10,11 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@Entity(name = "ORDER_ITEMS")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity(name = "ORDER_ITEMS")
 public class OrderItem {
 
     @Id

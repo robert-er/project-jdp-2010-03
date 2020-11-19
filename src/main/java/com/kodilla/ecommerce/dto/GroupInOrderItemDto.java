@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderItemDto {
+public class GroupInOrderItemDto {
 
-    private Long id;
-    private ProductInOrderItemDto product;
-    private Long quantity;
+    private long id;
+    private String name;
+    private String description;
 }

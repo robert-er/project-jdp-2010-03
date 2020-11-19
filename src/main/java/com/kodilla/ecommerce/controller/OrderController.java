@@ -40,7 +40,7 @@ public class OrderController {
     public void addOrder(@RequestBody OrderDto orderDto,
                          @RequestParam Long userId, @RequestParam String key) {
         userService.validateGeneratedKey(userId, key);
-        orderService.saveOrder(orderMapper.mapToOrder(orderDto));
+        orderService.createOrderWithoutCart(orderDto);
         HistoryEntryDto historyEntryDto = new HistoryEntryDto(LocalDateTime.now(),
                 HistoryType.ORDER, "addOrder");
         historyService.addEntryToHistory(userId, historyEntryMapper.mapToHistoryEntry(historyEntryDto, userId));
@@ -60,8 +60,7 @@ public class OrderController {
     public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto,
                                 @RequestParam Long userId, @RequestParam String key) {
         userService.validateGeneratedKey(userId, key);
-        Order orderToUpdate = orderMapper.mapToOrder(orderDto);
-        Order updatedOrder = orderService.updateOrderById(id, orderToUpdate);
+        Order updatedOrder = orderService.updateOrderById(id, orderDto);
         HistoryEntryDto historyEntryDto = new HistoryEntryDto(LocalDateTime.now(),
                 HistoryType.ORDER, "updateOrder");
         historyService.addEntryToHistory(userId, historyEntryMapper.mapToHistoryEntry(historyEntryDto, userId));
