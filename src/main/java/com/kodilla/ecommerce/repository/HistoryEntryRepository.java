@@ -1,6 +1,6 @@
 package com.kodilla.ecommerce.repository;
 
-import com.kodilla.ecommerce.domain.Group;
+import com.kodilla.ecommerce.domain.HistoryEntry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,14 +10,17 @@ import java.util.Optional;
 
 @Transactional
 @Repository
-public interface GroupRepository extends JpaRepository<Group, Long> {
+public interface HistoryEntryRepository extends JpaRepository<HistoryEntry, Long> {
 
     @Override
-    List<Group> findAll();
+    List<HistoryEntry> findAll();
 
     @Override
-    Optional<Group> findById(Long id);
+    Optional<HistoryEntry> findById(Long id);
 
     @Override
-    <S extends Group> S save(S group);
+    <S extends HistoryEntry> S save(S historyEntry);
+
+    @Override
+    void deleteById(Long id);
 }

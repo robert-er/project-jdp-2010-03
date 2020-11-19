@@ -2,6 +2,7 @@ package com.kodilla.ecommerce.controller;
 
 import com.kodilla.ecommerce.dto.UserDto;
 import com.kodilla.ecommerce.exception.NotFoundException;
+import com.kodilla.ecommerce.repository.HistoryRepository;
 import com.kodilla.ecommerce.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ class UserControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private HistoryRepository historyRepository;
 
     private final TestRestTemplate restTemplate = new TestRestTemplate();
     private final Random random = new Random();
@@ -52,9 +56,11 @@ class UserControllerTest {
         String generatedName = name + random.nextInt(1000);
         String generatedSurname = surname + random.nextInt(1000);
         Long userId = generateUser(generatedName, generatedSurname, false);
+        String randomKey = generateRandomKey(userId, generatedName, generatedSurname);
         //When
         HttpEntity<UserDto> entity = new HttpEntity<>(null, new HttpHeaders());
-        ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("block?id=" + userId),
+        ResponseEntity<String> response = restTemplate
+                .exchange(createURLWithPort("block/" + userId + "?userId=" + userId + "&key=" + randomKey),
                 HttpMethod.PUT, entity, String.class);
         boolean isBlocked = userRepository.findByNameAndSurnameAndEmail(generatedName, generatedSurname, email)
                 .orElseThrow(() -> new NotFoundException("User not found by name: " + generatedName
@@ -91,7 +97,7 @@ class UserControllerTest {
         //When
         HttpEntity<UserDto> entity = new HttpEntity<>(null, new HttpHeaders());
         ResponseEntity<String> response = restTemplate
-                .exchange(createURLWithPort("unblock?id=" + userId + "&generatedKey=" + randomKey),
+                .exchange(createURLWithPort("unblock/" + userId + "?userId=" + userId + "&key=" + randomKey),
                 HttpMethod.PUT, entity, String.class);
         boolean isBlocked = userRepository.findByNameAndSurnameAndEmail(generatedName, generatedSurname, email)
                 .orElseThrow(() -> new NotFoundException("User not found by name: " + generatedName
@@ -130,6 +136,7 @@ class UserControllerTest {
     }
 
     private void removeUser(Long id) {
+        historyRepository.deleteByUserId(id);
         userRepository.deleteById(id);
     }
 }
