@@ -16,7 +16,7 @@ public class ExampleController {
     @GetMapping
     public ExampleDto exampleGet() {
         ExampleDto exampleDto = new ExampleDto();
-        exampleDto.setMessage("Hello World!");
+        exampleDto.setMessage("Hello World! what next?");
         return exampleDto;
     }
 }
