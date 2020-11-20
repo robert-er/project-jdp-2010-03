@@ -15,32 +15,32 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(RestExceptionHandler.class);
 
     @ExceptionHandler({NotFoundException.class})
-    public ResponseEntity<ApiError> handleBookExistException(NotFoundException ex) {
+    public ResponseEntity<ApiError> handleNotFoundException(NotFoundException ex) {
         return handleException(ex);
     }
 
     @ExceptionHandler({NotValidException.class})
-    public ResponseEntity<ApiError> handleBookNotFoundException(NotValidException ex) {
+    public ResponseEntity<ApiError> handleNotValidException(NotValidException ex) {
         return handleException(ex);
     }
 
     @ExceptionHandler({ProductAlreadyExistException.class})
-    public ResponseEntity<ApiError> handleCopyExistException(ProductAlreadyExistException ex) {
+    public ResponseEntity<ApiError> handleProductAlreadyExistException(ProductAlreadyExistException ex) {
         return handleException(ex);
     }
 
     @ExceptionHandler({UserAlreadyBlockedException.class})
-    public ResponseEntity<ApiError> handleCopyNotFoundException(UserAlreadyBlockedException ex) {
+    public ResponseEntity<ApiError> handleAlreadyBlockedException(UserAlreadyBlockedException ex) {
         return handleException(ex);
     }
 
     @ExceptionHandler({UserAlreadyExists.class})
-    public ResponseEntity<ApiError> handleCopyIsBorrowedException(UserAlreadyExists ex) {
+    public ResponseEntity<ApiError> handleUserAlreadyExists(UserAlreadyExists ex) {
         return handleException(ex);
     }
 
     @ExceptionHandler({UserIsNotBlockedException.class})
-    public ResponseEntity<ApiError> handleRentalExistException(UserIsNotBlockedException ex) {
+    public ResponseEntity<ApiError> handleUserIsNotBlockedException(UserIsNotBlockedException ex) {
         return handleException(ex);
     }
 
