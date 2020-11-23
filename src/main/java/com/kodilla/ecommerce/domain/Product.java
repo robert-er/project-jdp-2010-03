@@ -2,10 +2,7 @@ package com.kodilla.ecommerce.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,7 +23,6 @@ public class Product {
     private Long id;
     private String title;
     private BigDecimal price;
-
     private String description;
     private Long quantityInStock;
 
@@ -47,11 +43,13 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    public Product(String title, BigDecimal price, String description, Long quantityInStock) {
+    @Builder
+    public Product(String title, BigDecimal price, String description, Long quantityInStock, Group group) {
         this.title = title;
         this.price = price;
         this.description = description;
         this.quantityInStock = quantityInStock;
+        this.group = group;
     }
 
     @Override

@@ -1,9 +1,6 @@
 package com.kodilla.ecommerce.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,4 +25,12 @@ public class HistoryEntry {
     LocalDateTime date;
     HistoryType historyType;
     String details;
+
+    @Builder
+    public HistoryEntry(@NotNull History history, LocalDateTime date, HistoryType historyType, String details) {
+        this.history = history;
+        this.date = date;
+        this.historyType = historyType;
+        this.details = details;
+    }
 }

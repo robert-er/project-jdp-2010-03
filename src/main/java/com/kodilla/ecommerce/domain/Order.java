@@ -1,6 +1,7 @@
 package com.kodilla.ecommerce.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,11 +35,12 @@ public class Order {
             fetch = FetchType.EAGER)
     private List<OrderItem> items;
 
-    public Order(Long id, String name, String description, OrderStatus status) {
-        this.id = id;
+    @Builder
+    public Order(String name, String description, OrderStatus status, User user) {
         this.name = name;
         this.description = description;
         this.status = status;
+        this.user = user;
     }
 }
 

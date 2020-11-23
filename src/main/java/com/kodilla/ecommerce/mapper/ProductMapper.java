@@ -25,16 +25,16 @@ public class ProductMapper {
     }
 
     public Product mapToProduct(final ProductDto productDto){
-
-        Product product = new Product();
-        product.setId(productDto.getId());
-        product.setTitle(productDto.getTitle());
-        product.setPrice(productDto.getPrice());
-        product.setDescription(productDto.getDescription());
-        product.setQuantityInStock(productDto.getQuantityInStock());
-        product.setGroup(groupRepository.findById(productDto.getGroupId()).orElseThrow(() -> new NotFoundException("Group id: " + productDto.getGroupId() + " not found")));
-
-        return product;
+        return Product.builder()
+                .title(productDto.getTitle())
+                .price(productDto.getPrice())
+                .description(productDto.getDescription())
+                .quantityInStock(productDto.getQuantityInStock())
+                .group(groupRepository
+                                .findById(productDto.getGroupId())
+                                .orElseThrow(() -> new NotFoundException("Group id: " +
+                                        productDto.getGroupId() + " not found")))
+                .build();
     }
     public ProductDto mapToProductDto (final Product product){
         return new ProductDto(

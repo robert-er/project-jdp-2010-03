@@ -23,17 +23,27 @@ class ProductTest {
     @Autowired
     private GroupRepository groupRepository;
 
-    private final Product product = new Product("Test Product", new BigDecimal(300), "Test Description", 40L);
-    private final Product product1 = new Product("Second Test Product", new BigDecimal(500), "Test Description", 70L);
     private final Group group = new Group();
+    private final Product product = Product.builder()
+            .title("Test Product")
+            .price(new BigDecimal(300))
+            .description("Test Description")
+            .quantityInStock(40L)
+            .group(group)
+            .build();
+    private final Product product1 = Product.builder()
+            .title("Second Test Product")
+            .price(new BigDecimal(500))
+            .description("Test Description")
+            .quantityInStock(70L)
+            .group(group)
+            .build();
 
     @Test
     public void createProductTest() {
-
         //Given
 
         //When
-        product.setGroup(group);
         productRepository.save(product);
         Long productLong = product.getId();
 
@@ -42,12 +52,10 @@ class ProductTest {
 
         //CleanUp
         productRepository.deleteById(productLong);
-
     }
 
     @Test
     public void AddProductToGroupTest() {
-
         //Given
         List<Product> productList = new ArrayList<>();
         productList.add(product);
@@ -55,8 +63,6 @@ class ProductTest {
 
         //When
         group.setProducts(productList);
-        product.setGroup(group);
-        product1.setGroup(group);
         productRepository.save(product);
         productRepository.save(product1);
         groupRepository.save(group);
@@ -68,6 +74,5 @@ class ProductTest {
 
         //CleanUp
         productRepository.deleteById(productLong);
-
     }
 }

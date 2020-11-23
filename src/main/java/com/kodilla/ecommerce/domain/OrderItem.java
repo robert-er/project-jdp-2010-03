@@ -1,9 +1,6 @@
 package com.kodilla.ecommerce.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -33,6 +30,12 @@ public class OrderItem {
 
     private Long quantity;
     private BigDecimal subtotal;
+
+    @Builder
+    public OrderItem(@NotNull Product product, Long quantity) {
+        this.product = product;
+        this.quantity = quantity;
+    }
 
     @Override
     public boolean equals(Object o) {
