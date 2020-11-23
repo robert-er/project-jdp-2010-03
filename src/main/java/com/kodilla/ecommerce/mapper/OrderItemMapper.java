@@ -15,17 +15,17 @@ public class OrderItemMapper {
 
     private final ProductMapper productMapper;
 
-    public List<OrderItem> mapToOrderItem(List<CartItem> cartItems) {
+    public List<OrderItem> mapToOrderItems(List<CartItem> cartItems) {
         return cartItems.stream()
                 .map(this::mapToOrderItem)
                 .collect(Collectors.toList());
     }
 
     private OrderItem mapToOrderItem(CartItem cartItem) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setProduct(cartItem.getProduct());
-        orderItem.setQuantity(cartItem.getQuantity());
-        return orderItem;
+        return OrderItem.builder()
+                .product(cartItem.getProduct())
+                .quantity(cartItem.getQuantity())
+                .build();
     }
 
     public OrderItem mapOrderItemDtoToOrderItem(OrderItemDto orderItemDto) {

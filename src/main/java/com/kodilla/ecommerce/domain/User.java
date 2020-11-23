@@ -2,6 +2,7 @@ package com.kodilla.ecommerce.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,6 +44,7 @@ public class User {
             cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<>();
 
+    @Builder
     public User(String nickname, String name, String surname, String email, boolean isBlocked) {
         this.nickname = nickname;
         this.name = name;

@@ -1,9 +1,6 @@
 package com.kodilla.ecommerce.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -32,6 +29,7 @@ public class CartItem {
     @NotNull
     private Long quantity;
 
+    @Builder
     public CartItem(@NotNull Cart cart, @NotNull Product product, Long quantity) {
         this.cart = cart;
         this.product = product;

@@ -51,7 +51,11 @@ public class CartServiceImpl implements CartService {
             item.setQuantity(item.getQuantity() + quantity);
             cartItemService.updateCartItem(item);
         } else {
-            CartItem item = new CartItem(cart, product, quantity);
+            CartItem item = CartItem.builder()
+                    .cart(cart)
+                    .product(product)
+                    .quantity(quantity)
+                    .build();
             addCartItemToCart(cart, item);
         }
     }

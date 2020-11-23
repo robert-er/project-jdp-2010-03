@@ -16,11 +16,11 @@ public class GroupMapper {
     private final ProductMapper productMapper;
 
     public Group mapToGroup(final GroupDto groupDto) {
-        Group group = new Group();
-        group.setId(groupDto.getId());
-        group.setName(groupDto.getName());
-        group.setDescription(groupDto.getDescription());
-        return group;
+        return Group.builder()
+                .id(groupDto.getId())
+                .name(groupDto.getName())
+                .description(groupDto.getDescription())
+                .build();
     }
 
     public GroupDto mapToGroupDto(final Group group) {

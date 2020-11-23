@@ -52,6 +52,5 @@ public class GroupController {
                 HistoryType.GROUP, "updateGroup");
         historyService.addEntryToHistory(userId, historyEntryMapper.mapToHistoryEntry(historyEntryDto, userId));
         return groupMapper.mapToGroupDto(groupService.updateGroup(groupMapper.mapToGroup(groupDto)));
-
     }
 }
