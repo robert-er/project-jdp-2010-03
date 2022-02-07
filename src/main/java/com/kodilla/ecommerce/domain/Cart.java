@@ -1,11 +1,9 @@
 package com.kodilla.ecommerce.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -27,8 +25,9 @@ public class Cart {
             mappedBy = "cart",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    private List<CartItem> items;
+    private List<CartItem> items = new ArrayList<>();
 
+    @Builder
     public Cart(User user) {
         this.user = user;
     }

@@ -70,8 +70,8 @@ public class UserController {
         historyService.addEntryToHistory(id, historyEntryMapper.mapToHistoryEntry(historyEntryDto, id));
     }
 
-    @GetMapping("history/{id}")
-    public List<HistoryEntryDto> getHistory(@PathVariable Long id) {
-        return historyEntryMapper.mapToHistoryEntryDtoList(historyService.getHistory(id));
+    @GetMapping("history/{userId}")
+    public List<HistoryEntryDto> getHistory(@PathVariable Long userId) {
+        return historyEntryMapper.mapToHistoryEntryDtoList(historyService.getHistory(userId));
     }
 }

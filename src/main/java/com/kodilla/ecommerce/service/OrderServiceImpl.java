@@ -12,6 +12,8 @@ import com.kodilla.ecommerce.repository.ProductRepository;
 import com.kodilla.ecommerce.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -76,12 +78,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean createOrder(Cart cart) {
-        Order order = new Order();
-        order.setUser(cart.getUser());
-        order.setName("order name");
-        order.setDescription("order description, cart id: " + cart.getId());
-        order.setStatus(OrderStatus.CONFIRMED);
-        List<OrderItem> orderItems = orderItemMapper.mapToOrderItem(cart.getItems());
+        Order order = Order.builder()
+                .name("order number: " + LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE) + "-" + cart.getId())
+                .description("order description: date: " + LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE) +
+                        " cart id: " + cart.getId())
+                .status(OrderStatus.CONFIRMED)
+                .user(cart.getUser())
+                .build();
+        List<OrderItem> orderItems = orderItemMapper.mapToOrderItems(cart.getItems());
         for(OrderItem item : orderItems) {
             if (isEnoughProductQuantityInDB(item.getProduct(), item.getQuantity())) {
                 addOrderItemToOrder(order, item);
@@ -93,7 +97,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrderWithoutCart(OrderDto orderDto) throws NotFoundException {
-        Order order = orderMapper.mapOrderDtoWithoutItems(orderDto);
+        Order order = orderMapper.mapToOrderWithoutItems(orderDto);
         if (orderDto.getItems() != null) {
             return addProductsFromOrderDto(orderDto, order);
         } else {

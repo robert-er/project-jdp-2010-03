@@ -29,13 +29,17 @@ class CartServiceImplTest {
     @Autowired
     private ProductRepository productRepository;
 
-    private User user = new User("nickname", "name", "surname", "email", false);
-    private Product product = new Product("product_title",
-            BigDecimal.ONE, "product_description", 10L);
-    private CartItem item = new CartItem();
+    private final User user = new User("nickname", "name", "surname", "email", false);
+    private final Product product = Product.builder()
+            .title("product_title")
+            .price(BigDecimal.ONE)
+            .description("product_description")
+            .quantityInStock(10L)
+            .group(new Group())
+            .build();
 
     @Test
-    public void should_save_cart_in_database() {
+    public void shouldSaveCartInDatabase() {
         //Given
         User createdUser = userRepository.save(user);
         Cart cart = new Cart(user);
@@ -49,7 +53,7 @@ class CartServiceImplTest {
     }
 
     @Test
-    public void should_add_product_to_cart() {
+    public void shouldAddProductToCart() {
         //Given
         User createdUser = userRepository.save(user);
         Group group = new Group();
