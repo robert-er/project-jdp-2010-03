@@ -1,11 +1,9 @@
 package com.kodilla.ecommerce.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -27,6 +25,10 @@ public class History {
             mappedBy = "history",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    private List<HistoryEntry> entries;
+    private List<HistoryEntry> entries = new ArrayList<>();
 
+    @Builder
+    public History(User user) {
+        this.user = user;
+    }
 }

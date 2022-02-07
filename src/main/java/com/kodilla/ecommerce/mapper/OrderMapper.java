@@ -45,19 +45,17 @@ public class OrderMapper {
 
     public List<OrderDto> mapToOrderDtoList(final List<Order> orderList) {
         return orderList.stream()
-                .map(t -> mapToOrderDto(t))
+                .map(this::mapToOrderDto)
                 .collect(Collectors.toList());
     }
 
-    public Order mapOrderDtoWithoutItems(final OrderDto orderDto) {
-        Order order = new Order();
-        order.setId(null);
-        order.setName(orderDto.getName());
-        order.setDescription(orderDto.getDescription());
-        order.setStatus(orderDto.getStatus());
-        User user = userRepository.findById(orderDto.getUserId())
-                .orElseThrow(() -> new NotFoundException("User id: " + orderDto.getUserId() + " not found"));
-        order.setUser(user);
-        return order;
+    public Order mapToOrderWithoutItems(final OrderDto orderDto) {
+        return Order.builder()
+                .name(orderDto.getName())
+                .description(orderDto.getDescription())
+                .status(orderDto.getStatus())
+                .user(userRepository.findById(orderDto.getUserId())
+                        .orElseThrow(() -> new NotFoundException("User id: " + orderDto.getUserId() + " not found")))
+                .build();
     }
 }

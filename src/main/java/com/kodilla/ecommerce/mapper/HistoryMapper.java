@@ -15,10 +15,8 @@ public class HistoryMapper {
     private final UserService userService;
 
     public History mapToHistory(HistoryDto historyDto) {
-        History history = new History();
-        history.setId(historyDto.getId());
-        history.setUser(userService.getUserById(historyDto.getUserId()));
-        history.setEntries(new ArrayList<>());
-        return history;
+        return History.builder()
+                .user(userService.getUserById(historyDto.getUserId()))
+                .build();
     }
 }

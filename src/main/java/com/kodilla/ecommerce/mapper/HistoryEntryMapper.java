@@ -16,14 +16,14 @@ public class HistoryEntryMapper {
 
     private final HistoryRepository historyRepository;
 
-    public HistoryEntry mapToHistoryEntry(HistoryEntryDto historyEntryDto, Long userId) {
-        HistoryEntry historyEntry = new HistoryEntry();
-        historyEntry.setHistory(historyRepository.findByUserId(userId)
-                .orElseThrow(() -> new NotFoundException("History for User id: " + userId + " not found")));
-        historyEntry.setDate(historyEntryDto.getDate());
-        historyEntry.setHistoryType(historyEntryDto.getHistoryType());
-        historyEntry.setDetails(historyEntryDto.getDetails());
-        return historyEntry;
+    public HistoryEntry mapToHistoryEntry(HistoryEntryDto historyEntryDto, Long userId) throws NotFoundException {
+        return HistoryEntry.builder()
+                .history(historyRepository.findByUserId(userId)
+                        .orElseThrow(() -> new NotFoundException("History for User id: " + userId + " not found")))
+                .date(historyEntryDto.getDate())
+                .historyType(historyEntryDto.getHistoryType())
+                .details(historyEntryDto.getDetails())
+                .build();
     }
 
     public HistoryEntryDto mapToHistoryEntryDto(HistoryEntry historyEntry) {

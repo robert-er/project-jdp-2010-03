@@ -18,12 +18,11 @@ public class CartMapper {
     private final UserRepository userRepository;
     private final CartItemMapper cartItemMapper;
 
-    public Cart mapToCart(CartDto cartDto) {
-        Cart cart = new Cart();
-        cart.setUser(userRepository.findById(cartDto.getUserId())
-                .orElseThrow(() -> new NotFoundException("User id: " + cartDto.getUserId() + " not found")));
-        cart.setItems(new ArrayList<>());
-        return cart;
+    public Cart mapToCart(CartDto cartDto) throws NotFoundException {
+        return Cart.builder()
+                .user(userRepository.findById(cartDto.getUserId())
+                        .orElseThrow(() -> new NotFoundException("User id: " + cartDto.getUserId() + " not found")))
+                .build();
     }
 
     public CartDto mapToCartDto(Cart cart) {
